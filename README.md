@@ -4,7 +4,13 @@ Official python client library for [capmonster.cloud](https://capmonster.cloud/r
 
 ## Installation
 
+Pip:
 
+    -
+
+From source:
+
+    pip3 install .
 
 ## Usage
 
