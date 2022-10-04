@@ -1,12 +1,17 @@
 import os
+import time
 import asyncio
 
 from capmonstercloud_client.requests import GeetestProxylessRequest
 from capmonstercloud_client import ClientOptions, CapMonsterClient
 
-async def get_result():
-    task = await cap_monster_client.solve_captcha(geetest_request)
-    return task
+async def solve_captcha_sync(num_requests):
+    return [await cap_monster_client.solve_captcha(geetest_request) for _ in range(num_requests)]
+
+async def solve_captcha_async(num_requests):
+    tasks = [asyncio.create_task(cap_monster_client.solve_captcha(geetest_request)) 
+             for _ in range(num_requests)]
+    return await asyncio.gather(*tasks, return_exceptions=True)
 
 if __name__ == '__main__':
     key = os.getenv('API_KEY')
@@ -17,5 +22,17 @@ if __name__ == '__main__':
                                               challenge='e72cbf52f5749a9cfefbf92fbdaee2ea',
                                             #   geetestApiServerSubdomain='https://api.geetest.com/get.php'
                                              )
-    response = asyncio.run(get_result())
-    print(response)
+      
+    nums = 3
+
+    # Sync test
+    sync_start = time.time()
+    sync_responses = asyncio.run(solve_captcha_sync(nums))
+    print(f'average execution time sync {1/((time.time()-sync_start)/3):0.2f} ' \
+          f'resp/sec\nsolution: {sync_responses[0]}')
+
+    # Async test
+    async_start = time.time()
+    async_responses = asyncio.run(solve_captcha_async(nums))
+    print(f'average execution time async {1/((time.time()-async_start)/3):0.2f} ' \
+          f'resp/sec\nsolution: {async_responses[0]}')

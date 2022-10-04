@@ -1,11 +1,16 @@
 import os
+import time
 import asyncio
 
 from capmonstercloud_client.requests import HcaptchaProxylessRequest
 from capmonstercloud_client import ClientOptions, CapMonsterClient
 
-async def get_result():
-    tasks = [asyncio.create_task(cap_monster_client.solve_captcha(hcaptcha_request)) for _ in range(3)]
+async def solve_captcha_sync(num_requests):
+    return [await cap_monster_client.solve_captcha(hcaptcha_request) for _ in range(num_requests)]
+
+async def solve_captcha_async(num_requests):
+    tasks = [asyncio.create_task(cap_monster_client.solve_captcha(hcaptcha_request)) 
+             for _ in range(num_requests)]
     return await asyncio.gather(*tasks, return_exceptions=True)
 
 if __name__ == '__main__':
@@ -15,5 +20,17 @@ if __name__ == '__main__':
 
     hcaptcha_request = HcaptchaProxylessRequest(websiteUrl='https://lessons.zennolab.com/captchas/hcaptcha/?level=difficult',
                                                 websiteKey='b744cfe0-50b1-455e-90ac-5e5a09ccb49f')
-    response = asyncio.run(get_result())
-    print(response)
+    
+    nums = 3
+
+    # Sync test
+    sync_start = time.time()
+    sync_responses = asyncio.run(solve_captcha_sync(nums))
+    print(f'average execution time sync {1/((time.time()-sync_start)/3):0.2f} ' \
+          f'resp/sec\nsolution: {sync_responses[0]}')
+
+    # Async test
+    async_start = time.time()
+    async_responses = asyncio.run(solve_captcha_async(nums))
+    print(f'average execution time async {1/((time.time()-async_start)/3):0.2f} ' \
+          f'resp/sec\nsolution: {async_responses[0]}')

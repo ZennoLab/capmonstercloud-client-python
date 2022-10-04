@@ -8,7 +8,7 @@ from pathlib import Path
 from setuptools import setup, find_packages
 
 NAME = 'capmonstercloud_client'
-VERSION = '0.0'
+VERSION = '0.1'
 DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/ru/'
 EMAIL = 'andrey.ilyin@zennolab.com'
 AUTHOR = 'Andrey Ilyin'
@@ -19,6 +19,7 @@ URL='https://github.com/ZennoLab/capmonstercloud-client-python'
 
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
+
 
 setup(
     name=NAME,
@@ -35,6 +36,33 @@ setup(
     url=URL,
     python_requires='>=3.6',
     install_requires=REQUIRED,
-    license="AGPL-3.0"
+    keywords="""
+                captcha 
+				recaptcha
+				geetest
+				hcaptcha
+				funcaptcha
+				python3
+				python-library
+				capmonster
+                capmonstercloud
+                capmonstercloudclient
+               """,
+    license="AGPL-3.0",
+    classifiers=[
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Development Status :: 5 - Production/Stable",
+        "Framework :: AsyncIO",
+        "Operating System :: Unix",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS",
+    ]
 )
-
