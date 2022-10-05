@@ -4,15 +4,15 @@ Official python client library for [capmonster.cloud](https://capmonster.cloud/r
 
 ## Installation
 
-    python3 -m pip install capmonstercloud_client
+    python3 -m pip install capmonstercloudclient
 
 ## Usage
 
 ***
     import asyncio
 
-    from capmonstercloud_client import CapMonsterClient, ClientOptions
-    from capmonstercloud_client.requests import RecaptchaV2ProxylessRequest
+    from capmonstercloudclient import CapMonsterClient, ClientOptions
+    from capmonstercloudclient.requests import RecaptchaV2ProxylessRequest
 
     client_options = ClientOptions(api_key=<YOUR_API_KEY>)
     cap_monster_client = CapMonsterClient(options=client_options)

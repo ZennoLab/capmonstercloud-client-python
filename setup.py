@@ -5,16 +5,16 @@ if sys.version_info < (3,):
     sys.exit(-1)
 
 from pathlib import Path
-from setuptools import setup, find_packages
+from pkg_resources import parse_requirements
+from setuptools import setup
 
-NAME = 'capmonstercloud_client'
+NAME = 'capmonstercloudclient'
 VERSION = '0.1'
 DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/ru/'
 EMAIL = 'andrey.ilyin@zennolab.com'
 AUTHOR = 'Andrey Ilyin'
-REQUIRED = ['aiohttp', 
-            'pydantic', 
-            'typing']
+with open("requirements.txt", "rt") as requirements_txt:
+    REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
 URL='https://github.com/ZennoLab/capmonstercloud-client-python'
 
 this_directory = Path(__file__).parent
@@ -29,10 +29,10 @@ setup(
     author=AUTHOR,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    packages=['capmonstercloud_client', 'capmonstercloud_client.requests'],
-    package_dir={"capmonstercloud_client": 'capmonstercloud_client'},
+    packages=['capmonstercloudclient', 'capmonstercloudclient.requests'],
+    package_dir={"capmonstercloudclient": 'capmonstercloud_client'},
     include_package_data=True,
-    py_modules=["capmonstercloud_client"],
+    py_modules=["capmonstercloudclient"],
     url=URL,
     python_requires='>=3.6',
     install_requires=REQUIRED,

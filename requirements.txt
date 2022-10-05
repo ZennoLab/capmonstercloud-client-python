@@ -1,3 +1,2 @@
-aiohttp
-pydantic
-typing
+aiohttp>=3.7.4
+pydantic==1.*
