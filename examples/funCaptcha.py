@@ -2,8 +2,8 @@ import os
 import time
 import asyncio
 
-from capmonstercloud_client.requests import FuncaptchaProxylessRequest
-from capmonstercloud_client import ClientOptions, CapMonsterClient
+from capmonstercloudclient.requests import FuncaptchaProxylessRequest
+from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 async def solve_captcha_sync(num_requests):
     return [await cap_monster_client.solve_captcha(funcaptcha_request) for _ in range(num_requests)]

@@ -1,7 +1,7 @@
 import os
 import asyncio
 
-from capmonstercloud_client import ClientOptions, CapMonsterClient
+from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 async def get_result():
     task = await cap_monster_client.get_balance()
