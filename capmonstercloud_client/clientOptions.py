@@ -4,7 +4,7 @@ from pydantic import BaseModel, validator, Field
 class ClientOptions(BaseModel):
     api_key: str
     service_url: str = Field(default="https://api.capmonster.cloud")
-    default_soft_id: int = Field(default=53)
+    default_soft_id: int = Field(default=55)
 
     @validator('api_key')
     def validate_api_key(cls, value):
