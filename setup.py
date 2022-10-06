@@ -10,7 +10,7 @@ from setuptools import setup
 
 NAME = 'capmonstercloudclient'
 VERSION = '0.1'
-DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/ru/'
+DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/'
 EMAIL = 'andrey.ilyin@zennolab.com'
 AUTHOR = 'Andrey Ilyin'
 with open("requirements.txt", "rt") as requirements_txt:

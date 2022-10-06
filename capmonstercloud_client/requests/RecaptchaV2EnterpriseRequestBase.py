@@ -1,6 +1,4 @@
-from email.errors import InvalidMultipartContentTransferEncodingDefect
 from typing import Optional
-from wsgiref.validate import validator
 from pydantic import Field
 
 from .baseRequest import BaseRequest

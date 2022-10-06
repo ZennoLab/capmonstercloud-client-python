@@ -1,6 +1,6 @@
 # Zennolab.CapMonsterCloud.Client
 
-Official python client library for [capmonster.cloud](https://capmonster.cloud/ru/) captcha recognition service
+Official python client library for [capmonster.cloud](https://capmonster.cloud/) captcha recognition service
 
 ## Installation
 

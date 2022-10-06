@@ -12,10 +12,20 @@ from .requests import *
 from .GetResultTimeouts import *
 
 
+_instance_config = (
+    ((RecaptchaV2ProxylessRequest, RecaptchaV2Request), getRecaptchaV2Timeouts),
+    ((RecaptchaV2EnterpriseProxylessRequest, RecaptchaV2EnterpriseRequest), getRecaptchaV2EnterpriseTimeouts),
+    ((RecaptchaV3ProxylessRequest), getRecaptchaV3Timeouts),
+    ((ImageToTextRequest), getImage2TextTimeouts),
+    ((FuncaptchaProxylessRequest, FuncaptchaRequest), getFuncaptchaTimeouts),
+    ((HcaptchaProxylessRequest, HcaptchaRequest), getHcaptchaTimeouts),
+    ((GeetestProxylessRequest, GeetestRequest), getGeetestTimeouts)
+)
+
+
 class CapMonsterClient:
-    def __init__(self, options: ClientOptions) -> None:
+    def __init__(self, options: Type[ClientOptions]) -> None:
         self.options = options
-        self.client_timeout = aiohttp.ClientTimeout(total=20.0)
 
     async def get_balance(self) -> Dict[str, Union[int, float, str]]:
         body = {
@@ -23,7 +33,8 @@ class CapMonsterClient:
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/getBalance',
-                                    json=body, timeout=self.client_timeout) as resp:
+                                    json=body, 
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
                 if resp.status != 200:
                     raise HTTPException(f'Cannot create task. Status code: {resp.status}.')
                 result = await resp.json(content_type=None)
@@ -33,7 +44,7 @@ class CapMonsterClient:
 
 
     async def solve_captcha(self, request: Union[RecaptchaV2EnterpriseProxylessRequest,
-                                                 RecaptchaV2EnterpriseRequest, RecaptchaV2Request, 
+                                                 RecaptchaV2EnterpriseRequest, RecaptchaV2Request,
                                                  RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
                                                  ImageToTextRequest, FuncaptchaProxylessRequest,
                                                  FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
@@ -44,36 +55,20 @@ class CapMonsterClient:
         Args:
             request : This object must be an instance of "requests", otherwise an exception will be thrown
         '''
-        if isinstance(request, RecaptchaV2ProxylessRequest):
-            return await self._solve(request, getRecaptchaV2Timeouts())
-        elif isinstance(request, RecaptchaV2Request):
-            return await self._solve(request, getRecaptchaV2Timeouts())
-        elif isinstance(request, RecaptchaV2EnterpriseProxylessRequest):
-            return await self._solve(request, getRecaptchaV2EnterpriseTimeouts())
-        elif isinstance(request, RecaptchaV2EnterpriseRequest):
-            return await self._solve(request, getRecaptchaV2EnterpriseTimeouts())
-        elif isinstance(request, ImageToTextRequest):
-            return await self._solve(request, getImage2TextTimeouts())
-        elif isinstance(request, RecaptchaV3ProxylessRequest):
-            return await self._solve(request, getRecaptchaV3Timeouts())
-        elif isinstance(request, HcaptchaProxylessRequest):
-            return await self._solve(request, getHcaptchaTimeouts())
-        elif isinstance(request, HcaptchaRequest):
-            return await self._solve(request, getHcaptchaTimeouts())
-        elif isinstance(request, FuncaptchaProxylessRequest):
-            return await self._solve(request, getFuncaptchaTimeouts())
-        elif isinstance(request, FuncaptchaRequest):
-            return await self._solve(request, getFuncaptchaTimeouts())
-        elif isinstance(request, GeetestProxylessRequest):
-            return await self._solve(request, getGeetestTimeouts())
-        elif isinstance(request, GeetestRequest):
-            return await self._solve(request, getGeetestTimeouts())
-        else:
-            rs_all = ''.join('\n'+ x for x in REQUESTS)
-            raise UnknownRequestInstanceError(f'Unknown request instance "{type(request)}", ' \
-                                              f'expected that request will belong next instances: {rs_all}')
+        for instance_source, get_timeouts in _instance_config:
+            if isinstance(request, instance_source):
+                return await self._solve(request, get_timeouts())
+        rs_all = ''.join('\n'+ x for x in REQUESTS)
+        raise UnknownRequestInstanceError(f'Unknown request instance "{type(request)}", ' \
+                                            f'expected that request will belong next instances: {rs_all}')
         
-    async def _solve(self, request: BaseRequest, timeouts: Type[GetResultTimeouts]) -> Dict[str, str]:
+    async def _solve(self, request: Union[RecaptchaV2EnterpriseProxylessRequest,
+                                          RecaptchaV2EnterpriseRequest, RecaptchaV2Request,
+                                          RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
+                                          ImageToTextRequest, FuncaptchaProxylessRequest,
+                                          FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
+                                          GeetestProxylessRequest, GeetestRequest],
+                           timeouts: Type[GetResultTimeouts]) -> Dict[str, str]:
 
         getTaskResponse = await self._createTask(request)
         if getTaskResponse.get('errorId') != 0:
@@ -113,7 +108,8 @@ class CapMonsterClient:
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/getTaskResult',
-                                    json=body, timeout=self.client_timeout) as resp:
+                                    json=body, 
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
                 if resp.status != 200:
                     if resp.status == 500:
                         return {'errorId': 0, 'status': 'processing'}
@@ -131,7 +127,8 @@ class CapMonsterClient:
                }
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/createTask',
-                                    json=body, timeout=self.client_timeout) as resp:
+                                    json=body, 
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
                 if resp.status != 200:
                     raise HTTPException(f'Cannot create task. Status code: {resp.status}.')
                 else:
