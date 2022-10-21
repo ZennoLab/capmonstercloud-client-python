@@ -22,7 +22,7 @@ Official python client library for [capmonster.cloud](https://capmonster.cloud/)
 
     recaptcha2request = RecaptchaV2ProxylessRequest(websiteUrl="https://lessons.zennolab.com/captchas/recaptcha/v2_simple.php?level=high",
                                                     websiteKey="6Lcg7CMUAAAAANphynKgn9YAgA4tQ2KI_iqRyTwd")
-    cap_monster_client = CapMonsterClient(options=client_options)
+
     responses = asyncio.run(solve_captcha())
     print(responses)
 ***
