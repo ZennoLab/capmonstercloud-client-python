@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 
 from http.client import HTTPException
-from typing import Dict, Union, Type
+from typing import Dict, Union
 
 from .captchaResult import CaptchaResult
 from .requestController import RequestController
@@ -24,7 +24,7 @@ _instance_config = (
 
 
 class CapMonsterClient:
-    def __init__(self, options: Type[ClientOptions]) -> None:
+    def __init__(self, options: ClientOptions) -> None:
         self.options = options
 
     async def get_balance(self) -> Dict[str, Union[int, float, str]]:
@@ -68,7 +68,7 @@ class CapMonsterClient:
                                           ImageToTextRequest, FuncaptchaProxylessRequest,
                                           FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
                                           GeetestProxylessRequest, GeetestRequest],
-                           timeouts: Type[GetResultTimeouts]) -> Dict[str, str]:
+                           timeouts: GetResultTimeouts) -> Dict[str, str]:
 
         getTaskResponse = await self._createTask(request)
         if getTaskResponse.get('errorId') != 0:

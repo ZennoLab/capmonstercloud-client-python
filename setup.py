@@ -9,7 +9,7 @@ from pkg_resources import parse_requirements
 from setuptools import setup
 
 NAME = 'capmonstercloudclient'
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/'
 EMAIL = 'andrey.ilyin@zennolab.com'
 AUTHOR = 'Andrey Ilyin'
