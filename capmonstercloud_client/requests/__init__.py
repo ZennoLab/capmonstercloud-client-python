@@ -10,6 +10,8 @@ from .FuncaptchaProxylessRequest import FuncaptchaProxylessRequest
 from .FuncaptchaRequest import FuncaptchaRequest
 from .GeetestProxylessRequest import GeetestProxylessRequest
 from .GeetestRequest import GeetestRequest
+from .TurnstileProxylessRequest import TurnstileProxylessRequest
+from .TurnstileRequest import TurnstileRequest
 from .baseRequest import BaseRequest
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 

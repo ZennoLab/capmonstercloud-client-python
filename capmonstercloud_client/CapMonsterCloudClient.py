@@ -19,7 +19,8 @@ _instance_config = (
     ((ImageToTextRequest), getImage2TextTimeouts),
     ((FuncaptchaProxylessRequest, FuncaptchaRequest), getFuncaptchaTimeouts),
     ((HcaptchaProxylessRequest, HcaptchaRequest), getHcaptchaTimeouts),
-    ((GeetestProxylessRequest, GeetestRequest), getGeetestTimeouts)
+    ((GeetestProxylessRequest, GeetestRequest), getGeetestTimeouts),
+    ((TurnstileProxylessRequest, TurnstileRequest), getTurnstileTimeouts),
 )
 
 
@@ -48,7 +49,8 @@ class CapMonsterClient:
                                                  RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
                                                  ImageToTextRequest, FuncaptchaProxylessRequest,
                                                  FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
-                                                 GeetestProxylessRequest, GeetestRequest]) -> Dict[str, str]:
+                                                 GeetestProxylessRequest, GeetestRequest,
+                                                 TurnstileProxylessRequest, TurnstileRequest]) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
 
@@ -67,7 +69,8 @@ class CapMonsterClient:
                                           RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
                                           ImageToTextRequest, FuncaptchaProxylessRequest,
                                           FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
-                                          GeetestProxylessRequest, GeetestRequest],
+                                          GeetestProxylessRequest, GeetestRequest,
+                                          TurnstileProxylessRequest, TurnstileRequest],
                            timeouts: GetResultTimeouts) -> Dict[str, str]:
 
         getTaskResponse = await self._createTask(request)
