@@ -8,11 +8,13 @@ from pathlib import Path
 from pkg_resources import parse_requirements
 from setuptools import setup
 
+
 NAME = 'capmonstercloudclient'
-VERSION = '1.0.1'
 DESCRIPTION = 'Official CapMonsterCloud Client: https://capmonster.cloud/'
 EMAIL = 'andrey.ilyin@zennolab.com'
 AUTHOR = 'Andrey Ilyin'
+with open('capmonstercloud_client/version.txt', 'r') as f:
+    VERSION = f.read()
 with open("requirements.txt", "rt") as requirements_txt:
     REQUIRED = [str(requirement) for requirement in parse_requirements(requirements_txt)]
 URL='https://github.com/ZennoLab/capmonstercloud-client-python'
@@ -31,6 +33,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=['capmonstercloudclient', 'capmonstercloudclient.requests'],
     package_dir={"capmonstercloudclient": 'capmonstercloud_client'},
+    package_data={'': ['version.txt']},
     include_package_data=True,
     py_modules=["capmonstercloudclient"],
     url=URL,

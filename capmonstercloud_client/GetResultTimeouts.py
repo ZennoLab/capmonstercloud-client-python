@@ -28,3 +28,6 @@ def getHcaptchaTimeouts() -> GetResultTimeouts:
 
 def getGeetestTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 80)
+
+def getTurnstileTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 1, 80)
