@@ -10,6 +10,7 @@ from .exceptions import GetBalanceError, GetTaskError, GetResultError, UnknownRe
 from .clientOptions import ClientOptions
 from .requests import *
 from .GetResultTimeouts import *
+from .utils import parseVersion
 
 
 _instance_config = (
@@ -25,8 +26,15 @@ _instance_config = (
 
 
 class CapMonsterClient:
-    def __init__(self, options: ClientOptions) -> None:
+    def __init__(self, 
+                 options: ClientOptions) -> None:
         self.options = options
+        self._headers = {'User-Agent': 
+                         f'Zennolab.CapMonsterCloud.Client.Python/{parseVersion()}'}
+    
+    @property
+    def headers(self):
+        return self._headers
 
     async def get_balance(self) -> Dict[str, Union[int, float, str]]:
         body = {
@@ -112,7 +120,8 @@ class CapMonsterClient:
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/getTaskResult',
                                     json=body, 
-                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout),
+                                    headers=self.headers) as resp:
                 if resp.status != 200:
                     if resp.status == 500:
                         return {'errorId': 0, 'status': 'processing'}
@@ -131,7 +140,8 @@ class CapMonsterClient:
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/createTask',
                                     json=body, 
-                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout),
+                                    headers=self.headers) as resp:
                 if resp.status != 200:
                     raise HTTPException(f'Cannot create task. Status code: {resp.status}.')
                 else:
