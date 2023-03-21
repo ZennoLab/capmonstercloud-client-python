@@ -12,6 +12,8 @@ from .GeetestProxylessRequest import GeetestProxylessRequest
 from .GeetestRequest import GeetestRequest
 from .TurnstileProxylessRequest import TurnstileProxylessRequest
 from .TurnstileRequest import TurnstileRequest
+from .HcaptchaComplexImageTask import HcaptchaComplexImageTaskRequest
+from .RecaptchaComplexImageTask import RecaptchaComplexImageTaskRequest
 from .baseRequest import BaseRequest
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 
