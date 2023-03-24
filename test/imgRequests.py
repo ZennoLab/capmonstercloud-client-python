@@ -45,7 +45,8 @@ class TestRequests(unittest.IsolatedAsyncioTestCase):
         client = CapMonsterClient(options=options)
         request = HcaptchaComplexImageTaskRequest(metadata=hcaptcha_metadata,
                                                   imagesUrls=hcaptcha_img_urls,
-                                                  userAgent=userAgent)
+                                                #   userAgent=userAgent,
+                                                  )
         result = asyncio.run(client.solve_captcha(request))
         keys = list(result.keys())
         for f in fields:
@@ -72,7 +73,8 @@ class TestRequests(unittest.IsolatedAsyncioTestCase):
         client = CapMonsterClient(options=options)
         request = RecaptchaComplexImageTaskRequest(metadata=recaptcha_metadata,
                                                    imagesUrls=recaptcha_img_urls,
-                                                   userAgent=userAgent)
+                                                #    userAgent=userAgent,
+                                                   )
         result = asyncio.run(client.solve_captcha(request))
         keys = list(result.keys())
         for f in fields:

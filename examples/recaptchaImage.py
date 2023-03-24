@@ -40,8 +40,7 @@ if __name__ == '__main__':
     
     # urls example
     request_with_urls = RecaptchaComplexImageTaskRequest(metadata=metadata,
-                                                         imagesUrls=imagesUrls,
-                                                         userAgent=userAgent)
+                                                         imagesUrls=imagesUrls)
     request_with_b64 = RecaptchaComplexImageTaskRequest(metadata=metadata,
                                                         imagesBase64=imagesBase64)
     

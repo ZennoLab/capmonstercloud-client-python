@@ -2,7 +2,7 @@ from typing import Dict, Union, Optional
 from pydantic import Field, validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
-from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError, UserAgentNotDefinedError
+from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
 
 class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     
@@ -65,8 +65,6 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         
         task["metadata"] = self.metadata
         
-        if self.userAgent is None and self.imagesUrls is not None:
-            raise UserAgentNotDefinedError()
         if self.userAgent is not None:
             task["userAgent"] = self.userAgent
             

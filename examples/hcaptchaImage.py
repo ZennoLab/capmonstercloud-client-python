@@ -39,8 +39,7 @@ if __name__ == '__main__':
     
     # urls example
     request_with_urls = HcaptchaComplexImageTaskRequest(metadata=metadata,
-                                                        imagesUrls=imagesUrls,
-                                                        userAgent=userAgent)
+                                                        imagesUrls=imagesUrls)
     request_with_b64 = HcaptchaComplexImageTaskRequest(metadata=metadata,
                                                        imagesBase64=imagesBase64)
     

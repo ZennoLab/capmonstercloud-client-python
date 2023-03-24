@@ -2,7 +2,7 @@ from typing import Dict, Union
 from pydantic import Field, validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
-from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError, UserAgentNotDefinedError
+from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
 
 class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     
@@ -63,13 +63,12 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         
         task['metadata'] = self.metadata
         
-        if self.userAgent is None and self.imagesUrls is not None:
-            raise UserAgentNotDefinedError()
-        elif self.userAgent is not None:
+        if self.userAgent is not None:
             task['userAgent'] = self.userAgent
         
         if self.websiteUrl is not None:
             task['websiteUrl'] = self.websiteUrl
+            
         return task
     
     

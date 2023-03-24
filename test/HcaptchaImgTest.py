@@ -53,7 +53,8 @@ class HcaptchaImageRequestTest(unittest.TestCase):
             request = HcaptchaComplexImageTaskRequest(websiteUrl=HcaptchaImageRequestTest.websiteUrlExample,
                                                       metadata=HcaptchaImageRequestTest.metadataExample,
                                                       imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples*20,
-                                                      userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.")
+                                                    #   userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.",
+                                                     )
         
         
         with self.assertRaises(NumbersImagesErrors, 
@@ -67,7 +68,8 @@ class HcaptchaImageRequestTest(unittest.TestCase):
         request = HcaptchaComplexImageTaskRequest(websiteUrl=HcaptchaImageRequestTest.websiteUrlExample,
                                                   metadata=HcaptchaImageRequestTest.metadataExample,
                                                   imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples,
-                                                  userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.")
+                                                #   userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.",
+                                                 )
         request_dict = request.getTaskDict()
         for i in required_fields:
             self.assertTrue(i in list(request_dict.keys()), 
@@ -78,13 +80,14 @@ class HcaptchaImageRequestTest(unittest.TestCase):
                                msg='Expect that empty "Task" field will be cause TaskNotDefinedError'):
             request = HcaptchaComplexImageTaskRequest(imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples,
                                                       metadata={},
-                                                      userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.")
+                                                    #   userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.",
+                                                      )
             
-    def testUserAgentWithUrl(self):
-        with self.assertRaises(UserAgentNotDefinedError):
-            request = HcaptchaComplexImageTaskRequest(metadata=HcaptchaImageRequestTest.metadataExample,
-                                                      imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples)
-            request.getTaskDict()
+    # def testUserAgentWithUrl(self):
+    #     with self.assertRaises(UserAgentNotDefinedError):
+    #         request = HcaptchaComplexImageTaskRequest(metadata=HcaptchaImageRequestTest.metadataExample,
+    #                                                   imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples)
+    #         request.getTaskDict()
             
     def testSuccessRequestDict(self):
         required_fields = ['class', 'type', 'websiteUrl', 'metadata', 'imageUrls', 'userAgent']
