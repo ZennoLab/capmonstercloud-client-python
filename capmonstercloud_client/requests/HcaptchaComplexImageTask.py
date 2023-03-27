@@ -27,7 +27,6 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise ZeroImagesErrors(f'At least one image url expected, got {len(value)}')
             # Check for each element type
             contain_types = [isinstance(x, str) for x in value]
-            print(contain_types)
             if not all(contain_types):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value

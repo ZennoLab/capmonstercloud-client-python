@@ -44,7 +44,7 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise ZeroImagesErrors(f'At least one image base64 expected, got {len(value)}')
             # Check for each element type
             contain_types = [isinstance(x, str) for x in value]
-            if not (contain_types):
+            if not all(contain_types):
                 raise TypeError(f'Next images from imagesBase64 array are not string: {contain_types}')
         return value
     
