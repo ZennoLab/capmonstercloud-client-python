@@ -22,6 +22,7 @@ _instance_config = (
     ((HcaptchaProxylessRequest, HcaptchaRequest), getHcaptchaTimeouts),
     ((GeetestProxylessRequest, GeetestRequest), getGeetestTimeouts),
     ((TurnstileProxylessRequest, TurnstileRequest), getTurnstileTimeouts),
+    ((RecaptchaComplexImageTaskRequest, HcaptchaComplexImageTaskRequest), getImage2TextTimeouts),
 )
 
 
@@ -53,12 +54,22 @@ class CapMonsterClient:
 
 
     async def solve_captcha(self, request: Union[RecaptchaV2EnterpriseProxylessRequest,
-                                                 RecaptchaV2EnterpriseRequest, RecaptchaV2Request,
-                                                 RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
-                                                 ImageToTextRequest, FuncaptchaProxylessRequest,
-                                                 FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
-                                                 GeetestProxylessRequest, GeetestRequest,
-                                                 TurnstileProxylessRequest, TurnstileRequest]) -> Dict[str, str]:
+                                                 RecaptchaV2EnterpriseRequest, 
+                                                 RecaptchaV2Request,
+                                                 RecaptchaV2ProxylessRequest, 
+                                                 RecaptchaV3ProxylessRequest,
+                                                 ImageToTextRequest, 
+                                                 FuncaptchaProxylessRequest,
+                                                 FuncaptchaRequest, 
+                                                 HcaptchaRequest, 
+                                                 HcaptchaProxylessRequest,
+                                                 GeetestProxylessRequest, 
+                                                 GeetestRequest,
+                                                 TurnstileProxylessRequest, 
+                                                 TurnstileRequest,
+                                                 HcaptchaComplexImageTaskRequest, 
+                                                 RecaptchaComplexImageTaskRequest],
+                            ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
 
@@ -73,13 +84,23 @@ class CapMonsterClient:
                                             f'expected that request will belong next instances: {rs_all}')
         
     async def _solve(self, request: Union[RecaptchaV2EnterpriseProxylessRequest,
-                                          RecaptchaV2EnterpriseRequest, RecaptchaV2Request,
-                                          RecaptchaV2ProxylessRequest, RecaptchaV3ProxylessRequest,
-                                          ImageToTextRequest, FuncaptchaProxylessRequest,
-                                          FuncaptchaRequest, HcaptchaRequest, HcaptchaProxylessRequest,
-                                          GeetestProxylessRequest, GeetestRequest,
-                                          TurnstileProxylessRequest, TurnstileRequest],
-                           timeouts: GetResultTimeouts) -> Dict[str, str]:
+                                          RecaptchaV2EnterpriseRequest, 
+                                          RecaptchaV2Request,
+                                          RecaptchaV2ProxylessRequest, 
+                                          RecaptchaV3ProxylessRequest,
+                                          ImageToTextRequest, 
+                                          FuncaptchaProxylessRequest,
+                                          FuncaptchaRequest, 
+                                          HcaptchaRequest, 
+                                          HcaptchaProxylessRequest,
+                                          GeetestProxylessRequest, 
+                                          GeetestRequest,
+                                          TurnstileProxylessRequest, 
+                                          TurnstileRequest,
+                                          HcaptchaComplexImageTaskRequest, 
+                                          RecaptchaComplexImageTaskRequest],
+                           timeouts: GetResultTimeouts,
+                           ) -> Dict[str, str]:
 
         getTaskResponse = await self._createTask(request)
         if getTaskResponse.get('errorId') != 0:

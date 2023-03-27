@@ -43,3 +43,5 @@ Supported captcha recognition requests:
 - RecaptchaV2EnterpriseRequest
 - TurnstileProxylessRequest
 - TurnstileRequest
+- RecaptchaComplexImageTaskRequest
+- HcaptchaComplexImageTaskRequest
