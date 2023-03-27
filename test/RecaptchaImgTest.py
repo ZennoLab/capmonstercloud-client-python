@@ -95,12 +95,13 @@ class RecaptchaImageRequestTest(unittest.TestCase):
                                                        metadata={'dsfsdf': 'sdfsdf'},
                                                        imagesUrls=RecaptchaImageRequestTest.imageUrlsExamples,
                                                        userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.")
-            
-    # def testUserAgentWithUrl(self):
-    #     with self.assertRaises(UserAgentNotDefinedError):
-    #         request = RecaptchaComplexImageTaskRequest(metadata=RecaptchaImageRequestTest.metadataExample,
-    #                                                    imagesUrls=RecaptchaImageRequestTest.imageUrlsExamples)
-    #         request.getTaskDict()
+    
+    @unittest.skip('Doesnt work right now')
+    def testUserAgentWithUrl(self):
+        with self.assertRaises(UserAgentNotDefinedError):
+            request = RecaptchaComplexImageTaskRequest(metadata=RecaptchaImageRequestTest.metadataExample,
+                                                       imagesUrls=RecaptchaImageRequestTest.imageUrlsExamples)
+            request.getTaskDict()
             
 
 if __name__ == '__main__':

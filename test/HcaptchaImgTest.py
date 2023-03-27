@@ -24,7 +24,7 @@ class HcaptchaImageRequestTest(unittest.TestCase):
                                                       metadata=HcaptchaImageRequestTest.metadataExample,
                                                       imagesUrls='[]',
                                                       userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.")
-    
+            
     def testImagesFilling(self):
         
         with self.assertRaises(ZeroImagesErrors, 
@@ -82,12 +82,13 @@ class HcaptchaImageRequestTest(unittest.TestCase):
                                                       metadata={},
                                                     #   userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36.",
                                                       )
-            
-    # def testUserAgentWithUrl(self):
-    #     with self.assertRaises(UserAgentNotDefinedError):
-    #         request = HcaptchaComplexImageTaskRequest(metadata=HcaptchaImageRequestTest.metadataExample,
-    #                                                   imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples)
-    #         request.getTaskDict()
+    
+    @unittest.skip('Doesnt work right now')
+    def testUserAgentWithUrl(self):
+        with self.assertRaises(UserAgentNotDefinedError):
+            request = HcaptchaComplexImageTaskRequest(metadata=HcaptchaImageRequestTest.metadataExample,
+                                                      imagesUrls=HcaptchaImageRequestTest.imageUrlsExamples)
+            request.getTaskDict()
             
     def testSuccessRequestDict(self):
         required_fields = ['class', 'type', 'websiteUrl', 'metadata', 'imageUrls', 'userAgent']

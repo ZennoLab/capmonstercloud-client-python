@@ -29,8 +29,8 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise ZeroImagesErrors(f'At least one image url expected, got {len(value)}')
             # Check for each element type
             contain_types = [isinstance(x, str) for x in value]
-            if False in contain_types:
-                raise TypeError(f'Next images from imagesUrls array not is string: {contain_types}')
+            if not all(contain_types):
+                raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
     
     @validator('imagesBase64')
@@ -44,8 +44,8 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise ZeroImagesErrors(f'At least one image base64 expected, got {len(value)}')
             # Check for each element type
             contain_types = [isinstance(x, str) for x in value]
-            if False in contain_types:
-                raise TypeError(f'Next images from imagesBase64 array not is string: {contain_types}')
+            if not (contain_types):
+                raise TypeError(f'Next images from imagesBase64 array are not string: {contain_types}')
         return value
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
@@ -57,11 +57,12 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         # fill with images
         if self.imagesBase64 is None and self.imagesUrls is None:
             raise ZeroImagesErrors(f'Expect at least one of array(imageBase64 or imageUrls) to contain images.')
-        else:
-            if self.imagesUrls is not None:
-                task["imageUrls"] = self.imagesUrls
-            if self.imagesBase64 is not None:
-                task["imagesBase64"] = self.imagesBase64
+        
+        if self.imagesUrls is not None:
+            task["imageUrls"] = self.imagesUrls
+        
+        if self.imagesBase64 is not None:
+            task["imagesBase64"] = self.imagesBase64
         
         task["metadata"] = self.metadata
         
@@ -70,6 +71,7 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             
         if self.websiteUrl is not None:
             task["websiteUrl"] = self.websiteUrl
+        
         return task
     
     
