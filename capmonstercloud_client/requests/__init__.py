@@ -8,6 +8,7 @@ from .HcaptchaProxylessRequest import HcaptchaProxylessRequest
 from .HcaptchaRequest import HcaptchaRequest
 from .FuncaptchaProxylessRequest import FuncaptchaProxylessRequest
 from .FuncaptchaRequest import FuncaptchaRequest
+from .FuncaptchaComplexImageTask import FunCaptchaComplexImageTaskRequest
 from .GeetestProxylessRequest import GeetestProxylessRequest
 from .GeetestRequest import GeetestRequest
 from .TurnstileProxylessRequest import TurnstileProxylessRequest

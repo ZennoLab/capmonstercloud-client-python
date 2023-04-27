@@ -22,7 +22,8 @@ _instance_config = (
     ((HcaptchaProxylessRequest, HcaptchaRequest), getHcaptchaTimeouts),
     ((GeetestProxylessRequest, GeetestRequest), getGeetestTimeouts),
     ((TurnstileProxylessRequest, TurnstileRequest), getTurnstileTimeouts),
-    ((RecaptchaComplexImageTaskRequest, HcaptchaComplexImageTaskRequest), getImage2TextTimeouts),
+    ((RecaptchaComplexImageTaskRequest, HcaptchaComplexImageTaskRequest, 
+      FunCaptchaComplexImageTaskRequest), getImage2TextTimeouts),
 )
 
 
@@ -68,7 +69,8 @@ class CapMonsterClient:
                                                  TurnstileProxylessRequest, 
                                                  TurnstileRequest,
                                                  HcaptchaComplexImageTaskRequest, 
-                                                 RecaptchaComplexImageTaskRequest],
+                                                 RecaptchaComplexImageTaskRequest,
+                                                 FunCaptchaComplexImageTaskRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
@@ -98,7 +100,8 @@ class CapMonsterClient:
                                           TurnstileProxylessRequest, 
                                           TurnstileRequest,
                                           HcaptchaComplexImageTaskRequest, 
-                                          RecaptchaComplexImageTaskRequest],
+                                          RecaptchaComplexImageTaskRequest,
+                                          FunCaptchaComplexImageTaskRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:
 
