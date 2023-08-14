@@ -24,7 +24,6 @@ class GeeTestIntegrationTest(unittest.TestCase):
                                                   initParameters={'riskType ': 'slide'},
                                                   )
         response = solve(self.cap_monster_client, geetest_request)
-        response = {}
         for key in required_keys:
             self.assertTrue(key in list(response.keys()), 
                             msg=f'Required captcha output key "{key}" doesnt include to response.')
