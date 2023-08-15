@@ -20,7 +20,7 @@ recaptcha_metadata = {
     "TaskDefinition": "/m/015qff"
     }
 hcaptcha_metadata = {
-    'Task': 'Please click each image containing a mountain'
+    'Task': 'Please click each image containing a motorcycle'
     }
 funcaptcha_metadata = {
     'Task': 'Pick the image that is the correct way up'
