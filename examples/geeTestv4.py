@@ -17,9 +17,10 @@ if __name__ == '__main__':
     key = os.getenv('API_KEY')
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
-    geetest_request = GeetestProxylessRequest(websiteUrl='https://example.com/',
-                                              gt='gt',
-                                              challenge='challenge'
+    geetest_request = GeetestProxylessRequest(websiteUrl="https://faucetpay.io/account/login",
+                                              gt='4eb8b0c2b27f3365b9244d9da81638c6',
+                                              version=4,
+                                              initParameters={'riskType ': 'slide'},
                                              )
     
     nums = 3

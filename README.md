@@ -29,19 +29,20 @@ Official python client library for [capmonster.cloud](https://capmonster.cloud/)
 
 Supported captcha recognition requests:
 
-- FunCaptchaProxylessRequest
-- FunCaptchaRequest
-- GeeTestProxylessRequest
-- GeeTestRequest
-- HCaptchaProxylessRequest
-- HCaptchaRequest
-- ImageToTextRequest
-- RecaptchaV2ProxylessRequest
-- RecaptchaV2Request
-- RecaptchaV3ProxylessRequest
-- RecaptchaV2EnterpriseProxylessRequest
-- RecaptchaV2EnterpriseRequest
-- TurnstileProxylessRequest
-- TurnstileRequest
-- RecaptchaComplexImageTaskRequest
-- HcaptchaComplexImageTaskRequest
+- [FunCaptchaProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/643629079/FunCaptchaTaskProxyless+solving+FunCaptcha)
+- [FunCaptchaRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/735805497/FunCaptchaTask+solving+FunCaptcha)
+- [GeeTestProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/1940291626/GeeTestTaskProxyless+GeeTest+captcha+recognition+without+proxy)
+- [GeeTestRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/1940357159/GeeTestTask+GeeTest+captcha+recognition)
+- [HCaptchaProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/1203240977/HCaptchaTaskProxyless+hCaptcha+puzzle+solving)
+- [HCaptchaRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/1203240988/HCaptchaTask+hCaptcha+puzzle+solving)
+- [ImageToTextRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/589863/ImageToTextTask)
+- [RecaptchaV2ProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/373161985/NoCaptchaTaskProxyless+solving+Google+recaptcha)
+- [RecaptchaV2Request](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/680689685/NoCaptchaTask+solving+Google+recaptcha)
+- [RecaptchaV3ProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/566853650/RecaptchaV3TaskProxyless+solving+Google+ReCaptcha+v.3)
+- [RecaptchaV2EnterpriseProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2178383893/RecaptchaV2EnterpriseTaskProxyless+solving+Google+reCAPTCHA+Enterprise+without+proxy)
+- [RecaptchaV2EnterpriseRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2179104769/RecaptchaV2EnterpriseTask+solving+Google+reCAPTCHA+Enterprise)
+- [TurnstileProxylessRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2257879047/TurnstileTaskProxyless+solving+Turnstile+without+proxy)
+- [TurnstileRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2313814017/TurnstileTask+Cloudflare+Challenge)
+- [RecaptchaComplexImageTaskRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2279538739/ComplexImageTask+Recaptcha+Google+captcha+solution)
+- [HcaptchaComplexImageTaskRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2279604241/ComplexImageTask+HCaptcha+hCaptcha+captcha+solution)
+- [FunCaptchaComplexImageTaskRequest](https://zennolab.atlassian.net/wiki/spaces/APIS/pages/2291400705/ComplexImageTask+Funcaptcha+Funcaptcha+solving)
