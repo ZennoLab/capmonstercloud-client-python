@@ -1,20 +1,11 @@
 import unittest
-import asyncio
-import os
+from copy import deepcopy
 
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 from capmonstercloudclient.requests import TurnstileProxylessRequest
-from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 
-def solve(client: CapMonsterClient, request: TurnstileProxylessRequest):
-    return asyncio.run(client.solve_captcha(request))
-
-class TurnstileResponseTest(unittest.IsolatedAsyncioTestCase):
-    
-    api_key = os.getenv('API_KEY')
-    client_options = ClientOptions(api_key=api_key)
-    cap_monster_client = CapMonsterClient(options=client_options)
+class TurnstileResponseTest(unittest.TestCase):
     
     def test_turnstile(self,
                        ):
@@ -22,33 +13,57 @@ class TurnstileResponseTest(unittest.IsolatedAsyncioTestCase):
                            'websiteURL', 
                            'websiteKey']
         request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAABUYP0XeMJF0xoy',
-                                            websiteUrl='http://tsmanaged.zlsupport.com')
+                                            websiteURL='http://tsmanaged.zlsupport.com',
+                                            pageAction='asdgf')
         task_dictionary = request.getTaskDict()
         for f in required_fields:
             self.assertTrue(f in list(task_dictionary.keys()), 
                             msg=f'Required captcha input key "{f}" does not include to request.')
 
+    def test_cloudflareTaskType_type(self):
         
-    def test_cloudflare_fields_request(self,
+        kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
+                  'websiteURL': 'https://nowsecure.nl',
+                  'cloudflareTaskType': '.'}
+        self.assertRaises(ValidationError, TurnstileProxylessRequest,
+                          **kwargs)
+        
+    def test_cloudflare_fields_request_1(self,
                         ):
         
         required_fields = ['type',
                            'websiteURL', 
                            'websiteKey',
                            'cloudflareTaskType',
-                           'htmlPageBase64',
-                           'data',
-                           'pageData',
-                           'pageAction']
+                           'htmlPageBase64']
         
         request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                            websiteUrl='https://nowsecure.nl',
+                                            websiteURL='https://nowsecure.nl',
                                             cloudflareTaskType='cf_clearance',
                                             htmlPageBase64='htmlPageBase64Here',
-                                            pageData='pageDataHere',
-                                            data='dataHere',
-                                            pageAction='pageActionHere',
-                                            userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) '\
+                                            userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
+                                                'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
+                                                '0.0.0 Safari/537.36',
+                                            )
+        task_dictionary = request.getTaskDict()
+        for f in required_fields:
+            self.assertTrue(f in list(task_dictionary.keys()), 
+                            msg=f'Required captcha input key "{f}" does not include to request.')
+    
+    def test_cloudflare_fields_request_2(self,
+                        ):
+        
+        required_fields = ['type', 'websiteURL', 'websiteKey',
+                           'pageAction', 'data', 'pageData',
+                           'userAgent']
+        
+        request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
+                                            websiteURL='https://nowsecure.nl',
+                                            cloudflareTaskType='token',
+                                            pageAction='pageAction',
+                                            pageData='pageData',
+                                            data='data',
+                                            userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
                                                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
                                                 '0.0.0 Safari/537.36',
                                             )
@@ -57,75 +72,33 @@ class TurnstileResponseTest(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(f in list(task_dictionary.keys()), 
                             msg=f'Required captcha input key "{f}" does not include to request.')
             
-    def test_failed_request(self):
-        failed_1 = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                             websiteUrl='https://nowsecure.nl',
-                                             cloudflareTaskType='cf_clearance',
-                                             htmlPageBase64='htmlPageBase64Here',
-                                             pageData='pageDataHere',
-                                             data='dataHere',
-                                             pageAction='pageActionHere',
-                                             )
+    def test_failed_task_error(self):
         
-        failed_2 = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                             websiteUrl='https://nowsecure.nl',
-                                             cloudflareTaskType='cf_clearance',
-                                             htmlPageBase64='htmlPageBase64Here',
-                                             pageData='pageDataHere',
-                                             data='dataHere',
-                                             userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) '\
-                                                'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
-                                                '0.0.0 Safari/537.36',
-                                             )
+        base_kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
+                       'websiteURL': 'https://nowsecure.nl'}
         
-        failed_3 = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                             websiteUrl='https://nowsecure.nl',
-                                             cloudflareTaskType='cf_clearance',
-                                             htmlPageBase64='htmlPageBase64Here',
-                                             pageData='pageDataHere',
-                                             pageAction='pageActionHere',
-                                             userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
-                                                'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
-                                                '0.0.0 Safari/537.36',
-                                             )
+        # Token pipeline
+        kwargs_1 = deepcopy(base_kwargs)
+        kwargs_1.update({'cloudflareTaskType': 'token'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        kwargs_1.update({'pageAction': 'pageAction'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        kwargs_1.update({'pageData': 'pageData'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        kwargs_1.update({'data': 'data'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
         
-        failed_3 = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                             websiteUrl='https://nowsecure.nl',
-                                             cloudflareTaskType='cf_clearance',
-                                             htmlPageBase64='htmlPageBase64Here',
-                                             data='dataHere',
-                                             pageAction='pageActionHere',
-                                             userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
-                                                'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
-                                                '0.0.0 Safari/537.36',
-                                             )
+        kwargs_1.update({'userAgent': 'userAgent'})
+        TurnstileProxylessRequest(**kwargs_1)
         
-        failed_4 = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
-                                             websiteUrl='https://nowsecure.nl',
-                                             cloudflareTaskType='cf_clearance',
-                                             pageData='pageDataHere',
-                                             data='dataHere',
-                                             pageAction='pageActionHere',
-                                             userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
-                                                'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
-                                                '0.0.0 Safari/537.36',
-                                             )
-        for failed_request in [failed_1, failed_2,
-                               failed_3, failed_4]:
-            self.assertRaises(RuntimeError, failed_request.getTaskDict)
-    
-    def test_cloudfare_type(self):
-        kwargs = {'websiteKey' : '0x4AAAAAAADnPIDROrmt1Wwj',
-                  'websiteUrl': 'https://nowsecure.nl',
-                  'cloudflareTaskType': '.'}
-        self.assertRaises(ValidationError, TurnstileProxylessRequest, **kwargs)
-    
-    # def test_turnstile_response(self):
-    #     request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAABUYP0XeMJF0xoy',
-    #                                         websiteUrl='http://tsmanaged.zlsupport.com')
-    #     response = solve(self.cap_monster_client, request)
-        
-        
+        # cf_clearance pipeline
+        kwargs_2 = deepcopy(base_kwargs)
+        kwargs_2.update({'cloudflareTaskType': 'cf_clearance'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_2)
+        kwargs_2.update({'htmlPageBase64': 'htmlPageBase64Here'})
+        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_2)
+        kwargs_2.update({'userAgent': 'userAgent'})
+        TurnstileProxylessRequest(**kwargs_2)
         
 if __name__ == '__main__':
     unittest.main()
