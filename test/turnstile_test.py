@@ -28,8 +28,7 @@ class TurnstileResponseTest(unittest.TestCase):
         self.assertRaises(ValidationError, TurnstileProxylessRequest,
                           **kwargs)
         
-    def test_cloudflare_fields_request_1(self,
-                        ):
+    def test_cf_clearance_inputs(self):
         
         required_fields = ['type',
                            'websiteURL', 
@@ -50,8 +49,7 @@ class TurnstileResponseTest(unittest.TestCase):
             self.assertTrue(f in list(task_dictionary.keys()), 
                             msg=f'Required captcha input key "{f}" does not include to request.')
     
-    def test_cloudflare_fields_request_2(self,
-                        ):
+    def test_token_inputs(self):
         
         required_fields = ['type', 'websiteURL', 'websiteKey',
                            'pageAction', 'data', 'pageData',
@@ -72,7 +70,7 @@ class TurnstileResponseTest(unittest.TestCase):
             self.assertTrue(f in list(task_dictionary.keys()), 
                             msg=f'Required captcha input key "{f}" does not include to request.')
             
-    def test_failed_task_error(self):
+    def test_failed_cf_clearance_cases(self):
         
         base_kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
                        'websiteURL': 'https://nowsecure.nl'}
@@ -87,9 +85,13 @@ class TurnstileResponseTest(unittest.TestCase):
         self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
         kwargs_1.update({'data': 'data'})
         self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
-        
         kwargs_1.update({'userAgent': 'userAgent'})
         TurnstileProxylessRequest(**kwargs_1)
+    
+    def test_failed_token_cases(self):
+        
+        base_kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
+                       'websiteURL': 'https://nowsecure.nl'}
         
         # cf_clearance pipeline
         kwargs_2 = deepcopy(base_kwargs)
