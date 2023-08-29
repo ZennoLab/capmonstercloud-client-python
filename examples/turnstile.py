@@ -25,7 +25,7 @@ if __name__ == '__main__':
     client_options = ClientOptions(api_key=api_key)
     client = CapMonsterClient(client_options)
     
-    turnstile_request = TurnstileProxylessRequest(websiteUrl='http://tsmanaged.zlsupport.com/',
+    turnstile_request = TurnstileProxylessRequest(websiteURL='http://tsmanaged.zlsupport.com/',
                                                   websiteKey='0x4AAAAAAABUYP0XeMJF0xoy')
 
     sync_start = time.time()
