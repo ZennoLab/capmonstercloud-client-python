@@ -12,11 +12,11 @@ class FuncaptchaRequest(FuncaptchaRequestBase, ProxyInfo):
         task['type'] = self.type
         task['websiteURL'] = self.websiteUrl
         task['websitePublicKey'] = self.websitePublicKey
-        task['proxyType'] = self.proxy_type
-        task['proxyAddress'] = self.proxy_address
-        task['proxyPort'] = self.proxy_port
-        task['proxyLogin'] = self.proxy_login
-        task['proxyPassword'] = self.proxy_password
+        task['proxyType'] = self.proxyType
+        task['proxyAddress'] = self.proxyAddress
+        task['proxyPort'] = self.proxyPort
+        task['proxyLogin'] = self.proxyLogin
+        task['proxyPassword'] = self.proxyPassword
         if self.funcaptchaApiJSSubdomain is not None:
             task['funcaptchaApiJSSubdomain'] = self.funcaptchaApiJSSubdomain
         if self.data is not None:
