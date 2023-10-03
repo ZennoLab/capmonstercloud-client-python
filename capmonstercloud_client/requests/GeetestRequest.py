@@ -30,10 +30,9 @@ class GeetestRequest(GeetestRequestBase, ProxyInfo):
         if self.user_agent is not None:
             task['userAgent'] = self.user_agent
         
-        
-        task['proxyType'] = self.proxy_type
-        task['proxyAddress'] = self.proxy_address
-        task['proxyPort'] = self.proxy_port
-        task['proxyLogin'] = self.proxy_login
-        task['proxyPassword'] = self.proxy_password
+        task['proxyType'] = self.proxyType
+        task['proxyAddress'] = self.proxyAddress
+        task['proxyPort'] = self.proxyPort
+        task['proxyLogin'] = self.proxyLogin
+        task['proxyPassword'] = self.proxyPassword
         return task
