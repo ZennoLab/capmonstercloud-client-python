@@ -16,9 +16,11 @@ from .TurnstileRequest import TurnstileRequest
 from .HcaptchaComplexImageTask import HcaptchaComplexImageTaskRequest
 from .RecaptchaComplexImageTask import RecaptchaComplexImageTaskRequest
 from .baseRequest import BaseRequest
+from .DataDomeCustomTaskRequest import DataDomeCustomTaskRequest
+from .DataDomeCustomTaskProxylessRequest import DataDomeCustomTaskProxylessRequest
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 
             'RecaptchaV2ProxylessRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest',
             'ImageToTextRequest', 'FuncaptchaProxylessRequest', 'FuncaptchaRequest',
             'GeetestRequest', 'GeetestProxylessRequest', 'HcaptchaProxylessRequest',
-            'HcaptchaRequest']
+            'HcaptchaRequest', 'DataDomeCustomTaskRequest', 'DataDomeCustomTaskProxylessRequest']

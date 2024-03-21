@@ -10,3 +10,4 @@ class HcaptchaRequestBase(BaseRequest):
     data: Optional[str] = Field(default=None)
     user_agent: Optional[str] = Field(default=None)
     cookies: Optional[str] = Field(default=None)
+    fallbackToActualUA: Optional[bool] = Field(default=None)

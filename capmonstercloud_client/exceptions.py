@@ -21,6 +21,14 @@ class ZeroImagesErrors(BaseError):
 class TaskNotDefinedError(BaseError):
     pass
 
+class WrongMetadataError(BaseError):
+    pass
+
+class ExtraParamsError(BaseError):
+    pass
+
+
+
 class UserAgentNotDefinedError(BaseError):
     
     default_message = 'If "imageUrls" is not defined, then "userAgent" must explicitly specify signature ' \

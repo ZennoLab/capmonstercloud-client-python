@@ -31,3 +31,6 @@ def getGeetestTimeouts() -> GetResultTimeouts:
 
 def getTurnstileTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 80)
+
+def getDatadomeTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 1, 80)
