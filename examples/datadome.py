@@ -22,7 +22,6 @@ if __name__ == '__main__':
     datadome_request = DataDomeCustomTaskProxylessRequest(websiteUrl='https://antoinevastel.com/bots/datadome',
                                                     metadata=metadata
                                                     )
-    print(datadome_request.getTaskDict())
     nums = 3
 
     # Sync test
