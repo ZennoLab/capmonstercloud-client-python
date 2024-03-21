@@ -1,9 +1,7 @@
 from typing import Dict, Union
 from pydantic import Field, validator
-from pydantic.error_wrappers import ValidationError
 from .DataDomeCustomTaskRequestBase import DataDomeCustomTaskRequestBase
 from .proxy_info import ProxyInfo
-from ..exceptions import WrongMetadataError
 
 class DataDomeCustomTaskRequest(DataDomeCustomTaskRequestBase, ProxyInfo):
     metadata : Dict[str, str]
@@ -11,7 +9,7 @@ class DataDomeCustomTaskRequest(DataDomeCustomTaskRequestBase, ProxyInfo):
     @validator('metadata')
     def validate_metadata(cls, value):
         if value.get('datadomeCookie') is None:
-            raise WrongMetadataError(f'Expect that datadomeCookie will be defined.')
+            raise TypeError(f'Expect that datadomeCookie will be defined.')
         if value.get('captchaUrl') and value.get('htmlPageBase64'):
             raise TypeError(f'Expected only one of [captchaUrl, htmlPageBase64]')
         elif value.get('captchaUrl'):

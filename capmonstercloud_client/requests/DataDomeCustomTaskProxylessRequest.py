@@ -1,8 +1,7 @@
 from typing import Dict, Union
-from pydantic import Field, validator, ValidationError
+from pydantic import Field, validator
 
 from .DataDomeCustomTaskRequestBase import DataDomeCustomTaskRequestBase
-from ..exceptions import WrongMetadataError
 
 class DataDomeCustomTaskProxylessRequest(DataDomeCustomTaskRequestBase):
     metadata : Dict[str, str]

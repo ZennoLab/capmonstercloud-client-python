@@ -21,9 +21,6 @@ class ZeroImagesErrors(BaseError):
 class TaskNotDefinedError(BaseError):
     pass
 
-class WrongMetadataError(BaseError):
-    pass
-
 class ExtraParamsError(BaseError):
     pass
 
