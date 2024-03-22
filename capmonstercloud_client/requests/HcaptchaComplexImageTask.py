@@ -24,7 +24,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             if not isinstance(value, (list, tuple)):
                 raise TypeError(f'Expect that type exampleImageUrls array will be <list> or <tuple>, got {type(value)}')
             elif len(value) > 1:
-                raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
+                raise NumbersImagesErrors(f'Maximum number of images in list 1, got {len(value)}')
             elif not len(value):
                 raise ZeroImagesErrors(f'At least one image url expected, got {len(value)}')
             # Check for each element type
@@ -39,7 +39,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             if not isinstance(value, (list, tuple)):
                 raise TypeError(f'Expect that type exampleImagesBase64 array will be <list> or <tuple>, got {type(value)}')
             elif len(value) > 1:
-                raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
+                raise NumbersImagesErrors(f'Maximum number of images in list 1, got {len(value)}')
             elif not len(value):
                 raise ZeroImagesErrors(f'At least one image base64 expected, got {len(value)}')
             # Check for each element type
@@ -54,7 +54,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             if not isinstance(value, (list, tuple)):
                 raise TypeError(f'Expect that type imagesUrls array will be <list> or <tuple>, got {type(value)}')
             elif len(value) > 18:
-                raise NumbersImagesErrors(f'Maximum numbers images in list 18, got {len(value)}')
+                raise NumbersImagesErrors(f'Maximum number of images in list 18, got {len(value)}')
             elif not len(value):
                 raise ZeroImagesErrors(f'At least one image url expected, got {len(value)}')
             # Check for each element type
@@ -69,7 +69,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             if not isinstance(value, (list, tuple)):
                 raise TypeError(f'Expect that type imagesBase64 array will be <list> or <tuple>, got {type(value)}')
             elif len(value) > 18:
-                raise NumbersImagesErrors(f'Maximum numbers images in list 18, got {len(value)}')
+                raise NumbersImagesErrors(f'Maximum number of images in list 18, got {len(value)}')
             elif not len(value):
                 raise ZeroImagesErrors(f'At least one image base64 expected, got {len(value)}')
             # Check for each element type
