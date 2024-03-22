@@ -43,3 +43,4 @@ Supported captcha recognition requests:
 - [TurnstileRequest](https://zenno.link/doc-turnstile-proxy-en)
 - [RecaptchaComplexImageTaskRequest](https://zenno.link/doc-complextask-rc-en)
 - [HcaptchaComplexImageTaskRequest](https://zenno.link/doc-complextask-hc-en)
+- [DataDomeCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/datadome)
