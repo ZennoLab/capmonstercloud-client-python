@@ -33,7 +33,7 @@ class DataDomeOutsTest(unittest.TestCase):
         result = asyncio.run(client.solve_captcha(request))
    
         for i in required_outs:
-            self.assertTrue(i in list(result.keys()))
+            self.assertTrue(i in get_all_keys(result))
 
             
 if __name__ == '__main__':
