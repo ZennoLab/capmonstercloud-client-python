@@ -26,5 +26,7 @@ class HcaptchaRequest(HcaptchaRequestBase, ProxyInfo):
             task['userAgent'] = self.user_agent
         if self.cookies is not None:
             task['cookies'] = self.cookies
+        if self.fallbackToActualUA is not None:
+            task['fallbackToActualUA'] = self.fallbackToActualUA
 
         return task
