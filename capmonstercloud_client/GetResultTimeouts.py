@@ -34,3 +34,12 @@ def getTurnstileTimeouts() -> GetResultTimeouts:
 
 def getDatadomeTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 80)
+
+def getTenDiTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
+
+def getBasiliskTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 100)
+
+def getAmazonWafTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
