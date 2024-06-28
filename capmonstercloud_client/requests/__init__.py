@@ -18,9 +18,17 @@ from .RecaptchaComplexImageTask import RecaptchaComplexImageTaskRequest
 from .baseRequest import BaseRequest
 from .DataDomeCustomTaskRequest import DataDomeCustomTaskRequest
 from .DataDomeCustomTaskProxylessRequest import DataDomeCustomTaskProxylessRequest
+from .TenDiCustomTaskRequest import TenDiCustomTaskRequest
+from .TenDiCustomTaskProxylessRequest import TenDiCustomTaskProxylessRequest
+from .BasiliskCustomTaskRequest import BasiliskCustomTaskRequest
+from .BasiliskCustomTaskProxylessRequest import BasiliskCustomTaskProxylessRequest
+from .AmazonWafRequest import AmazonWafRequest
+from .AmazonWafProxylessRequest import AmazonWafProxylessRequest
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 
             'RecaptchaV2ProxylessRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest',
             'ImageToTextRequest', 'FuncaptchaProxylessRequest', 'FuncaptchaRequest',
             'GeetestRequest', 'GeetestProxylessRequest', 'HcaptchaProxylessRequest',
-            'HcaptchaRequest', 'DataDomeCustomTaskRequest', 'DataDomeCustomTaskProxylessRequest']
+            'HcaptchaRequest', 'DataDomeCustomTaskRequest', 'DataDomeCustomTaskProxylessRequest',
+            'TenDiCustomTaskRequest', 'TenDiCustomTaskProxylessRequest', 'BasiliskCustomTaskRequest',
+            'BasiliskCustomTaskProxylessRequest', 'AmazonWafRequest', 'AmazonWafProxylessRequest']

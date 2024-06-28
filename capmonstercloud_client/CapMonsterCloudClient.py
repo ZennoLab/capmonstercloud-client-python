@@ -25,6 +25,10 @@ _instance_config = (
     ((RecaptchaComplexImageTaskRequest, HcaptchaComplexImageTaskRequest, 
       FunCaptchaComplexImageTaskRequest), getImage2TextTimeouts),
     ((DataDomeCustomTaskRequest, DataDomeCustomTaskProxylessRequest), getDatadomeTimeouts),
+    ((TenDiCustomTaskRequest, TenDiCustomTaskProxylessRequest), getTenDiTimeouts),
+    ((BasiliskCustomTaskRequest, BasiliskCustomTaskProxylessRequest), getBasiliskTimeouts),
+    ((AmazonWafRequest, AmazonWafProxylessRequest), getAmazonWafTimeouts),
+
 )
 
 
