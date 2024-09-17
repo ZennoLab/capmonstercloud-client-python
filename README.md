@@ -44,3 +44,6 @@ Supported captcha recognition requests:
 - [RecaptchaComplexImageTaskRequest](https://zenno.link/doc-complextask-rc-en)
 - [HcaptchaComplexImageTaskRequest](https://zenno.link/doc-complextask-hc-en)
 - [DataDomeCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/datadome)
+- [TenDiCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/tendi)
+- [BasiliskCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/Basilisk-task)
+- [AmazonWafRequest](https://docs.capmonster.cloud/docs/captchas/amazon-task)
