@@ -8,8 +8,8 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     
     captchaClass: str = Field(default='hcaptcha')
     metadata : Dict[str, str]
-    exampleImageUrls: Optional[List[str]]
-    exampleImagesBase64: Optional[List[str]]
+    exampleImageUrls: Optional[List[str]] = None
+    exampleImagesBase64: Optional[List[str]] = None
     
     @validator('metadata')
     def validate_metadata(cls, value):
