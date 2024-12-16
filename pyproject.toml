@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "capmonster-client-cloud"
 version = "0.1.0"
-description = ""
-authors = ["Zennolab"]
+description = "Official python client library for capmonster.cloud captcha recognition service"
+authors = ["Andrey Ilyin <andrey.ilyin@zennolab.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
