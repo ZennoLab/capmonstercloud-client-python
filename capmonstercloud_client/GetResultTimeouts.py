@@ -43,3 +43,9 @@ def getBasiliskTimeouts() -> GetResultTimeouts:
 
 def getAmazonWafTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 10, 3, 180)
+
+def getBinanceTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 1, 20)
+
+def getImpervaTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 1, 20)

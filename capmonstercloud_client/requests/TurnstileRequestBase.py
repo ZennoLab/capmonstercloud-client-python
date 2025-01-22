@@ -13,6 +13,7 @@ class TurnstileRequestBase(BaseRequest):
     userAgent: Optional[str] = Field(default=None)
     cloudflareTaskType: Optional[str] = Field(default=None)
     htmlPageBase64: Optional[str] = Field(default=None)
+    apiJsUrl: Optional[str] = Field(default=None)
     
     @validator('cloudflareTaskType')
     def validate_cloudflare_task(cls, value):

@@ -28,7 +28,8 @@ _instance_config = (
     ((TenDiCustomTaskRequest, TenDiCustomTaskProxylessRequest), getTenDiTimeouts),
     ((BasiliskCustomTaskRequest, BasiliskCustomTaskProxylessRequest), getBasiliskTimeouts),
     ((AmazonWafRequest, AmazonWafProxylessRequest), getAmazonWafTimeouts),
-
+    ((BinanceTaskRequest, BinanceTaskProxylessRequest), getBinanceTimeouts),
+    ((ImpervaCustomTaskProxylessRequest), getImpervaTimeouts)
 )
 
 
@@ -77,7 +78,10 @@ class CapMonsterClient:
                                                  RecaptchaComplexImageTaskRequest,
                                                  FunCaptchaComplexImageTaskRequest,
                                                  DataDomeCustomTaskProxylessRequest,
-                                                 DataDomeCustomTaskRequest],
+                                                 DataDomeCustomTaskRequest,
+                                                 BinanceTaskRequest,
+                                                 BinanceTaskProxylessRequest,
+                                                 ImpervaCustomTaskProxylessRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
@@ -108,7 +112,10 @@ class CapMonsterClient:
                                           TurnstileRequest,
                                           HcaptchaComplexImageTaskRequest, 
                                           RecaptchaComplexImageTaskRequest,
-                                          FunCaptchaComplexImageTaskRequest],
+                                          FunCaptchaComplexImageTaskRequest,
+                                          BinanceTaskRequest,
+                                          BinanceTaskProxylessRequest,
+                                          ImpervaCustomTaskProxylessRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:
 
