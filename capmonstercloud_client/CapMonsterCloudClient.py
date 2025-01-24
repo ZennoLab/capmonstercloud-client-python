@@ -29,7 +29,7 @@ _instance_config = (
     ((BasiliskCustomTaskRequest, BasiliskCustomTaskProxylessRequest), getBasiliskTimeouts),
     ((AmazonWafRequest, AmazonWafProxylessRequest), getAmazonWafTimeouts),
     ((BinanceTaskRequest, BinanceTaskProxylessRequest), getBinanceTimeouts),
-    ((ImpervaCustomTaskProxylessRequest), getImpervaTimeouts)
+    ((ImpervaCustomTaskRequest, ImpervaCustomTaskProxylessRequest), getImpervaTimeouts)
 )
 
 
@@ -81,6 +81,7 @@ class CapMonsterClient:
                                                  DataDomeCustomTaskRequest,
                                                  BinanceTaskRequest,
                                                  BinanceTaskProxylessRequest,
+                                                 ImpervaCustomTaskRequest,
                                                  ImpervaCustomTaskProxylessRequest],
                             ) -> Dict[str, str]:
         '''
@@ -115,6 +116,7 @@ class CapMonsterClient:
                                           FunCaptchaComplexImageTaskRequest,
                                           BinanceTaskRequest,
                                           BinanceTaskProxylessRequest,
+                                          ImpervaCustomTaskRequest,
                                           ImpervaCustomTaskProxylessRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:

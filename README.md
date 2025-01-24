@@ -45,4 +45,6 @@ Supported captcha recognition requests:
 - [BasiliskCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/Basilisk-task)
 - [AmazonWafRequest](https://docs.capmonster.cloud/docs/captchas/amazon-task)
 - [BinanceTaskRequest](https://docs.capmonster.cloud/docs/captchas/binance)
+- [BinanceTaskProxylessRequest](https://docs.capmonster.cloud/docs/captchas/binance)
 - [ImpervaCustomTaskRequest](https://docs.capmonster.cloud/docs/captchas/incapsula)
+- [ImpervaCustomTaskProxylessRequest](https://docs.capmonster.cloud/docs/captchas/incapsula)
