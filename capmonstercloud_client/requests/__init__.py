@@ -24,6 +24,11 @@ from .BasiliskCustomTaskRequest import BasiliskCustomTaskRequest
 from .BasiliskCustomTaskProxylessRequest import BasiliskCustomTaskProxylessRequest
 from .AmazonWafRequest import AmazonWafRequest
 from .AmazonWafProxylessRequest import AmazonWafProxylessRequest
+from .BinanceTaskRequest import BinanceTaskRequest
+from .BinanceTaskProxylessRequest import BinanceTaskProxylessRequest
+from .ImpervaCustomTaskRequest import ImpervaCustomTaskRequest
+from .ImpervaCustomTaskProxylessRequest import ImpervaCustomTaskProxylessRequest
+
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 
             'RecaptchaV2ProxylessRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest',
@@ -31,4 +36,6 @@ REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessReques
             'GeetestRequest', 'GeetestProxylessRequest', 'HcaptchaProxylessRequest',
             'HcaptchaRequest', 'DataDomeCustomTaskRequest', 'DataDomeCustomTaskProxylessRequest',
             'TenDiCustomTaskRequest', 'TenDiCustomTaskProxylessRequest', 'BasiliskCustomTaskRequest',
-            'BasiliskCustomTaskProxylessRequest', 'AmazonWafRequest', 'AmazonWafProxylessRequest']
+            'BasiliskCustomTaskProxylessRequest', 'AmazonWafRequest', 'AmazonWafProxylessRequest',
+            'BinanceTaskRequest', 'BinanceTaskProxylessRequest', 'ImpervaCustomTaskProxylessRequest',
+            'ImpervaCustomTaskRequest']
