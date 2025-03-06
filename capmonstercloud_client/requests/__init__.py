@@ -28,6 +28,7 @@ from .BinanceTaskRequest import BinanceTaskRequest
 from .BinanceTaskProxylessRequest import BinanceTaskProxylessRequest
 from .ImpervaCustomTaskRequest import ImpervaCustomTaskRequest
 from .ImpervaCustomTaskProxylessRequest import ImpervaCustomTaskProxylessRequest
+from .RecognitionComplexImageTaskRequest import RecognitionComplexImageTaskRequest
 
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessRequest', 
@@ -38,4 +39,4 @@ REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2EnterpriseProxylessReques
             'TenDiCustomTaskRequest', 'TenDiCustomTaskProxylessRequest', 'BasiliskCustomTaskRequest',
             'BasiliskCustomTaskProxylessRequest', 'AmazonWafRequest', 'AmazonWafProxylessRequest',
             'BinanceTaskRequest', 'BinanceTaskProxylessRequest', 'ImpervaCustomTaskProxylessRequest',
-            'ImpervaCustomTaskRequest']
+            'ImpervaCustomTaskRequest', 'RecognitionComplexImageTaskRequest']
