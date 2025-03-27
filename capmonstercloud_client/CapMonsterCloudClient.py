@@ -29,7 +29,8 @@ _instance_config = (
     ((BasiliskCustomTaskRequest, BasiliskCustomTaskProxylessRequest), getBasiliskTimeouts),
     ((AmazonWafRequest, AmazonWafProxylessRequest), getAmazonWafTimeouts),
     ((BinanceTaskRequest, BinanceTaskProxylessRequest), getBinanceTimeouts),
-    ((ImpervaCustomTaskRequest, ImpervaCustomTaskProxylessRequest), getImpervaTimeouts)
+    ((ImpervaCustomTaskRequest, ImpervaCustomTaskProxylessRequest), getImpervaTimeouts),
+    ((RecognitionComplexImageTaskRequest), getCITTimeouts)
 )
 
 
@@ -82,7 +83,8 @@ class CapMonsterClient:
                                                  BinanceTaskRequest,
                                                  BinanceTaskProxylessRequest,
                                                  ImpervaCustomTaskRequest,
-                                                 ImpervaCustomTaskProxylessRequest],
+                                                 ImpervaCustomTaskProxylessRequest,
+                                                 RecognitionComplexImageTaskRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 

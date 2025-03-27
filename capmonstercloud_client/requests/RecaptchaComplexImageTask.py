@@ -71,7 +71,7 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
             
         if self.websiteUrl is not None:
             task["websiteUrl"] = self.websiteUrl
-        
+
         return task
     
     

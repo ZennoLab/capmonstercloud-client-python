@@ -49,3 +49,6 @@ def getBinanceTimeouts() -> GetResultTimeouts:
 
 def getImpervaTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 20)
+
+def getCITTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(0.35, 0, 0.2, 10)
