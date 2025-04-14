@@ -27,10 +27,11 @@ if __name__ == '__main__':
     binance_request = BinanceTaskRequest(
         websiteUrl='https://accounts.binance.com/ru/login?loginChannel=&return_to=',
         websiteKey='login',
-        validateId="2b8137c0b9b44189800368819354e114"
+        validateId="2b8137c0b9b44189800368819354e114",
+        proxy=proxy
     )
     nums = 3
-
+    print(binance_request.getTaskDict())
     # Sync test
     sync_start = time.time()
     sync_responses = asyncio.run(solve_captcha_sync(nums))
