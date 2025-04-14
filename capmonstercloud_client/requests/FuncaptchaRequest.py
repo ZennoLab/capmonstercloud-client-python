@@ -1,22 +1,27 @@
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 from pydantic import Field
 
-from .FuncaptchaRequestBase import FuncaptchaRequestBase
-from .proxy_info import ProxyInfo
+from .baseRequestWithProxy import BaseRequestWithProxy
 
-class FuncaptchaRequest(FuncaptchaRequestBase, ProxyInfo):
+class FuncaptchaRequest(BaseRequestWithProxy):
     type: str = Field(default='FunCaptchaTask')
-
+    websiteUrl: str
+    websitePublicKey: str
+    funcaptchaApiJSSubdomain: Optional[str] = Field(default=None)
+    data: Optional[str] = Field(default=None)
+    
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
         task['type'] = self.type
         task['websiteURL'] = self.websiteUrl
         task['websitePublicKey'] = self.websitePublicKey
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
+        
         if self.funcaptchaApiJSSubdomain is not None:
             task['funcaptchaApiJSSubdomain'] = self.funcaptchaApiJSSubdomain
         if self.data is not None:

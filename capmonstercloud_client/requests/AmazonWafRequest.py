@@ -1,11 +1,17 @@
-from typing import Dict, Union
-from pydantic import Field, validator
+from typing import Dict, Union, Optional
+from pydantic import Field
 
-from .proxy_info import ProxyInfo
-from .AmazonWafRequestBase import AmazonWafRequestBase
+from .baseRequestWithProxy import BaseRequestWithProxy
 
-class AmazonWafRequest(AmazonWafRequestBase, ProxyInfo):
+class AmazonWafRequest(BaseRequestWithProxy):
     type: str = 'AmazonTask'
+    websiteUrl: str
+    challengeScript: str
+    captchaScript: str
+    websiteKey: str
+    context: str
+    iv: str
+    cookieSolution: Optional[bool] = Field(default=None)
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
@@ -16,12 +22,13 @@ class AmazonWafRequest(AmazonWafRequestBase, ProxyInfo):
         task['websiteKey'] = self.websiteKey
         task['context'] = self.context
         task['iv'] = self.iv
-
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
         
         if self.cookieSolution is not None:
             task['cookieSolution'] = self.cookieSolution

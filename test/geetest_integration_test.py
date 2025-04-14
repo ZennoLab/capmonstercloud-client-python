@@ -2,11 +2,11 @@ import os
 import asyncio
 import unittest
 
-from capmonstercloudclient.requests import GeetestProxylessRequest
+from capmonstercloudclient.requests import GeetestRequest
 from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 
-def solve(client: CapMonsterClient, request: GeetestProxylessRequest):
+def solve(client: CapMonsterClient, request: GeetestRequest):
     return asyncio.run(client.solve_captcha(request))
 
 class GeeTestIntegrationTest(unittest.TestCase):
@@ -18,7 +18,7 @@ class GeeTestIntegrationTest(unittest.TestCase):
     def test_check_response_outputs(self):
 
         required_keys = ['captcha_id', 'lot_number', 'pass_token', 'gen_time', 'captcha_output']
-        geetest_request = GeetestProxylessRequest(websiteUrl="https://faucetpay.io/account/login",
+        geetest_request = GeetestRequest(websiteUrl="https://faucetpay.io/account/login",
                                                   gt='4eb8b0c2b27f3365b9244d9da81638c6',
                                                   version=4,
                                                   initParameters={'riskType ': 'slide'},

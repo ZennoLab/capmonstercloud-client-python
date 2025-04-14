@@ -2,7 +2,7 @@ import asyncio
 import unittest
 import os
 
-from capmonstercloudclient.requests import RecaptchaV2ProxylessRequest
+from capmonstercloudclient.requests import RecaptchaV2Request
 from capmonstercloudclient import CapMonsterClient, ClientOptions
 from capmonstercloudclient.exceptions import UnknownRequestInstanceError
 
@@ -15,7 +15,7 @@ class InstanceRequestTest(unittest.IsolatedAsyncioTestCase):
     def testSuccessResponse(self):
         options = ClientOptions(api_key=api_key)
         client = CapMonsterClient(options=options)
-        request = RecaptchaV2ProxylessRequest(websiteUrl="https://lessons.zennolab.com/captchas/recaptcha/v2_simple.php?level=high",
+        request = RecaptchaV2Request(websiteUrl="https://lessons.zennolab.com/captchas/recaptcha/v2_simple.php?level=high",
                                               websiteKey="6Lcg7CMUAAAAANphynKgn9YAgA4tQ2KI_iqRyTwd")
         # Success
         response_1 = asyncio.run(client.solve_captcha(request))

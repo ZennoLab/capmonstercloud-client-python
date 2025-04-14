@@ -3,7 +3,7 @@ import asyncio
 import os
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import AmazonWafProxylessRequest
+from capmonstercloudclient.requests import AmazonWafRequest
 from capmonstercloudclient import CapMonsterClient, ClientOptions
 
 def get_all_keys(dictionary):
@@ -33,7 +33,7 @@ class AmazonWafOutsTest(unittest.TestCase):
 
         challenge = "https://41bcdd4fb3cb.610cd090.us-east-1.token.awswaf.com/41bcdd4fb3cb/0d21de737ccb/cd77baa6c832/challenge.js"
         captcha = "https://41bcdd4fb3cb.610cd090.us-east-1.captcha.awswaf.com/41bcdd4fb3cb/0d21de737ccb/cd77baa6c832/captcha.js"
-        request = AmazonWafProxylessRequest(websiteUrl='https://efw47fpad9.execute-api.us-east-1.amazonaws.com/latest',
+        request = AmazonWafRequest(websiteUrl='https://efw47fpad9.execute-api.us-east-1.amazonaws.com/latest',
                                              websiteKey=goku_props['key'],
                                              challengeScript=challenge,
                                              captchaScript=captcha,

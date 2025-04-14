@@ -3,7 +3,7 @@ import asyncio
 import os
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import HcaptchaProxylessRequest
+from capmonstercloudclient.requests import HcaptchaRequest
 from capmonstercloudclient import CapMonsterClient, ClientOptions
 
 class HcaptchaOutsTest(unittest.TestCase):
@@ -13,7 +13,7 @@ class HcaptchaOutsTest(unittest.TestCase):
         api_key = os.getenv('API_KEY')
         options = ClientOptions(api_key=api_key)
         client = CapMonsterClient(options)
-        request = HcaptchaProxylessRequest(websiteUrl='https://lessons.zennolab.com/captchas/hcaptcha/?level=difficult',
+        request = HcaptchaRequest(websiteUrl='https://lessons.zennolab.com/captchas/hcaptcha/?level=difficult',
                                            websiteKey='b744cfe0-50b1-455e-90ac-5e5a09ccb49f')
         result = asyncio.run(client.solve_captcha(request))
    

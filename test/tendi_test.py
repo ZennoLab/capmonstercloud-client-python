@@ -1,7 +1,7 @@
 import unittest
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import TenDiCustomTaskProxylessRequest
+from capmonstercloudclient.requests import TenDiCustomTaskRequest
 from capmonstercloudclient.exceptions import NumbersImagesErrors, TaskNotDefinedError, ZeroImagesErrors, \
     UserAgentNotDefinedError
 
@@ -14,22 +14,22 @@ class TenDiCustomTaskRequestTest(unittest.TestCase):
     def testCaptchaInputTypes(self):
         
         with self.assertRaises(ValidationError):
-            request = TenDiCustomTaskProxylessRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample)
+            request = TenDiCustomTaskRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample)
         
         with self.assertRaises(ValidationError):
-            request = TenDiCustomTaskProxylessRequest(
+            request = TenDiCustomTaskRequest(
                                                 websiteKey=TenDiCustomTaskRequestTest.websiteKeyExample,
                                                 )
         
 
-        request = TenDiCustomTaskProxylessRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample,
+        request = TenDiCustomTaskRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample,
                                                   websiteKey=TenDiCustomTaskRequestTest.websiteKeyExample,
                                                   userAgent=TenDiCustomTaskRequestTest.userAgentExample
                                             )
     
     def testAllRequiredFieldsFilling(self):
         required_fields = ['class', 'type', 'websiteURL', 'websiteKey']
-        request = TenDiCustomTaskProxylessRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample,
+        request = TenDiCustomTaskRequest(websiteUrl=TenDiCustomTaskRequestTest.websiteUrlExample,
                                             websiteKey=TenDiCustomTaskRequestTest.websiteKeyExample)
         request_dict = request.getTaskDict()
         for i in required_fields:

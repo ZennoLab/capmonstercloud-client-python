@@ -1,4 +1,4 @@
-from typing import Dict, Union, Optional
+from typing import Dict, Union
 from pydantic import Field, validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase

@@ -1,10 +1,11 @@
 from typing import Dict, Union
-from pydantic import Field, validator
+from pydantic import Field
 
-from .proxy_info import ProxyInfo
-from .BasiliskCustomTaskRequestBase import BasiliskCustomTaskRequestBase
+from .CustomTaskRequestBase import CustomTaskRequestBase
 
-class BasiliskCustomTaskRequest(BasiliskCustomTaskRequestBase, ProxyInfo):
+class BasiliskCustomTaskRequest(CustomTaskRequestBase):
+    captchaClass: str = Field(default='Basilisk')
+    websiteKey: str = Field()
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
@@ -12,11 +13,12 @@ class BasiliskCustomTaskRequest(BasiliskCustomTaskRequestBase, ProxyInfo):
         task['class'] = self.captchaClass
         task['websiteURL'] = self.websiteUrl
         task['websiteKey'] = self.websiteKey
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
         if self.userAgent is not None:
             task['userAgent'] = self.userAgent
         return task
