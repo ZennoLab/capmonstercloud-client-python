@@ -1,8 +1,8 @@
-from typing import Optional, List, Dict
+from typing import Optional, List
 
-from .baseRequest import BaseRequest
+from .baseRequestWithProxy import BaseRequestWithProxy
 
-class CustomTaskRequestBase(BaseRequest):
+class CustomTaskRequestBase(BaseRequestWithProxy):
     captchaClass: str # Class(subtype) of ComplexImageTask
     type: str = "CustomTask" # Recognition task type
     websiteUrl: str # Address of a webpage with captcha

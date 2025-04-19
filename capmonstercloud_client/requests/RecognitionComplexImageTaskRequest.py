@@ -1,7 +1,7 @@
-from typing import Optional, List, Dict, Union
+from typing import Dict, Union
 from pydantic import validator
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
-from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
+from ..exceptions import ZeroImagesErrors, TaskNotDefinedError
 
 
 class RecognitionComplexImageTaskRequest(ComplexImageTaskRequestBase):

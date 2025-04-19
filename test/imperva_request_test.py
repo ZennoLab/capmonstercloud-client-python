@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import ImpervaCustomTaskProxylessRequest
+from capmonstercloudclient.requests import ImpervaCustomTaskRequest
 
 
 class ImpervaRequestTest(unittest.TestCase):
@@ -20,7 +20,7 @@ class ImpervaRequestTest(unittest.TestCase):
                            'metadata']
         metadata_required_fields = ['incapsulaScriptBase64', 'incapsulaSessionCookie']
         metadata_example = {"incapsulaScriptBase64": self.incapsulaScriptBase64Example,"incapsulaSessionCookie": self.incapsulaSessionCookieExample}
-        request = ImpervaCustomTaskProxylessRequest(websiteUrl=self.websiteUrlExample, metadata=metadata_example)
+        request = ImpervaCustomTaskRequest(websiteUrl=self.websiteUrlExample, metadata=metadata_example)
         task_dictionary = request.getTaskDict()
         for f in required_fields:
             self.assertTrue(f in list(task_dictionary.keys()), 
@@ -31,13 +31,13 @@ class ImpervaRequestTest(unittest.TestCase):
     
     def test_imperva_metadata(self,):
         base_kwargs = {"websiteUrl": self.websiteUrlExample, "metadata": {}}
-        self.assertRaises(TypeError, ImpervaCustomTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs['metadata']['incapsulaScriptBase64'] = self.incapsulaScriptBase64Example
-        self.assertRaises(TypeError, ImpervaCustomTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs['metadata']['incapsulaSessionCookie'] = self.incapsulaSessionCookieExample
-        ImpervaCustomTaskProxylessRequest(**base_kwargs)
+        ImpervaCustomTaskRequest(**base_kwargs)
         base_kwargs['metadata']['reese84UrlEndpoint'] = self.reese84UrlEndpointExample
-        ImpervaCustomTaskProxylessRequest(**base_kwargs)
+        ImpervaCustomTaskRequest(**base_kwargs)
 
     def test_imperva_missing(self,):
         required_fields = ['type',
@@ -45,11 +45,11 @@ class ImpervaRequestTest(unittest.TestCase):
                            'metadata']
         base_kwargs = {}
         metadata_example = {"incapsulaScriptBase64": self.incapsulaScriptBase64Example,"incapsulaSessionCookie": self.incapsulaSessionCookieExample}
-        self.assertRaises(ValidationError, ImpervaCustomTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(ValidationError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs.update({'websiteUrl': self.websiteUrlExample})
-        self.assertRaises(ValidationError, ImpervaCustomTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(ValidationError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs.update({'metadata': metadata_example})
-        ImpervaCustomTaskProxylessRequest(**base_kwargs)
+        ImpervaCustomTaskRequest(**base_kwargs)
 
 if __name__ == '__main__':
     unittest.main()

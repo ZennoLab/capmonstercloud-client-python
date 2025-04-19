@@ -1,12 +1,26 @@
-from pydantic import Field
-from typing import Dict, Union
+from pydantic import Field, validator
+from typing import Dict, Union, Optional
 
-from .GeetestRequestBase import GeetestRequestBase
-from .proxy_info import ProxyInfo
+from .baseRequestWithProxy import BaseRequestWithProxy
 
-class GeetestRequest(GeetestRequestBase, ProxyInfo):
+
+class GeetestRequest(BaseRequestWithProxy):
     type: str = Field(default='GeeTestTask')
+    websiteUrl: str
+    gt: str
+    challenge: Optional[str] = Field(default=None)
+    version: int = Field(default=3)
+    initParameters: Optional[Dict] = Field(default=None)
+    geetestApiServerSubdomain: Optional[str] = Field(default=None)
+    geetestGetLib: Optional[str] = Field(default=None)
+    user_agent: Optional[str] = Field(default=None)
 
+    @validator('version')
+    def validate_version(cls, value):
+        if value not in [3, 4]:
+            raise ValueError(f"Geetest version could be 3 or 4, not {value}")
+        return value
+    
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
         task['type'] = self.type
@@ -30,9 +44,10 @@ class GeetestRequest(GeetestRequestBase, ProxyInfo):
         if self.user_agent is not None:
             task['userAgent'] = self.user_agent
         
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
         return task

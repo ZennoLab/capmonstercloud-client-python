@@ -1,7 +1,7 @@
 import unittest
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import DataDomeCustomTaskProxylessRequest
+from capmonstercloudclient.requests import DataDomeCustomTaskRequest
 from capmonstercloudclient.exceptions import NumbersImagesErrors, TaskNotDefinedError, ZeroImagesErrors, \
     UserAgentNotDefinedError
 
@@ -23,17 +23,17 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
         metadataListExtra = DataDomeCustomTaskRequestTest.metadataExample.copy()
         metadataListExtra['htmlPageBase64'] = metadataListExtra['captchaUrl']
         with self.assertRaises(ValidationError):
-            request = DataDomeCustomTaskProxylessRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
+            request = DataDomeCustomTaskRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
                                                 metadata=metadataListUrl,
                                                 )
         
         with self.assertRaises(ValidationError):
-            request = DataDomeCustomTaskProxylessRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
+            request = DataDomeCustomTaskRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
                                                 metadata=metadataListImage,
                                                 )
         
         with self.assertRaises(ValidationError):
-            request = DataDomeCustomTaskProxylessRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
+            request = DataDomeCustomTaskRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
                                                 metadata=metadataListExtra,
                                                 )
     
@@ -41,7 +41,7 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
         required_fields = ['class', 'type', 'websiteURL', 'metadata']
         metadata_fields = ['datadomeCookie']
         one_of_fields = [['captchaUrl', 'htmlPageBase64']]
-        request = DataDomeCustomTaskProxylessRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
+        request = DataDomeCustomTaskRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
                                             metadata=DataDomeCustomTaskRequestTest.metadataExample)
         request_dict = request.getTaskDict()
         for i in required_fields:

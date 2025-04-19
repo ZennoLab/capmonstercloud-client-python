@@ -2,7 +2,7 @@ import os
 import time
 import asyncio
 
-from capmonstercloudclient.requests import HcaptchaProxylessRequest
+from capmonstercloudclient.requests import HcaptchaRequest
 from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 async def solve_captcha_sync(num_requests):
@@ -18,11 +18,11 @@ if __name__ == '__main__':
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
 
-    hcaptcha_request = HcaptchaProxylessRequest(websiteUrl='https://lessons.zennolab.com/captchas/hcaptcha/?level=difficult',
+    hcaptcha_request = HcaptchaRequest(websiteUrl='https://lessons.zennolab.com/captchas/hcaptcha/?level=difficult',
                                                 websiteKey='b744cfe0-50b1-455e-90ac-5e5a09ccb49f')
     
     nums = 3
-
+    print(hcaptcha_request.getTaskDict())
     # Sync test
     sync_start = time.time()
     sync_responses = asyncio.run(solve_captcha_sync(nums))

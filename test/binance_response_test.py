@@ -3,8 +3,9 @@ import asyncio
 import os
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import BinanceTaskProxylessRequest
+from capmonstercloudclient.requests import BinanceTaskRequest
 from capmonstercloudclient import CapMonsterClient, ClientOptions
+from capmonstercloudclient.requests.proxy_info import ProxyInfo
 
 def get_all_keys(dictionary):
     all_values = []
@@ -25,7 +26,7 @@ class AmazonWafOutsTest(unittest.TestCase):
         api_key = os.getenv('API_KEY')
         options = ClientOptions(api_key=api_key)
         client = CapMonsterClient(options)
-        request = BinanceTaskProxylessRequest(websiteUrl='https://accounts.binance.com/ru/login?loginChannel=&return_to=',
+        request = BinanceTaskRequest(websiteUrl='https://accounts.binance.com/ru/login?loginChannel=&return_to=',
                                              websiteKey='login',
                                              validateId="2b8137c0b9b44189800368819354e114"
                                             )
@@ -33,6 +34,26 @@ class AmazonWafOutsTest(unittest.TestCase):
         for i in required_outs:
             self.assertTrue(i in get_all_keys(result))
 
+    def testOutsProxy(self):
+        required_outs = ['token', 'userAgent']
+        api_key = os.getenv('API_KEY')
+        options = ClientOptions(api_key=api_key)
+        client = CapMonsterClient(options)
+        proxy = ProxyInfo(proxyType='https', 
+                          proxyAddress='proxyAddress',
+                          proxyPort=8000,
+                          proxyLogin='proxyLogin',
+                          proxyPassword='proxyPassword'
+        )
+        request = BinanceTaskRequest(websiteUrl='https://accounts.binance.com/ru/login?loginChannel=&return_to=',
+                                     websiteKey='login',
+                                     validateId="2b8137c0b9b44189800368819354e114",
+                                     proxy=proxy
+        )
+        result = asyncio.run(client.solve_captcha(request))
+        for i in required_outs:
+            self.assertTrue(i in get_all_keys(result))
+    
             
 if __name__ == '__main__':
     unittest.main()

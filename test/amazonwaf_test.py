@@ -1,7 +1,7 @@
 import unittest
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import AmazonWafProxylessRequest
+from capmonstercloudclient.requests import AmazonWafRequest
 from capmonstercloudclient.exceptions import NumbersImagesErrors, TaskNotDefinedError, ZeroImagesErrors, \
     UserAgentNotDefinedError
 
@@ -17,14 +17,14 @@ class AmazonWafRequestTest(unittest.TestCase):
     def testCaptchaInputTypes(self):
         
         with self.assertRaises(ValidationError):
-            request = AmazonWafProxylessRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample)
+            request = AmazonWafRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample)
         
         with self.assertRaises(ValidationError):
-            request = AmazonWafProxylessRequest(
+            request = AmazonWafRequest(
                                                 websiteKey=AmazonWafRequestTest.websiteKeyExample,
                                                 )
         with self.assertRaises(ValidationError):
-            request = AmazonWafProxylessRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
+            request = AmazonWafRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
                                                         websiteKey=AmazonWafRequestTest.websiteKeyExample,
                                                         challengeScript=AmazonWafRequestTest.challengeScriptExample,
                                                         captchaScript=int(AmazonWafRequestTest.captchaScriptExample),
@@ -33,7 +33,7 @@ class AmazonWafRequestTest(unittest.TestCase):
                                                         )
         
 
-        request = AmazonWafProxylessRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
+        request = AmazonWafRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
                                              websiteKey=AmazonWafRequestTest.websiteKeyExample,
                                              challengeScript=AmazonWafRequestTest.challengeScriptExample,
                                              captchaScript=AmazonWafRequestTest.captchaScriptExample,
@@ -44,7 +44,7 @@ class AmazonWafRequestTest(unittest.TestCase):
     def testAllRequiredFieldsFilling(self):
         required_fields = ['websiteURL', 'type', 'websiteKey', 'challengeScript', 'captchaScript',
                            'context', 'iv']
-        request = AmazonWafProxylessRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
+        request = AmazonWafRequest(websiteUrl=AmazonWafRequestTest.websiteUrlExample,
                                              websiteKey=AmazonWafRequestTest.websiteKeyExample,
                                              challengeScript=AmazonWafRequestTest.challengeScriptExample,
                                              captchaScript=AmazonWafRequestTest.captchaScriptExample,

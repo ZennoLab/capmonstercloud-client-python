@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import BinanceTaskProxylessRequest
+from capmonstercloudclient.requests import BinanceTaskRequest
 
 
 class BinanceRequestTest(unittest.TestCase):
@@ -17,7 +17,7 @@ class BinanceRequestTest(unittest.TestCase):
                            'websiteURL', 
                            'websiteKey',
                            'validateId']
-        request = BinanceTaskProxylessRequest(websiteKey=self.websiteKeyExample,
+        request = BinanceTaskRequest(websiteKey=self.websiteKeyExample,
                                             websiteUrl=self.websiteUrlExample,
                                             validateId='asdgf')
         task_dictionary = request.getTaskDict()
@@ -31,15 +31,15 @@ class BinanceRequestTest(unittest.TestCase):
                            'websiteKey',
                            'validateId']
         base_kwargs = {}
-        self.assertRaises(ValidationError, BinanceTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(ValidationError, BinanceTaskRequest, **base_kwargs)
         base_kwargs.update({'websiteUrl': self.websiteUrlExample})
-        self.assertRaises(ValidationError, BinanceTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(ValidationError, BinanceTaskRequest, **base_kwargs)
         base_kwargs.update({'websiteKey': self.websiteKeyExample})
-        self.assertRaises(ValidationError, BinanceTaskProxylessRequest, **base_kwargs)
+        self.assertRaises(ValidationError, BinanceTaskRequest, **base_kwargs)
         base_kwargs.update({'validateId': 'asdgf'})
-        BinanceTaskProxylessRequest(**base_kwargs)
+        BinanceTaskRequest(**base_kwargs)
         base_kwargs.update({'userAgent': self.userAgentExample})
-        BinanceTaskProxylessRequest(**base_kwargs)
+        BinanceTaskRequest(**base_kwargs)
 
 if __name__ == '__main__':
     unittest.main()

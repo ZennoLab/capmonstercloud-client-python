@@ -1,10 +1,10 @@
 from typing import Dict, Union
 from pydantic import Field, validator
 
-from .proxy_info import ProxyInfo
-from .ImpervaCustomTaskRequestBase import ImpervaCustomTaskRequestBase
+from .CustomTaskRequestBase import CustomTaskRequestBase
 
-class ImpervaCustomTaskRequest(ImpervaCustomTaskRequestBase, ProxyInfo):
+class ImpervaCustomTaskRequest(CustomTaskRequestBase):
+    captchaClass: str = Field(default='Imperva')
     metadata : Dict[str, str]
     
     @validator('metadata')
@@ -29,11 +29,12 @@ class ImpervaCustomTaskRequest(ImpervaCustomTaskRequestBase, ProxyInfo):
         task['class'] = self.captchaClass
         task['websiteURL'] = self.websiteUrl
         task['metadata'] = self.metadata
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
         if self.userAgent is not None:
             task['userAgent'] = self.userAgent
         return task

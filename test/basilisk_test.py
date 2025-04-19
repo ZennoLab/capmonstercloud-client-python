@@ -1,7 +1,7 @@
 import unittest
 
 from pydantic.error_wrappers import ValidationError
-from capmonstercloudclient.requests import BasiliskCustomTaskProxylessRequest
+from capmonstercloudclient.requests import BasiliskCustomTaskRequest
 from capmonstercloudclient.exceptions import NumbersImagesErrors, TaskNotDefinedError, ZeroImagesErrors, \
     UserAgentNotDefinedError
 
@@ -14,22 +14,22 @@ class BasiliskCustomTaskRequestTest(unittest.TestCase):
     def testCaptchaInputTypes(self):
         
         with self.assertRaises(ValidationError):
-            request = BasiliskCustomTaskProxylessRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample)
+            request = BasiliskCustomTaskRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample)
         
         with self.assertRaises(ValidationError):
-            request = BasiliskCustomTaskProxylessRequest(
+            request = BasiliskCustomTaskRequest(
                                                 websiteKey=BasiliskCustomTaskRequestTest.websiteKeyExample,
                                                 )
         
 
-        request = BasiliskCustomTaskProxylessRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample,
+        request = BasiliskCustomTaskRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample,
                                                   websiteKey=BasiliskCustomTaskRequestTest.websiteKeyExample,
                                                   userAgent=BasiliskCustomTaskRequestTest.userAgentExample
                                             )
     
     def testAllRequiredFieldsFilling(self):
         required_fields = ['class', 'type', 'websiteURL', 'websiteKey']
-        request = BasiliskCustomTaskProxylessRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample,
+        request = BasiliskCustomTaskRequest(websiteUrl=BasiliskCustomTaskRequestTest.websiteUrlExample,
                                             websiteKey=BasiliskCustomTaskRequestTest.websiteKeyExample)
         request_dict = request.getTaskDict()
         for i in required_fields:

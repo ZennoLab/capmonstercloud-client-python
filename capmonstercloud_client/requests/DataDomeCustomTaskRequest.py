@@ -1,9 +1,9 @@
 from typing import Dict, Union
 from pydantic import Field, validator
-from .DataDomeCustomTaskRequestBase import DataDomeCustomTaskRequestBase
-from .proxy_info import ProxyInfo
+from .CustomTaskRequestBase import CustomTaskRequestBase
 
-class DataDomeCustomTaskRequest(DataDomeCustomTaskRequestBase, ProxyInfo):
+class DataDomeCustomTaskRequest(CustomTaskRequestBase):
+    captchaClass: str = Field(default='DataDome')
     metadata : Dict[str, str]
     
     @validator('metadata')
@@ -28,11 +28,12 @@ class DataDomeCustomTaskRequest(DataDomeCustomTaskRequestBase, ProxyInfo):
         task['type'] = self.type
         task['class'] = self.captchaClass
         task['websiteURL'] = self.websiteUrl
-        task['proxyType'] = self.proxyType
-        task['proxyAddress'] = self.proxyAddress
-        task['proxyPort'] = self.proxyPort
-        task['proxyLogin'] = self.proxyLogin
-        task['proxyPassword'] = self.proxyPassword
+        if self.proxy:
+            task['proxyType'] = self.proxy.proxyType
+            task['proxyAddress'] = self.proxy.proxyAddress
+            task['proxyPort'] = self.proxy.proxyPort
+            task['proxyLogin'] = self.proxy.proxyLogin
+            task['proxyPassword'] = self.proxy.proxyPassword
         task['domains'] = self.domains
         task['metadata'] = self.metadata
         if self.userAgent is not None:

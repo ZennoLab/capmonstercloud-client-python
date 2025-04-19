@@ -2,7 +2,7 @@ import os
 import time
 import asyncio
 
-from capmonstercloudclient.requests import GeetestProxylessRequest
+from capmonstercloudclient.requests import GeetestRequest
 from capmonstercloudclient import ClientOptions, CapMonsterClient
 
 async def solve_captcha_sync(num_requests):
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     key = os.getenv('API_KEY')
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
-    geetest_request = GeetestProxylessRequest(websiteUrl="https://faucetpay.io/account/login",
+    geetest_request = GeetestRequest(websiteUrl="https://faucetpay.io/account/login",
                                               gt='4eb8b0c2b27f3365b9244d9da81638c6',
                                               version=4,
                                               initParameters={'riskType ': 'slide'},

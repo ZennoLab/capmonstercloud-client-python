@@ -3,7 +3,7 @@ import time
 import asyncio
 
 from capmonstercloudclient import CapMonsterClient, ClientOptions
-from capmonstercloudclient.requests import RecaptchaV2EnterpriseProxylessRequest
+from capmonstercloudclient.requests import RecaptchaV2EnterpriseRequest
 
 async def solve_captcha_sync(num_requests):
     return [await cap_monster_client.solve_captcha(recaptcha2request) for _ in range(num_requests)]
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
 
-    recaptcha2request = RecaptchaV2EnterpriseProxylessRequest(websiteUrl='https://example.com/',
+    recaptcha2request = RecaptchaV2EnterpriseRequest(websiteUrl='https://example.com/',
                                                               websiteKey="websiteKey")
     
     nums = 3

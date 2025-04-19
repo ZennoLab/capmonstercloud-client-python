@@ -2,7 +2,7 @@ import os
 import time
 import asyncio
 
-from capmonstercloudclient.requests import ImpervaCustomTaskProxylessRequest
+from capmonstercloudclient.requests import ImpervaCustomTaskRequest
 from capmonstercloudclient import ClientOptions, CapMonsterClient
 import json
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     metadata = {"incapsulaScriptBase64": "",
 			"incapsulaSessionCookie": "SAyLRzdYgUntD6v0r7nFBmxTYGcAAAAArkznhRMmVs/cBynTg3r6YA==",
 			"reese84UrlEndpoint": "Alarums-Exeunter-Hath-Brese-Banq-Wheth-frangerd-"}
-    imperva_request = ImpervaCustomTaskProxylessRequest(
+    imperva_request = ImpervaCustomTaskRequest(
         websiteUrl='https://example.com/login',
         metadata=metadata
     )

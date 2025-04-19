@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import TurnstileProxylessRequest
+from capmonstercloudclient.requests import TurnstileRequest
 
 
 class TurnstileResponseTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class TurnstileResponseTest(unittest.TestCase):
         required_fields = ['type',
                            'websiteURL', 
                            'websiteKey']
-        request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAABUYP0XeMJF0xoy',
+        request = TurnstileRequest(websiteKey='0x4AAAAAAABUYP0XeMJF0xoy',
                                             websiteURL='http://tsmanaged.zlsupport.com',
                                             pageAction='asdgf')
         task_dictionary = request.getTaskDict()
@@ -25,7 +25,7 @@ class TurnstileResponseTest(unittest.TestCase):
         kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
                   'websiteURL': 'https://nowsecure.nl',
                   'cloudflareTaskType': '.'}
-        self.assertRaises(ValidationError, TurnstileProxylessRequest,
+        self.assertRaises(ValidationError, TurnstileRequest,
                           **kwargs)
         
     def test_cf_clearance_inputs(self):
@@ -36,7 +36,7 @@ class TurnstileResponseTest(unittest.TestCase):
                            'cloudflareTaskType',
                            'htmlPageBase64']
         
-        request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
+        request = TurnstileRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
                                             websiteURL='https://nowsecure.nl',
                                             cloudflareTaskType='cf_clearance',
                                             htmlPageBase64='htmlPageBase64Here',
@@ -55,7 +55,7 @@ class TurnstileResponseTest(unittest.TestCase):
                            'pageAction', 'data', 'pageData',
                            'userAgent']
         
-        request = TurnstileProxylessRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
+        request = TurnstileRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
                                             websiteURL='https://nowsecure.nl',
                                             cloudflareTaskType='token',
                                             pageAction='pageAction',
@@ -78,15 +78,15 @@ class TurnstileResponseTest(unittest.TestCase):
         # Token pipeline
         kwargs_1 = deepcopy(base_kwargs)
         kwargs_1.update({'cloudflareTaskType': 'token'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_1)
         kwargs_1.update({'pageAction': 'pageAction'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_1)
         kwargs_1.update({'pageData': 'pageData'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_1)
         kwargs_1.update({'data': 'data'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_1)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_1)
         kwargs_1.update({'userAgent': 'userAgent'})
-        TurnstileProxylessRequest(**kwargs_1)
+        TurnstileRequest(**kwargs_1)
     
     def test_failed_token_cases(self):
         
@@ -96,11 +96,11 @@ class TurnstileResponseTest(unittest.TestCase):
         # cf_clearance pipeline
         kwargs_2 = deepcopy(base_kwargs)
         kwargs_2.update({'cloudflareTaskType': 'cf_clearance'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_2)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_2)
         kwargs_2.update({'htmlPageBase64': 'htmlPageBase64Here'})
-        self.assertRaises(RuntimeError, TurnstileProxylessRequest, **kwargs_2)
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_2)
         kwargs_2.update({'userAgent': 'userAgent'})
-        TurnstileProxylessRequest(**kwargs_2)
+        TurnstileRequest(**kwargs_2)
         
 if __name__ == '__main__':
     unittest.main()
