@@ -18,9 +18,9 @@ if __name__ == '__main__':
     key = os.getenv('API_KEY')
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
-    metadata = {"incapsulaScriptBase64": "",
-			"incapsulaSessionCookie": "SAyLRzdYgUntD6v0r7nFBmxTYGcAAAAArkznhRMmVs/cBynTg3r6YA==",
-			"reese84UrlEndpoint": "Alarums-Exeunter-Hath-Brese-Banq-Wheth-frangerd-"}
+    metadata = {"incapsulaScriptUrl": "_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3",
+			"incapsulaCookie": "incap_ses_1166_2930313=br7iX33ZNCtf3HlpEXcuEDzz72cAAAAA0suDnBGrq/iA0J4oERYzjQ==; visid_incap_2930313=P3hgPVm9S8Oond1L0sXhZqfK72cAAAAAQUIPAAAAAABoMSY9xZ34RvRseJRiY6s+;",
+			"reese84UrlEndpoint": "Built-with-the-For-hopence-Hurleysurfecting-the-"}
     imperva_request = ImpervaCustomTaskRequest(
         websiteUrl='https://example.com/login',
         metadata=metadata

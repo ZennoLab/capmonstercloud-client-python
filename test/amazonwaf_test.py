@@ -57,7 +57,7 @@ class AmazonWafRequestTest(unittest.TestCase):
             self.assertTrue(i in list(request_dict.keys()), 
                             msg=f'Required field {i} not in {request_dict}')
 
-        self.assertEqual(request_dict['type'], 'AmazonTaskProxyless')
+        self.assertEqual(request_dict['type'], 'AmazonTask')
             
 
 if __name__ == '__main__':

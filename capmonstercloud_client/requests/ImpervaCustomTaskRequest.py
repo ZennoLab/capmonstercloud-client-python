@@ -9,17 +9,17 @@ class ImpervaCustomTaskRequest(CustomTaskRequestBase):
     
     @validator('metadata')
     def validate_metadata(cls, value):
-        if value.get('incapsulaScriptBase64') is None:
-            raise TypeError(f'Expect that incapsulaScriptBase64 will be defined.')
+        if value.get('incapsulaScriptUrl') is None:
+            raise TypeError(f'Expect that incapsulaScriptUrl will be defined.')
         else:
-            if not isinstance(value.get('incapsulaScriptBase64'), str):
-                raise TypeError(f'Expect that incapsulaScriptBase64 will be str.')
-        if value.get('incapsulaSessionCookie') is None:
-            raise TypeError(f'Expect that incapsulaSessionCookie will be defined.')
+            if not isinstance(value.get('incapsulaScriptUrl'), str):
+                raise TypeError(f'Expect that incapsulaScriptUrl will be str.')
+        if value.get('incapsulaCookie') is None:
+            raise TypeError(f'Expect that incapsulaCookie will be defined.')
         else:
-            if not isinstance(value.get('incapsulaSessionCookie'), str):
-                raise TypeError(f'Expect that incapsulaSessionCookie will be str.')
-        if value.get('reese84UrlEndpoint') is not None and not isinstance(value.get('incapsulaSessionCookie'), str):
+            if not isinstance(value.get('incapsulaCookie'), str):
+                raise TypeError(f'Expect that incapsulaCookie will be str.')
+        if value.get('reese84UrlEndpoint') is not None and not isinstance(value.get('reese84UrlEndpoint'), str):
             raise TypeError(f'Expect that reese84UrlEndpoint will be str.')
         return value
     
