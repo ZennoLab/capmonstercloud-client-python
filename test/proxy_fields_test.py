@@ -1,6 +1,6 @@
 import unittest
 
-from capmonstercloudclient.requests.proxy_info import ProxyInfo
+from capmonstercloudclient.requests import ProxyInfo
         
 
 FIELDS = ['proxyType', 'proxyAddress', 'proxyPort', 'proxyLogin', 'proxyPassword']

@@ -18,6 +18,7 @@ from .AmazonWafRequest import AmazonWafRequest
 from .BinanceTaskRequest import BinanceTaskRequest
 from .ImpervaCustomTaskRequest import ImpervaCustomTaskRequest
 from .RecognitionComplexImageTaskRequest import RecognitionComplexImageTaskRequest
+from .proxy_info import ProxyInfo
 
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest', 'RecaptchaComplexImageTaskRequest'

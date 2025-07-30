@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import TurnstileRequest
+from capmonstercloudclient.requests import TurnstileRequest, ProxyInfo
 
 
 class TurnstileResponseTest(unittest.TestCase):
@@ -34,8 +34,19 @@ class TurnstileResponseTest(unittest.TestCase):
                            'websiteURL', 
                            'websiteKey',
                            'cloudflareTaskType',
-                           'htmlPageBase64']
-        
+                           'htmlPageBase64',
+                           'proxyType',
+                           'proxyAddress',
+                           'proxyPort',
+                           'proxyLogin',
+                           'proxyPassword']
+        proxy = ProxyInfo(
+            proxyType="http",
+            proxyAddress="8.8.8.8",
+            proxyPort=8000,
+            proxyLogin="proxyLoginHere",
+            proxyPassword="proxyPasswordHere"
+        )
         request = TurnstileRequest(websiteKey='0x4AAAAAAADnPIDROrmt1Wwj',
                                             websiteURL='https://nowsecure.nl',
                                             cloudflareTaskType='cf_clearance',
@@ -43,6 +54,7 @@ class TurnstileResponseTest(unittest.TestCase):
                                             userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' \
                                                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.' \
                                                 '0.0.0 Safari/537.36',
+                                            proxy=proxy
                                             )
         task_dictionary = request.getTaskDict()
         for f in required_fields:
@@ -70,7 +82,7 @@ class TurnstileResponseTest(unittest.TestCase):
             self.assertTrue(f in list(task_dictionary.keys()), 
                             msg=f'Required captcha input key "{f}" does not include to request.')
             
-    def test_failed_cf_clearance_cases(self):
+    def test_failed_token_cases(self):
         
         base_kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
                        'websiteURL': 'https://nowsecure.nl'}
@@ -88,7 +100,7 @@ class TurnstileResponseTest(unittest.TestCase):
         kwargs_1.update({'userAgent': 'userAgent'})
         TurnstileRequest(**kwargs_1)
     
-    def test_failed_token_cases(self):
+    def test_failed_cf_clearance_cases(self):
         
         base_kwargs = {'websiteKey': '0x4AAAAAAADnPIDROrmt1Wwj',
                        'websiteURL': 'https://nowsecure.nl'}
@@ -100,6 +112,15 @@ class TurnstileResponseTest(unittest.TestCase):
         kwargs_2.update({'htmlPageBase64': 'htmlPageBase64Here'})
         self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_2)
         kwargs_2.update({'userAgent': 'userAgent'})
+        self.assertRaises(RuntimeError, TurnstileRequest, **kwargs_2)
+        proxy = ProxyInfo(
+            proxyType="http",
+            proxyAddress="8.8.8.8",
+            proxyPort=8000,
+            proxyLogin="proxyLoginHere",
+            proxyPassword="proxyPasswordHere"
+        )
+        kwargs_2.update({'proxy': proxy})
         TurnstileRequest(**kwargs_2)
         
 if __name__ == '__main__':
