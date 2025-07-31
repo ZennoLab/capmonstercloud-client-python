@@ -13,12 +13,8 @@ class DataDomeCustomTaskRequest(CustomTaskRequestBase):
         if value.get('captchaUrl') and value.get('htmlPageBase64'):
             raise TypeError(f'Expected only one of [captchaUrl, htmlPageBase64]')
         elif value.get('captchaUrl'):
-            if not isinstance(value.get('captchaUrl'), str):
-                raise TypeError(f'Expect that type imagesUrls array will be <str>, got {type(value.get("captchaUrl"))}')
             return {i: value[i] for i in value if i != 'htmlPageBase64'}
         elif value.get('htmlPageBase64'):
-            if not isinstance(value.get('htmlPageBase64'), str):
-                raise TypeError(f'Expect that type imagesUrls array will be <str>, got {type(value.get("htmlPageBase64"))}')
             return {i: value[i] for i in value if i != 'captchaUrl'}
         else:
             raise TypeError(f'Expected one of [captchaUrl, htmlPageBase64]')

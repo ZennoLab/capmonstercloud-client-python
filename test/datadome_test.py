@@ -32,7 +32,7 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
                                                 metadata=metadataListImage,
                                                 )
         
-        with self.assertRaises(ValidationError):
+        with self.assertRaises(TypeError):
             request = DataDomeCustomTaskRequest(websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
                                                 metadata=metadataListExtra,
                                                 )

@@ -29,11 +29,11 @@ class RequestGenerationTests(unittest.TestCase):
 
         rc2_proxy_type = 'NoCaptchaTask'
         default_proxy_keys = default_keys + PROXY_LIST
+        proxy = requests.ProxyInfo(proxyType='http', proxyAddress='address', proxyPort=8001, proxyLogin='login', proxyPassword='password')
         proxy_request = requests.RecaptchaV2Request(
             websiteUrl='some_url', websiteKey='some_key',
             dataSValue='data s value', userAgent='user agent',
-            cookies='cookies', proxyType='http', proxyAddress='address',
-            proxyPort=8001, proxyLogin='login', proxyPassword='password')
+            cookies='cookies', proxy=proxy)
         proxy_task = proxy_request.getTaskDict()
         for key in default_proxy_keys:
             self.assertIsNotNone(proxy_task.get(key), msg=f'Missing {key} for ReCaptchaV2 request.')
@@ -42,8 +42,8 @@ class RequestGenerationTests(unittest.TestCase):
         
     def test_rcv3(self):
         default_keys = ['type', 'websiteURL', 'websiteKey', 'minScore', 'pageAction']
-        rc3_type = 'RecaptchaV3Task'
-        request = requests.RecaptchaV3Request(websiteUrl='some_url',
+        rc3_type = 'RecaptchaV3TaskProxyless'
+        request = requests.RecaptchaV3ProxylessRequest(websiteUrl='some_url',
                                                        websiteKey='some_key',
                                                        min_score=0.2,
                                                        pageAction='asdfsfd')
@@ -69,11 +69,11 @@ class RequestGenerationTests(unittest.TestCase):
         self.assertEqual(rcv2e_type, task.get('type'), 
                          msg=f'Task type of RecaptchaV2EnterpriseTask not equal to {rcv2e_type}')
 
+        proxy = requests.ProxyInfo(proxyType='http', proxyAddress='address', proxyPort=8001, proxyLogin='login', proxyPassword='password')
         proxy_request = requests.RecaptchaV2EnterpriseRequest(
             websiteUrl='some_url', websiteKey='some_key',
             enterprisePayload='payload', apiDomain='asdfasdf',
-            proxyType='http', proxyAddress='address',
-            proxyPort=8001, proxyLogin='login', proxyPassword='password')
+            proxy=proxy)
         
         proxy_keys = default_keys + PROXY_LIST
         proxy_type = 'RecaptchaV2EnterpriseTask'
@@ -100,11 +100,11 @@ class RequestGenerationTests(unittest.TestCase):
         
         proxy_type = 'FunCaptchaTask'
         proxy_keys = default_keys + PROXY_LIST
+        proxy = requests.ProxyInfo(proxyType='http', proxyAddress='address', proxyPort=8001, proxyLogin='login', proxyPassword='password')
         proxy_request = requests.FuncaptchaRequest(
             websiteUrl='some_url', websitePublicKey='some_key',
             funcaptchaApiJSSubdomain='domain', data='asdfasdf',
-            proxyType='http', proxyAddress='address',
-            proxyPort=8001, proxyLogin='login', proxyPassword='password')
+            proxy=proxy)
         
         proxy_task = proxy_request.getTaskDict()
         for key in proxy_keys:
@@ -130,11 +130,11 @@ class RequestGenerationTests(unittest.TestCase):
         self.assertEqual(noproxy_type, task.get('type'), 
                          msg=f'Task type of HCaptchaTask not equal to {noproxy_type}')
         
+        proxy = requests.ProxyInfo(proxyType='http', proxyAddress='address', proxyPort=8001, proxyLogin='login', proxyPassword='password')
         proxy_request = requests.HcaptchaRequest(
             websiteUrl='some_url', websiteKey='some_key',
             is_invisible=False, data='data', user_agent='agent',
-            cookies='cookies', proxyType='http', proxyAddress='address',
-            proxyPort=8001, proxyLogin='login', proxyPassword='password')
+            cookies='cookies', proxy=proxy)
 
         proxy_type = 'HCaptchaTask'
         proxy_keys = default_keys + PROXY_LIST
@@ -144,7 +144,6 @@ class RequestGenerationTests(unittest.TestCase):
                                  msg=f'Missing {key} for HCaptchaTask request.')
         self.assertEqual(proxy_type, proxy_task.get('type'), 
                          msg=f'Task type of HCaptchaTask not equal to {proxy_type}')
-        
 
     def test_image2text(self):
         noproxy_type = 'ImageToTextTask'
@@ -181,12 +180,12 @@ class RequestGenerationTests(unittest.TestCase):
                                  msg=f'Missing {key} for GeeTestTask request.')
         self.assertEqual(noproxy_type, task.get('type'), 
                          msg=f'Task type of GeeTestTask not equal to {noproxy_type}')
-
+        
+        proxy = requests.ProxyInfo(proxyType='http', proxyAddress='address', proxyPort=8001, proxyLogin='login', proxyPassword='password')
         proxy_request = requests.GeetestRequest(
             websiteUrl='some_url', gt='some_key', challenge='challenge',
             geetestApiServerSubdomain='api.domain', geetestGetLib='lib',
-            user_agent='agent', proxyType='http', proxyAddress='address',
-            proxyPort=8001, proxyLogin='login', proxyPassword='password')
+            user_agent='agent', proxy=proxy)
         proxy_task = proxy_request.getTaskDict()
         proxy_type = 'GeeTestTask'
         proxy_keys = default_keys + PROXY_LIST
