@@ -1,8 +1,9 @@
-import unittest
 from copy import deepcopy
+import unittest
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import TurnstileRequest, ProxyInfo
+
+from capmonstercloudclient.requests import ProxyInfo, TurnstileRequest
 
 
 class TurnstileResponseTest(unittest.TestCase):

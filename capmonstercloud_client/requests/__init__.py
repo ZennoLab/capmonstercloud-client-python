@@ -18,6 +18,8 @@ from .AmazonWafRequest import AmazonWafRequest
 from .BinanceTaskRequest import BinanceTaskRequest
 from .ImpervaCustomTaskRequest import ImpervaCustomTaskRequest
 from .RecognitionComplexImageTaskRequest import RecognitionComplexImageTaskRequest
+from .MTCaptchaRequest import MTCaptchaRequest
+from .YidunRequest import YidunRequest
 from .proxy_info import ProxyInfo
 
 
