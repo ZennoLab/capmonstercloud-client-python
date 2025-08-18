@@ -20,6 +20,8 @@ from .ImpervaCustomTaskRequest import ImpervaCustomTaskRequest
 from .RecognitionComplexImageTaskRequest import RecognitionComplexImageTaskRequest
 from .MTCaptchaRequest import MTCaptchaRequest
 from .YidunRequest import YidunRequest
+from .ProsopoTaskRequest import ProsopoTaskRequest
+from .TemuCustomTaskRequest import TemuCustomTaskRequest
 from .proxy_info import ProxyInfo
 
 
@@ -35,4 +37,9 @@ REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3Pro
             'BinanceTaskRequest',
             'ImpervaCustomTaskRequest',
             'TurnstileRequest',
-            'RecognitionComplexImageTaskRequest']
+            'RecognitionComplexImageTaskRequest',
+            'MTCaptchaRequest',
+            'YidunRequest',
+            'ProsopoTaskRequest',
+            'TemuCustomTaskRequest'
+            ]
