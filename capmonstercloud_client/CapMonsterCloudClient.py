@@ -32,7 +32,9 @@ _instance_config = (
     ((ImpervaCustomTaskRequest,), getImpervaTimeouts),
     ((RecognitionComplexImageTaskRequest), getCITTimeouts),
     ((MTCaptchaRequest), getImage2TextTimeouts),
-    ((YidunRequest), getImage2TextTimeouts),
+    ((YidunRequest), getYidunTimeouts),
+    ((TemuCustomTaskRequest), getTemuTimeouts),
+    ((ProsopoTaskRequest), getProsopoTimeouts),
 )
 
 
@@ -83,7 +85,9 @@ class CapMonsterClient:
                                                  TurnstileRequest,
                                                  RecognitionComplexImageTaskRequest,
                                                  MTCaptchaRequest,
-                                                 YidunRequest],
+                                                 YidunRequest,
+                                                 TemuCustomTaskRequest,
+                                                 ProsopoTaskRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
@@ -116,7 +120,11 @@ class CapMonsterClient:
                                           BinanceTaskRequest,
                                           ImpervaCustomTaskRequest,
                                           TurnstileRequest,
-                                          RecognitionComplexImageTaskRequest],
+                                          RecognitionComplexImageTaskRequest,
+                                          MTCaptchaRequest,
+                                          YidunRequest,
+                                          TemuCustomTaskRequest,
+                                          ProsopoTaskRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:
 

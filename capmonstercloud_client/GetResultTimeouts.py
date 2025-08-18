@@ -52,3 +52,12 @@ def getImpervaTimeouts() -> GetResultTimeouts:
 
 def getCITTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(0.35, 0, 0.2, 10)
+
+def getYidunTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
+
+def getProsopoTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
+
+def getTemuTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
