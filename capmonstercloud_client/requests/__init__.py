@@ -2,6 +2,8 @@ from .ImageToTextRequest import ImageToTextRequest
 from .RecaptchaV2Request import RecaptchaV2Request
 from .RecaptchaV2EnterpiseRequest import RecaptchaV2EnterpriseRequest
 from .RecaptchaV3ProxylessRequest import RecaptchaV3ProxylessRequest
+from .RecaptchaV3EnterpriseRequest import RecaptchaV3EnterpriseRequest
+from .RecaptchaV3EnterpriseRequest import RecaptchaV3EnterpriseRequest
 from .RecaptchaComplexImageTask import RecaptchaComplexImageTaskRequest
 from .HcaptchaRequest import HcaptchaRequest
 from .FuncaptchaRequest import FuncaptchaRequest
@@ -22,7 +24,8 @@ from .MTCaptchaRequest import MTCaptchaRequest
 from .YidunRequest import YidunRequest
 from .ProsopoTaskRequest import ProsopoTaskRequest
 from .TemuCustomTaskRequest import TemuCustomTaskRequest
-from .proxy_info import ProxyInfo
+from .AltchaCustomTaskRequest import AltchaCustomTaskRequest
+from .proxy_info import ProxyInfo, ClientProxyInfo
 
 
 REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest', 'RecaptchaComplexImageTaskRequest'

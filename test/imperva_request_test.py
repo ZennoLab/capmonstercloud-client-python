@@ -2,7 +2,7 @@ import unittest
 from copy import deepcopy
 
 from pydantic import ValidationError
-from capmonstercloudclient.requests import ImpervaCustomTaskRequest
+from capmonstercloudclient.requests import ImpervaCustomTaskRequest, ProxyInfo
 
 
 class ImpervaRequestTest(unittest.TestCase):
@@ -14,17 +14,26 @@ class ImpervaRequestTest(unittest.TestCase):
     incapsulaCookieExample = "l/LsGnrvyB9lNhXI8borDKa2IGcAAAAAX0qAEHheCWuNDquzwb44cw="
     reese84UrlEndpointExample = "Built-with-the-For-hopence-Hurleysurfecting-the-"
 
+    def setUp(self):
+        self.proxy = ProxyInfo(
+            proxyType="http",
+            proxyAddress="8.8.8.8",
+            proxyPort=8000,
+            proxyLogin="proxyLoginHere",
+            proxyPassword="proxyPasswordHere"
+        )
+
     def test_imperva(
         self,
     ):
-        required_fields = ["type", "websiteURL", "metadata"]
+        required_fields = ["type", "websiteURL", "metadata", "proxyType", "proxyAddress", "proxyPort", "proxyLogin", "proxyPassword"]
         metadata_required_fields = ["incapsulaScriptUrl", "incapsulaCookie"]
         metadata_example = {
             "incapsulaScriptUrl": self.incapsulaScriptUrlExample,
             "incapsulaCookie": self.incapsulaCookieExample,
         }
         request = ImpervaCustomTaskRequest(
-            websiteUrl=self.websiteUrlExample, metadata=metadata_example
+            websiteUrl=self.websiteUrlExample, metadata=metadata_example, proxy=self.proxy
         )
         task_dictionary = request.getTaskDict()
         for f in required_fields:
@@ -41,7 +50,7 @@ class ImpervaRequestTest(unittest.TestCase):
     def test_imperva_metadata(
         self,
     ):
-        base_kwargs = {"websiteUrl": self.websiteUrlExample, "metadata": {}}
+        base_kwargs = {"websiteUrl": self.websiteUrlExample, "metadata": {}, "proxy": self.proxy}
         self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs["metadata"]["incapsulaScriptUrl"] = self.incapsulaScriptUrlExample
         self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
@@ -59,10 +68,13 @@ class ImpervaRequestTest(unittest.TestCase):
             "incapsulaScriptUrl": self.incapsulaScriptUrlExample,
             "incapsulaCookie": self.incapsulaCookieExample,
         }
+        self.assertRaises(RuntimeError, ImpervaCustomTaskRequest, **base_kwargs)
+        base_kwargs.update({"proxy": self.proxy})
         self.assertRaises(ValidationError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs.update({"websiteUrl": self.websiteUrlExample})
         self.assertRaises(ValidationError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs.update({"metadata": metadata_example})
+        
         ImpervaCustomTaskRequest(**base_kwargs)
 
 
