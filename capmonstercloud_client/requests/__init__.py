@@ -28,7 +28,7 @@ from .AltchaCustomTaskRequest import AltchaCustomTaskRequest
 from .proxy_info import ProxyInfo, ClientProxyInfo
 
 
-REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest', 'RecaptchaComplexImageTaskRequest'
+REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3ProxylessRequest', 'RecaptchaComplexImageTaskRequest', 'RecaptchaV3EnterpriseRequest'
             'ImageToTextRequest', 
             'FuncaptchaRequest', 'FunCaptchaComplexImageTaskRequest',
             'HcaptchaRequest', 'HcaptchaComplexImageTaskRequest'
@@ -44,5 +44,6 @@ REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3Pro
             'MTCaptchaRequest',
             'YidunRequest',
             'ProsopoTaskRequest',
-            'TemuCustomTaskRequest'
+            'TemuCustomTaskRequest',
+            'AltchaCustomTaskRequest'
             ]

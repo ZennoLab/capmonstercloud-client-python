@@ -36,7 +36,6 @@ _instance_config = (
     ((YidunRequest), getYidunTimeouts),
     ((TemuCustomTaskRequest), getTemuTimeouts),
     ((ProsopoTaskRequest), getProsopoTimeouts),
-    ((YidunRequest), getImage2TextTimeouts),
     ((AltchaCustomTaskRequest), getAltchaTimeouts),
 )
 
@@ -99,9 +98,8 @@ class CapMonsterClient:
                                                  RecognitionComplexImageTaskRequest,
                                                  MTCaptchaRequest,
                                                  YidunRequest,
-                                                 AltchaCustomTaskRequest,
                                                  TemuCustomTaskRequest,
-                                                 ProsopoTaskRequest],
+                                                 ProsopoTaskRequest,
                                                  AltchaCustomTaskRequest],
                             ) -> Dict[str, str]:
         '''
