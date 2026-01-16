@@ -17,6 +17,9 @@ def getRecaptchaV2EnterpriseTimeouts() -> GetResultTimeouts:
 def getRecaptchaV3Timeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 10, 3, 180)
 
+def getRecaptchaV3EnterpriseTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 150)
+
 def getImage2TextTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(0.35, 0, 0.2, 10)
 
@@ -49,6 +52,9 @@ def getBinanceTimeouts() -> GetResultTimeouts:
 
 def getImpervaTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 20)
+
+def getAltchaTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 1, 50)
 
 def getCITTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(0.35, 0, 0.2, 10)

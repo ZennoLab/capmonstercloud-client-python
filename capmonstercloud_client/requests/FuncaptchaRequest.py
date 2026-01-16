@@ -9,6 +9,7 @@ class FuncaptchaRequest(BaseRequestWithProxy):
     websitePublicKey: str
     funcaptchaApiJSSubdomain: Optional[str] = Field(default=None)
     data: Optional[str] = Field(default=None)
+    cookies: Optional[str] = Field(default=None)
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
@@ -26,4 +27,6 @@ class FuncaptchaRequest(BaseRequestWithProxy):
             task['funcaptchaApiJSSubdomain'] = self.funcaptchaApiJSSubdomain
         if self.data is not None:
             task['data'] = self.data
+        if self.cookies is not None:
+            task['cookies'] = self.cookies
         return task

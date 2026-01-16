@@ -18,6 +18,9 @@ class DataDomeCustomTaskRequest(CustomTaskRequestBase):
             return {i: value[i] for i in value if i != 'captchaUrl'}
         else:
             raise TypeError(f'Expected one of [captchaUrl, htmlPageBase64]')
+        if value.get('datadomeVersion') and not isinstance(value.get('datadomeVersion'), str):
+            raise TypeError(f'Expected datadomeVersion to be str')
+
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}

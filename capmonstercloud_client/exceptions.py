@@ -24,6 +24,8 @@ class TaskNotDefinedError(BaseError):
 class ExtraParamsError(BaseError):
     pass
 
+class UnsupportedProxyTypeError(BaseError):
+    pass
 
 
 class UserAgentNotDefinedError(BaseError):

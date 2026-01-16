@@ -17,6 +17,7 @@ _instance_config = (
     ((RecaptchaV2Request,), getRecaptchaV2Timeouts),
     ((RecaptchaV2EnterpriseRequest,), getRecaptchaV2EnterpriseTimeouts),
     ((RecaptchaV3ProxylessRequest), getRecaptchaV3Timeouts),
+    ((RecaptchaV3EnterpriseRequest), getRecaptchaV3Timeouts),
     ((ImageToTextRequest), getImage2TextTimeouts),
     ((FuncaptchaRequest,), getFuncaptchaTimeouts),
     ((HcaptchaRequest,), getHcaptchaTimeouts),
@@ -35,6 +36,7 @@ _instance_config = (
     ((YidunRequest), getYidunTimeouts),
     ((TemuCustomTaskRequest), getTemuTimeouts),
     ((ProsopoTaskRequest), getProsopoTimeouts),
+    ((AltchaCustomTaskRequest), getAltchaTimeouts),
 )
 
 
@@ -44,6 +46,14 @@ class CapMonsterClient:
         self.options = options
         self._headers = {'User-Agent': 
                          f'Zennolab.CapMonsterCloud.Client.Python/{parseVersion()}'}
+        if self.options.client_proxy:
+            if self.options.client_proxy.proxyType not in ['http', 'https']:
+                raise UnsupportedProxyTypeError(f'Supported client proxy types are: [HTTP, HTTPS]')
+            if self.options.client_proxy.proxyLogin and self.options.client_proxy.proxyPassword:
+                auth = f"{self.options.client_proxy.proxyLogin}:{self.options.client_proxy.proxyPassword}@"
+            self.client_proxy_string = f"{self.options.client_proxy.proxyType}://{auth}{self.options.client_proxy.proxyAddress}:{self.options.client_proxy.proxyPort}"
+        else:
+            self.client_proxy_string = None
     
     @property
     def headers(self):
@@ -56,7 +66,8 @@ class CapMonsterClient:
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/getBalance',
                                     json=body, 
-                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout)) as resp:
+                                    timeout=aiohttp.ClientTimeout(total=self.options.client_timeout),
+                                    proxy=self.client_proxy_string) as resp:
                 if resp.status != 200:
                     raise HTTPException(f'Cannot create task. Status code: {resp.status}.')
                 result = await resp.json(content_type=None)
@@ -69,6 +80,7 @@ class CapMonsterClient:
                                                  RecaptchaV2EnterpriseRequest, 
                                                  RecaptchaV2Request,
                                                  RecaptchaV3ProxylessRequest,
+                                                 RecaptchaV3EnterpriseRequest,
                                                  RecaptchaComplexImageTaskRequest,
                                                  ImageToTextRequest, 
                                                  FuncaptchaRequest,
@@ -87,7 +99,8 @@ class CapMonsterClient:
                                                  MTCaptchaRequest,
                                                  YidunRequest,
                                                  TemuCustomTaskRequest,
-                                                 ProsopoTaskRequest],
+                                                 ProsopoTaskRequest,
+                                                 AltchaCustomTaskRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
@@ -106,6 +119,7 @@ class CapMonsterClient:
                                           RecaptchaV2EnterpriseRequest, 
                                           RecaptchaV2Request,
                                           RecaptchaV3ProxylessRequest,
+                                          RecaptchaV3EnterpriseRequest,
                                           RecaptchaComplexImageTaskRequest,
                                           ImageToTextRequest, 
                                           FuncaptchaRequest,
@@ -124,7 +138,8 @@ class CapMonsterClient:
                                           MTCaptchaRequest,
                                           YidunRequest,
                                           TemuCustomTaskRequest,
-                                          ProsopoTaskRequest],
+                                          ProsopoTaskRequest,
+                                          AltchaCustomTaskRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:
 
@@ -168,7 +183,8 @@ class CapMonsterClient:
             async with session.post(url=self.options.service_url + '/getTaskResult',
                                     json=body, 
                                     timeout=aiohttp.ClientTimeout(total=self.options.client_timeout),
-                                    headers=self.headers) as resp:
+                                    headers=self.headers,
+                                    proxy=self.client_proxy_string) as resp:
                 if resp.status != 200:
                     if resp.status == 500:
                         return {'errorId': 0, 'status': 'processing'}
@@ -184,11 +200,13 @@ class CapMonsterClient:
                 "task": task,
                 "softId": self.options.default_soft_id
                }
+        
         async with aiohttp.ClientSession() as session:
             async with session.post(url=self.options.service_url + '/createTask',
                                     json=body, 
                                     timeout=aiohttp.ClientTimeout(total=self.options.client_timeout),
-                                    headers=self.headers) as resp:
+                                    headers=self.headers,
+                                    proxy=self.client_proxy_string) as resp:
                 if resp.status != 200:
                     raise HTTPException(f'Cannot create task. Status code: {resp.status}.')
                 else:

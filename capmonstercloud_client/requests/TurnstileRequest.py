@@ -19,7 +19,7 @@ class TurnstileRequest(BaseRequestWithProxy):
     @validator('cloudflareTaskType')
     def validate_cloudflare_task(cls, value):
         if value is not None:
-            if value not in ['cf_clearance', 'token']:
+            if value not in ['cf_clearance', 'token', 'wait_room']:
                 raise ValueError(f'cloudflareTaskType could be "cf_clearance" if you need cookie or ' \
                                  f'"token" if required token from Turnstile.')
         return value
@@ -28,13 +28,13 @@ class TurnstileRequest(BaseRequestWithProxy):
     def validate_cloudflare_type_token(self):
         
         if self.get('htmlPageBase64') is None:
-            if self.get('cloudflareTaskType') == 'cf_clearance':
+            if self.get('cloudflareTaskType') in ['cf_clearance', 'wait_room']:
                 raise RuntimeError(f'Expect that "htmlPageBase64" will be filled ' \
-                    f'when cloudflareTaskType is "cf_clearance"')
+                    f'when cloudflareTaskType is "cf_clearance" or "wait_room')
         
         if self.get('proxy') is None:
-            if self.get('cloudflareTaskType') == 'cf_clearance':
-                raise RuntimeError(f'You are working using queries, and you need cf_clearance cookies ' \
+            if self.get('cloudflareTaskType') in ['cf_clearance', 'wait_room']:
+                raise RuntimeError(f'You are working using queries, and you need cf_clearance cookies or wait_room ' \
                         f'it is required that you need your proxies.')
 
         if self.get('cloudflareTaskType') == 'token':
@@ -44,7 +44,7 @@ class TurnstileRequest(BaseRequestWithProxy):
                     f'when "cloudflareTaskType" = "token".')
         
         if self.get('cloudflareTaskType') is not None:
-            if self.get('cloudflareTaskType') in ['cf_clearance', 'token']:
+            if self.get('cloudflareTaskType') in ['cf_clearance', 'token', 'wait_room']:
                 if self.get('userAgent') is None:
                     raise RuntimeError(f'Expect that userAgent will be filled ' \
                         f'when cloudflareTaskType specified.')

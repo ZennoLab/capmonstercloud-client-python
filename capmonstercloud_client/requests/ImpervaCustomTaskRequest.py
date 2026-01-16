@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator
+from pydantic import Field, validator, model_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -23,18 +23,24 @@ class ImpervaCustomTaskRequest(CustomTaskRequestBase):
             raise TypeError(f'Expect that reese84UrlEndpoint will be str.')
         return value
     
+    @model_validator(mode='before')
+    def validate_imperva_proxy(cls, values):
+        proxy = values.get('proxy')
+        if proxy is None:
+            raise RuntimeError(f'You are required to use your own proxies.')
+        return values
+    
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
         task['type'] = self.type
         task['class'] = self.captchaClass
         task['websiteURL'] = self.websiteUrl
         task['metadata'] = self.metadata
-        if self.proxy:
-            task['proxyType'] = self.proxy.proxyType
-            task['proxyAddress'] = self.proxy.proxyAddress
-            task['proxyPort'] = self.proxy.proxyPort
-            task['proxyLogin'] = self.proxy.proxyLogin
-            task['proxyPassword'] = self.proxy.proxyPassword
+        task['proxyType'] = self.proxy.proxyType
+        task['proxyAddress'] = self.proxy.proxyAddress
+        task['proxyPort'] = self.proxy.proxyPort
+        task['proxyLogin'] = self.proxy.proxyLogin
+        task['proxyPassword'] = self.proxy.proxyPassword
         if self.userAgent is not None:
             task['userAgent'] = self.userAgent
         return task
