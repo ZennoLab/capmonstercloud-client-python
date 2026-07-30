@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -8,7 +8,8 @@ class AltchaCustomTaskRequest(CustomTaskRequestBase):
     websiteKey: str = Field()
     metadata : Dict[str, str]
     
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         for key in ['challenge', 'iterations', 'salt', 'signature']:
             if value.get(key) is None:

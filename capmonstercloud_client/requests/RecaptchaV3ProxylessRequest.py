@@ -1,5 +1,5 @@
 from typing import Optional, Union, Dict
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from .baseRequest import BaseRequest
 
 
@@ -10,7 +10,8 @@ class RecaptchaV3ProxylessRequest(BaseRequest):
     minScore: Optional[float] = Field(default=None)
     pageAction: Optional[str] = Field(default=None)
 
-    @validator('minScore')
+    @field_validator('minScore')
+    @classmethod
     def validate_min_score(cls, value):
         if value is not None:
             if not 0.1 <= value <= 0.9:

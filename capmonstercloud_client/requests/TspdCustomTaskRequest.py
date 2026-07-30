@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -8,7 +8,8 @@ class TspdCustomTaskRequest(CustomTaskRequestBase):
     userAgent: str = Field()
     metadata: Dict[str, str]
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('tspdCookie') is None:
             raise TypeError(f'Expect that tspdCookie will be defined.')

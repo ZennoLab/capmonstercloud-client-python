@@ -3,26 +3,19 @@ from pydantic import Field, field_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
-class CastleCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Castle')
+class FriendlyCustomTaskRequest(CustomTaskRequestBase):
+    captchaClass: str = Field(default='friendly')
     websiteKey: str = Field()
-    metadata: Dict[str, Union[str, int]]
+    metadata: Dict[str, str]
 
     @field_validator('metadata')
     @classmethod
     def validate_metadata(cls, value):
-        if value.get('wUrl') is None:
-            raise TypeError(f'Expected that wUrl is defined.')
+        if value.get('apiGetLib') is None:
+            raise TypeError(f'Expect that apiGetLib will be defined.')
         else:
-            if not isinstance(value.get('wUrl'), str):
-                raise TypeError(f'Expected that wUrl is str.')
-        if value.get('swUrl') is None:
-            raise TypeError(f'Expected that swUrl is defined.')
-        else:
-            if not isinstance(value.get('swUrl'), str):
-                raise TypeError(f'Expected that swUrl is str.')
-        if value.get('count') is not None and not isinstance(value.get('count'), int):
-            raise TypeError(f'Expected that count is int.')
+            if not isinstance(value.get('apiGetLib'), str):
+                raise TypeError(f'Expect that apiGetLib will be str.')
         return value
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:

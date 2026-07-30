@@ -1,12 +1,13 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class DataDomeCustomTaskRequest(CustomTaskRequestBase):
     captchaClass: str = Field(default='DataDome')
     metadata : Dict[str, str]
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('datadomeCookie') is None:
             raise TypeError(f'Expect that datadomeCookie will be defined.')

@@ -11,7 +11,7 @@ class ImpervaRequestTest(unittest.TestCase):
     incapsulaScriptUrlExample = (
         "dmFyIF8weGQ2ZmU9Wydce..eDUzXHg2YVx4NGYnKV09XzB4Mjk3MTIxO319KCkpOw=="
     )
-    incapsulaCookieExample = "l/LsGnrvyB9lNhXI8borDKa2IGcAAAAAX0qAEHheCWuNDquzwb44cw="
+    incapsulaCookiesExample = "l/LsGnrvyB9lNhXI8borDKa2IGcAAAAAX0qAEHheCWuNDquzwb44cw="
     reese84UrlEndpointExample = "Built-with-the-For-hopence-Hurleysurfecting-the-"
 
     def setUp(self):
@@ -27,10 +27,10 @@ class ImpervaRequestTest(unittest.TestCase):
         self,
     ):
         required_fields = ["type", "websiteURL", "metadata", "proxyType", "proxyAddress", "proxyPort", "proxyLogin", "proxyPassword"]
-        metadata_required_fields = ["incapsulaScriptUrl", "incapsulaCookie"]
+        metadata_required_fields = ["incapsulaScriptUrl", "incapsulaCookies"]
         metadata_example = {
             "incapsulaScriptUrl": self.incapsulaScriptUrlExample,
-            "incapsulaCookie": self.incapsulaCookieExample,
+            "incapsulaCookies": self.incapsulaCookiesExample,
         }
         request = ImpervaCustomTaskRequest(
             websiteUrl=self.websiteUrlExample, metadata=metadata_example, proxy=self.proxy
@@ -54,7 +54,7 @@ class ImpervaRequestTest(unittest.TestCase):
         self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs["metadata"]["incapsulaScriptUrl"] = self.incapsulaScriptUrlExample
         self.assertRaises(TypeError, ImpervaCustomTaskRequest, **base_kwargs)
-        base_kwargs["metadata"]["incapsulaCookie"] = self.incapsulaCookieExample
+        base_kwargs["metadata"]["incapsulaCookies"] = self.incapsulaCookiesExample
         ImpervaCustomTaskRequest(**base_kwargs)
         base_kwargs["metadata"]["reese84UrlEndpoint"] = self.reese84UrlEndpointExample
         ImpervaCustomTaskRequest(**base_kwargs)
@@ -66,7 +66,7 @@ class ImpervaRequestTest(unittest.TestCase):
         base_kwargs = {}
         metadata_example = {
             "incapsulaScriptUrl": self.incapsulaScriptUrlExample,
-            "incapsulaCookie": self.incapsulaCookieExample,
+            "incapsulaCookies": self.incapsulaCookiesExample,
         }
         self.assertRaises(RuntimeError, ImpervaCustomTaskRequest, **base_kwargs)
         base_kwargs.update({"proxy": self.proxy})

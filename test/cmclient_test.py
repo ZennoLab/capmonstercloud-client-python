@@ -10,6 +10,7 @@ from capmonstercloudclient.exceptions import UnknownRequestInstanceError
 api_key = os.getenv("API_KEY")
 
 
+@unittest.skipUnless(api_key, "API_KEY not set; skipping live integration test")
 class InstanceRequestTest(unittest.IsolatedAsyncioTestCase):
     def testSuccessResponse(self):
         options = ClientOptions(api_key=api_key)

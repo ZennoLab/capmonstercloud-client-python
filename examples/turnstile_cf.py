@@ -1,10 +1,11 @@
+import os
 import asyncio
 from capmonstercloudclient import CapMonsterClient, ClientOptions
 from capmonstercloudclient.requests import TurnstileRequest
 from capmonstercloudclient.requests.baseRequestWithProxy import ProxyInfo
 
 async def main():
-    client_options = ClientOptions(api_key="dac3599143bdfd88dfc41758c6cb8729")
+    client_options = ClientOptions(api_key=os.getenv("API_KEY"))
     cap_monster_client = CapMonsterClient(options=client_options)
 
     proxy = ProxyInfo(

@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -7,7 +7,8 @@ class TemuCustomTaskRequest(CustomTaskRequestBase):
     captchaClass: str = Field(default='Temu')
     metadata: Dict[str, str]
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('cookie') is None:
             raise TypeError(f'Expect that cookie will be defined.')

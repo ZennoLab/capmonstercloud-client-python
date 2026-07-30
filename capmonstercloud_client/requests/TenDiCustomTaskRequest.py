@@ -1,5 +1,5 @@
 from typing import Dict, Optional, Union
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -8,7 +8,8 @@ class TenDiCustomTaskRequest(CustomTaskRequestBase):
     websiteKey: str = Field()
     metadata: Optional[Dict[str, str]] = Field(default=None)
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value is not None:
             if not set(value.keys()).issubset(set(["captchaUrl"])):

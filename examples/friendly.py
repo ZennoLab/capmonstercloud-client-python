@@ -2,29 +2,36 @@ import os
 import time
 import asyncio
 
-from capmonstercloudclient import CapMonsterClient, ClientOptions
-from capmonstercloudclient.requests import RecaptchaV3ProxylessRequest
+from capmonstercloudclient.requests import FriendlyCustomTaskRequest
+from capmonstercloudclient import ClientOptions, CapMonsterClient
+
 
 async def solve_captcha_sync(num_requests):
-    return [await cap_monster_client.solve_captcha(recaptcha3request) for _ in range(num_requests)]
+    return [await cap_monster_client.solve_captcha(friendly_request) for _ in range(num_requests)]
+
 
 async def solve_captcha_async(num_requests):
-    tasks = [asyncio.create_task(cap_monster_client.solve_captcha(recaptcha3request)) 
+    tasks = [asyncio.create_task(cap_monster_client.solve_captcha(friendly_request))
              for _ in range(num_requests)]
     return await asyncio.gather(*tasks, return_exceptions=True)
-    
+
 
 if __name__ == '__main__':
     key = os.getenv('API_KEY')
     client_options = ClientOptions(api_key=key)
     cap_monster_client = CapMonsterClient(options=client_options)
 
-    recaptcha3request = RecaptchaV3ProxylessRequest(websiteUrl="https://lessons.zennolab.com/captchas/recaptcha/v3.php?level=beta",
-                                                    websiteKey="6Le0xVgUAAAAAIt20XEB4rVhYOODgTl00d8juDob",
-                                                    minScore=0.9)
-    
-    nums = 3
+    metadata = {
+        "apiGetLib": "https://cdn.jsdelivr.net/npm/friendly-challenge@0.9.18/widget.module.min.js",
+    }
+    friendly_request = FriendlyCustomTaskRequest(
+        websiteUrl='https://www.example.com',
+        websiteKey='FCMSITEKEY000000000000000000000000000000',
+        metadata=metadata,
+        userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    )
 
+    nums = 3
     # Sync test
     sync_start = time.time()
     sync_responses = asyncio.run(solve_captcha_sync(nums))

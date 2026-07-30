@@ -1,4 +1,4 @@
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from typing import Dict, Union, Optional
 
 from .baseRequestWithProxy import BaseRequestWithProxy
@@ -15,7 +15,8 @@ class GeetestRequest(BaseRequestWithProxy):
     geetestGetLib: Optional[str] = Field(default=None)
     user_agent: Optional[str] = Field(default=None)
 
-    @validator('version')
+    @field_validator('version')
+    @classmethod
     def validate_version(cls, value):
         if value not in [3, 4]:
             raise ValueError(f"Geetest version could be 3 or 4, not {value}")

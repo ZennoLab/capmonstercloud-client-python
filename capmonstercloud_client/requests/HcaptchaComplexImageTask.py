@@ -1,5 +1,5 @@
 from typing import Dict, Union, List, Optional
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError, ExtraParamsError
@@ -36,26 +36,31 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
             raise TaskNotDefinedError('Expect that task will be defined.')
         else:
             return value
     
-    @validator('exampleImageUrls')
+    @field_validator('exampleImageUrls')
+    @classmethod
     def validate_example_image_urls(cls, value):
         return cls._validate_image_array(value, 'exampleImageUrls', 1)
     
-    @validator('exampleImagesBase64')
+    @field_validator('exampleImagesBase64')
+    @classmethod
     def validate_example_images_base64(cls, value):
         return cls._validate_image_array(value, 'exampleImagesBase64', 1)
     
-    @validator('imagesUrls')
+    @field_validator('imagesUrls')
+    @classmethod
     def validate_images_urls(cls, value):
         return cls._validate_image_array(value, 'imagesUrls', 18)
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_base64(cls, value):
         return cls._validate_image_array(value, 'imagesBase64', 18)
 

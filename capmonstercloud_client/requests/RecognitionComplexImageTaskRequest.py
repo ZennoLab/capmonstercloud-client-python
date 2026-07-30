@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import validator
+from pydantic import field_validator
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import ZeroImagesErrors, TaskNotDefinedError
 
@@ -8,7 +8,8 @@ class RecognitionComplexImageTaskRequest(ComplexImageTaskRequestBase):
     captchaClass: str = 'recognition'
     metadata: Dict[str, str]
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
             raise TaskNotDefinedError(f'Expect that Task will be defined.')
@@ -19,7 +20,8 @@ class RecognitionComplexImageTaskRequest(ComplexImageTaskRequestBase):
             raise TypeError(f'Allowed keys for metadata are "Task" and "TaskArgument"')
         return value
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):

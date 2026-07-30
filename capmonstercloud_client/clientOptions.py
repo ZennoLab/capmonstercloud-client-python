@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, field_validator, Field
 from .requests import ClientProxyInfo
 from typing import Optional
 
@@ -10,19 +10,22 @@ class ClientOptions(BaseModel):
     client_timeout: float = Field(default=20.0)
     
 
-    @validator('api_key')
+    @field_validator('api_key')
+    @classmethod
     def validate_api_key(cls, value):
         if not isinstance(value, str):
             raise TypeError(f'Api Key must be <str> type, got {type(value)}')
         return value
     
-    @validator('service_url')
+    @field_validator('service_url')
+    @classmethod
     def validate_service_url(cls, value):
         if not isinstance(value, str):
             raise TypeError(f'Service url must be <str> type, got {type(value)}')
         return value
 
-    @validator('default_soft_id')
+    @field_validator('default_soft_id')
+    @classmethod
     def validate_soft_id(cls, value):
         if not isinstance(value, int):
             raise TypeError(f'Soft id must be <int> type, got {type(value)}')

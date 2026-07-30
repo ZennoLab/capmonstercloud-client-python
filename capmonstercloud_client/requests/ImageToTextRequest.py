@@ -1,6 +1,6 @@
 import base64
 
-from pydantic import validator, Field
+from pydantic import field_validator, Field
 from typing import Optional, Dict, Union
 from .baseRequest import BaseRequest
 from .enums import TextModules
@@ -15,14 +15,16 @@ class ImageToTextRequest(BaseRequest):
     numeric: Optional[int] = Field(default=None)
     math: Optional[bool] = Field(default=None)
 
-    @validator('threshold')
+    @field_validator('threshold')
+    @classmethod
     def validate_threshold(cls, value):
         if value is not None:
             if value not in range(0, 101):
                 raise ValueError(f"threshold must be between 1 and 100, got {value}")
         return value
 
-    @validator('module_name')
+    @field_validator('module_name')
+    @classmethod
     def validate_module_name(cls, value):
         if value is not None:
             if value not in TextModules.list_values():
@@ -30,21 +32,24 @@ class ImageToTextRequest(BaseRequest):
                                  f"got '{value}'")
         return value
     
-    @validator('case')
+    @field_validator('case')
+    @classmethod
     def validate_case_type(cls, value):
         if value is not None:
             if not isinstance(value, bool):
                 raise TypeError(f'Case value must be type as boolean, not {type(value)}')
         return value
     
-    @validator('numeric')
+    @field_validator('numeric')
+    @classmethod
     def validate_numeric_range(cls, value):
         if value is not None:
             if not value in range(0, 2):
                 raise ValueError(f'numeric must be between [0, 1], got {value}')
         return value
 
-    @validator('math')
+    @field_validator('math')
+    @classmethod
     def validate_math_type(cls, value):
         if value is not None:
             if not isinstance(value, bool):

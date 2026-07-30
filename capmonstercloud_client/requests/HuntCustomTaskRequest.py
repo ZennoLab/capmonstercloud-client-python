@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
@@ -7,7 +7,8 @@ class HuntCustomTaskRequest(CustomTaskRequestBase):
     captchaClass: str = Field(default='HUNT')
     metadata: Dict[str, str]
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('apiGetLib') is None:
             raise TypeError(f'Expect that apiGetLib will be defined.')

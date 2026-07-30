@@ -1,5 +1,5 @@
 from typing import Dict, Union
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
@@ -9,7 +9,8 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     metadata : Dict[str, str]
     captchaClass: str = Field(default='recaptcha')
     
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None and value.get('TaskDefinition') is None:
             raise TaskNotDefinedError(f'Expect at least one of value(Task or TaskDefinition) will be filled.')
@@ -18,7 +19,8 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         else:
             return value
     
-    @validator('imagesUrls')
+    @field_validator('imagesUrls')
+    @classmethod
     def validate_urls_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
@@ -33,7 +35,8 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):

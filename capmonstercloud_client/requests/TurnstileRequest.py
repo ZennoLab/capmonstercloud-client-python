@@ -1,5 +1,5 @@
 from typing import Dict, Optional, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 from .baseRequestWithProxy import BaseRequestWithProxy
 
 
@@ -16,7 +16,8 @@ class TurnstileRequest(BaseRequestWithProxy):
     htmlPageBase64: Optional[str] = Field(default=None)
     apiJsUrl: Optional[str] = Field(default=None)
 
-    @validator('cloudflareTaskType')
+    @field_validator('cloudflareTaskType')
+    @classmethod
     def validate_cloudflare_task(cls, value):
         if value is not None:
             if value not in ['cf_clearance', 'token', 'wait_room']:
