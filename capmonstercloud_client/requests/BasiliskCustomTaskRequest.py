@@ -4,8 +4,19 @@ from pydantic import Field
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class BasiliskCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Basilisk')
-    websiteKey: str = Field()
+    """
+    Represents a payload structure for solving Basilisk custom captcha
+    challenges.
+
+    Attributes:
+        captchaClass: The class (subtype) identifier of the custom module,
+            fixed to "Basilisk" for this task type.
+        websiteKey: The site key associated with the Basilisk captcha on
+            the webpage.
+    """
+
+    captchaClass: str = Field(default='Basilisk', description='Class (subtype) identifier of the custom module, fixed to "Basilisk".')
+    websiteKey: str = Field(..., description='Site key associated with the Basilisk captcha on the webpage.')
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}

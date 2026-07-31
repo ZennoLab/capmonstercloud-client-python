@@ -1,13 +1,27 @@
-from typing import Dict, Union
+from typing import Dict, List, Optional, Union
 from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
 
 class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
-    
-    captchaClass: str = Field(default='funcaptcha')
-    metadata : Dict[str, str]
+    """
+    Represents a payload structure for solving FunCaptcha (Arkose Labs)
+    complex image challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the complex
+            image task subtype as "funcaptcha".
+        metadata: A dictionary describing the FunCaptcha challenge, which
+            must include a "Task" key naming the specific image challenge
+            to solve (e.g. matching, rotating, or selecting images).
+        imagesUrls: A collection of image URLs to be recognized. Must be
+            populated if imagesBase64 is not.
+    """
+
+    captchaClass: str = Field(default='funcaptcha', description='The constant string value identifying the complex image task subtype as "funcaptcha".')
+    metadata : Dict[str, str] = Field(..., description='A dictionary describing the FunCaptcha challenge, which must include a "Task" key naming the specific image challenge to solve.')
+    imagesUrls: Optional[List[str]] = Field(default=None, description='Collection with image urls. Must be populated if imagesBase64 is not.')
     
     @field_validator('metadata')
     @classmethod

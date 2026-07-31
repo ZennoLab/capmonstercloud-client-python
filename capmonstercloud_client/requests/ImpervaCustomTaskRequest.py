@@ -4,8 +4,20 @@ from pydantic import Field, field_validator, model_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class ImpervaCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Imperva')
-    metadata : Dict[str, str]
+    """
+    Represents a payload structure for solving Imperva/Incapsula custom challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the captcha class
+            as "Imperva".
+        metadata: A dictionary of Imperva-specific parameters, including the
+            required incapsulaScriptUrl and incapsulaCookies values, and the
+            optional reese84UrlEndpoint value.
+        proxy: Proxy settings to route the request through. Required for
+            this task type — Imperva will not solve without your own proxy.
+    """
+    captchaClass: str = Field(default='Imperva', description='The constant string value identifying the captcha class as "Imperva".')
+    metadata : Dict[str, str] = Field(..., description='A dictionary of Imperva-specific parameters, including the required incapsulaScriptUrl and incapsulaCookies values, and the optional reese84UrlEndpoint value.')
     
     @field_validator('metadata')
     @classmethod

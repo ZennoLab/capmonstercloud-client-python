@@ -9,8 +9,19 @@ ALLOWED_METADATA_KEYS = {
 }
 
 class AlibabaCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='alibaba')
-    metadata: Dict[str, Union[str, bool]]
+    """
+    Represents a payload structure for solving Alibaba custom captcha challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the captcha
+            class as "alibaba".
+        metadata: A dictionary of Alibaba-specific parameters. Requires sceneId
+            and prefix; userId, userUserId, verifyType, region, UserCertifyId,
+            apiGetLib, and cookieRequired are optional, needed only for sites
+            that use them.
+    """
+    captchaClass: str = Field(default='alibaba', description='The constant string value identifying the captcha class as "alibaba".')
+    metadata: Dict[str, Union[str, bool]] = Field(..., description='A dictionary of Alibaba-specific parameters. Requires sceneId and prefix; userId, userUserId, verifyType, region, UserCertifyId, apiGetLib, and cookieRequired are optional, needed only for sites that use them.')
 
     @field_validator('metadata')
     @classmethod

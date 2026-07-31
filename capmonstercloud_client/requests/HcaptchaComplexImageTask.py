@@ -5,11 +5,31 @@ from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError, ExtraParamsError
 
 class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
-    
-    captchaClass: str = Field(default='hcaptcha')
-    metadata : Dict[str, str]
-    exampleImageUrls: Optional[List[str]] = None
-    exampleImagesBase64: Optional[List[str]] = None
+    """
+    Represents a payload structure for solving hCaptcha "complex image"
+    challenges, where a worker must select images matching a described
+    object or example image across a grid of candidate images.
+
+    Attributes:
+        captchaClass: The constant string value identifying the hCaptcha
+            challenge class, used to select the correct solving logic.
+        metadata: A dictionary describing the challenge, including the
+            mandatory "Task" key with the instruction shown to the worker.
+        exampleImageUrls: A list of URLs pointing to example image(s)
+            that illustrate the object to be found. Mutually exclusive
+            with exampleImagesBase64.
+        exampleImagesBase64: A list of base64-encoded example image(s)
+            that illustrate the object to be found. Mutually exclusive
+            with exampleImageUrls.
+        imagesUrls: A collection of image URLs to be recognized (up to 18).
+            Must be populated if imagesBase64 is not.
+    """
+
+    captchaClass: str = Field(default='hcaptcha', description='The constant string value identifying the hCaptcha challenge class.')
+    metadata : Dict[str, str] = Field(..., description='Dictionary describing the challenge, must contain a "Task" key with the instruction for the worker.')
+    exampleImageUrls: Optional[List[str]] = Field(default=None, description='List of URLs of example image(s) illustrating the object to find. Mutually exclusive with exampleImagesBase64.')
+    exampleImagesBase64: Optional[List[str]] = Field(default=None, description='List of base64-encoded example image(s) illustrating the object to find. Mutually exclusive with exampleImageUrls.')
+    imagesUrls: Optional[List[str]] = Field(default=None, description='Collection with image urls (up to 18). Must be populated if imagesBase64 is not.')
 
     @staticmethod
     def _validate_image_array(value, field_name, max_images):

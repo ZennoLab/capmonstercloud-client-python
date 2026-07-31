@@ -4,8 +4,20 @@ from pydantic import Field, field_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class TemuCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Temu')
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving Temu's custom captcha
+    challenge.
+
+    Attributes:
+        captchaClass: The constant string value identifying the custom
+            module class as "Temu".
+        metadata: A dictionary carrying the additional data required to
+            solve the captcha; must contain a "cookie" string value and no
+            other keys.
+    """
+
+    captchaClass: str = Field(default='Temu', description='Class (subtype) identifier of the custom module, constant "Temu".')
+    metadata: Dict[str, str] = Field(..., description='Additional data required to solve the captcha; must contain a "cookie" string value and no other keys.')
 
     @field_validator('metadata')
     @classmethod

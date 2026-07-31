@@ -4,9 +4,21 @@ from pydantic import Field, field_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class CastleCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Castle')
-    websiteKey: str = Field()
-    metadata: Dict[str, Union[str, int]]
+    """
+    Represents a payload structure for solving Castle challenges via a custom task.
+
+    Attributes:
+        captchaClass: The constant string value identifying the captcha
+            class as "Castle".
+        websiteKey: The site key associated with the Castle challenge on the
+            webpage.
+        metadata: A dictionary of additional parameters required to solve the
+            challenge, including the worker script URL (wUrl), service worker
+            URL (swUrl), and an optional request count (count).
+    """
+    captchaClass: str = Field(default='Castle', description='The constant string value identifying the captcha class as "Castle".')
+    websiteKey: str = Field(description='The site key associated with the Castle challenge on the webpage.')
+    metadata: Dict[str, Union[str, int]] = Field(description='A dictionary of additional parameters required to solve the challenge, including the worker script URL (wUrl), service worker URL (swUrl), and an optional request count (count).')
 
     @field_validator('metadata')
     @classmethod

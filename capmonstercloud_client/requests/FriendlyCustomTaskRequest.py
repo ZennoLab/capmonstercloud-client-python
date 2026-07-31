@@ -4,9 +4,22 @@ from pydantic import Field, field_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class FriendlyCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='friendly')
-    websiteKey: str = Field()
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving Friendly Captcha challenges.
+
+    Attributes:
+        captchaClass: The constant string value "friendly" identifying
+            this custom task as a Friendly Captcha challenge.
+        websiteKey: The site key associated with the Friendly Captcha
+            widget on the webpage.
+        metadata: Must contain the "apiGetLib" entry — the URL of the Friendly
+            Captcha widget script loaded on the page (widget.module.min.js for
+            V1, site.min.js for V2), used to detect the captcha version.
+    """
+
+    captchaClass: str = Field(default='friendly', description='Constant string "friendly" identifying this custom task as a Friendly Captcha challenge.')
+    websiteKey: str = Field(..., description='Site key associated with the Friendly Captcha widget on the webpage.')
+    metadata: Dict[str, str] = Field(..., description='Additional task parameters, must include the "apiGetLib" string entry.')
 
     @field_validator('metadata')
     @classmethod

@@ -17,7 +17,7 @@ class RequestGenerationTests(unittest.TestCase):
             "cookies",
             "isInvisible",
         ]
-        rc2_no_proxy_type = "NoCaptchaTask"
+        rc2_no_proxy_type = "RecaptchaV2Task"
         request = requests.RecaptchaV2Request(
             websiteUrl="some_url",
             websiteKey="sime_key",
@@ -36,7 +36,7 @@ class RequestGenerationTests(unittest.TestCase):
             msg=f"Task type of ReCaptchaV2 not equal to {rc2_no_proxy_type}",
         )
 
-        rc2_proxy_type = "NoCaptchaTask"
+        rc2_proxy_type = "RecaptchaV2Task"
         default_proxy_keys = default_keys + PROXY_LIST
         proxy = requests.ProxyInfo(
             proxyType="http",
@@ -84,6 +84,22 @@ class RequestGenerationTests(unittest.TestCase):
             rc3_type,
             task.get("type"),
             msg=f"Task type of ReCaptchaV3 not equal to {rc3_type}",
+        )
+
+        self.assertNotIn(
+            "isEnterprise", task,
+            msg="isEnterprise should not be sent when not explicitly set.",
+        )
+
+        enterprise_request = requests.RecaptchaV3ProxylessRequest(
+            websiteUrl="some_url",
+            websiteKey="some_key",
+            isEnterprise=True,
+        )
+        enterprise_task = enterprise_request.getTaskDict()
+        self.assertTrue(
+            enterprise_task.get("isEnterprise") is True,
+            msg="isEnterprise=True should be included in the task dict.",
         )
 
         # validate_min_score: valid boundary values

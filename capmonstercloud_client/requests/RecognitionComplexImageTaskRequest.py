@@ -1,12 +1,25 @@
 from typing import Dict, Union
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import ZeroImagesErrors, TaskNotDefinedError
 
 
 class RecognitionComplexImageTaskRequest(ComplexImageTaskRequestBase):
-    captchaClass: str = 'recognition'
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving recognition-type complex
+    image captchas, where images must be classified or matched against a
+    described task.
+
+    Attributes:
+        captchaClass: The class (subtype) of the ComplexImageTask, fixed to
+            "recognition" for this task type.
+        metadata: Must contain a "Task" key naming the CapMonster recognition
+            module to run (e.g. "shein", "bls_3x3", "bills_audio"), and may
+            optionally contain a "TaskArgument" key carrying the target/instruction
+            for that module (e.g. a number to match or an icon name).
+    """
+    captchaClass: str = Field(default='recognition', description='Class(subtype) of ComplexImageTask, fixed to "recognition".')
+    metadata: Dict[str, str] = Field(..., description='Must contain a "Task" key naming the CapMonster recognition module to run (e.g. "shein", "bls_3x3"), and may optionally contain a "TaskArgument" key carrying the target/instruction for that module.')
 
     @field_validator('metadata')
     @classmethod

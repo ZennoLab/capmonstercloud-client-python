@@ -4,8 +4,21 @@ from pydantic import Field, field_validator, model_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class HuntCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='HUNT')
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving custom HUNT challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the underlying
+            captcha class as "HUNT".
+        metadata: A dictionary of parameters required by the HUNT solver.
+            Always requires "apiGetLib" (the URL of the HUNT JS script on
+            the page). HUNT has two solving modes: fingerprint generation
+            (only "apiGetLib" needed) and captcha solving (also requires
+            "data", which must hold the "meta.token" value extracted from
+            the page).
+    """
+    captchaClass: str = Field(default='HUNT', description='The constant string value identifying the underlying captcha class as "HUNT".')
+    metadata: Dict[str, str] = Field(..., description='Dictionary of HUNT parameters. Always requires "apiGetLib". Also requires "data" (the "meta.token" value from the page) when solving a captcha rather than just generating a fingerprint.')
 
     @field_validator('metadata')
     @classmethod

@@ -4,9 +4,24 @@ from pydantic import Field, field_validator, model_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class TspdCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='tspd')
-    userAgent: str = Field()
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving TSPD (PerimeterX/HUMAN
+    Bot Defender) custom challenges.
+
+    Attributes:
+        captchaClass: The class (subtype) identifier of the custom module,
+            fixed to "tspd" for this task type.
+        userAgent: Browser User-Agent to emulate. Pass only a current
+            Windows OS UA, matching the one used when the tspdCookie and
+            htmlPageBase64 were obtained.
+        metadata: A dictionary carrying the challenge data required to solve
+            the TSPD task, including the "tspdCookie" string and the
+            "htmlPageBase64" string.
+    """
+
+    captchaClass: str = Field(default='tspd', description='Class (subtype) identifier of the custom module, fixed to "tspd".')
+    userAgent: str = Field(description='Browser User-Agent to emulate. Pass only a current Windows OS UA, matching the one used when the tspdCookie and htmlPageBase64 were obtained.')
+    metadata: Dict[str, str] = Field(description='Challenge data required to solve the task, including "tspdCookie" and "htmlPageBase64".')
 
     @field_validator('metadata')
     @classmethod

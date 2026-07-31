@@ -4,9 +4,18 @@ from .baseRequestWithProxy import BaseRequestWithProxy
 
 
 class ProsopoTaskRequest(BaseRequestWithProxy):
-    type: str = Field(default="ProsopoTask")
-    websiteUrl: str
-    websiteKey: str
+    """
+    Represents a payload structure for solving Prosopo Procaptcha challenges.
+
+    Attributes:
+        type: The constant string value identifying the task type as "ProsopoTask".
+        websiteUrl: The URL of the webpage containing the Prosopo challenge.
+        websiteKey: The site key associated with the Prosopo captcha on the webpage.
+    """
+
+    type: str = Field(default="ProsopoTask", description='The constant string value identifying the task type as "ProsopoTask".')
+    websiteUrl: str = Field(..., description='The URL of the webpage containing the Prosopo challenge.')
+    websiteKey: str = Field(..., description='The site key associated with the Prosopo captcha on the webpage.')
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}
