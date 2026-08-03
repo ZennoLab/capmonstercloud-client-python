@@ -24,12 +24,12 @@ class HuntCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('apiGetLib') is None:
-            raise TypeError(f'Expect that apiGetLib will be defined.')
+            raise TypeError(f'apiGetLib must be defined inside metadata.')
         else:
             if not isinstance(value.get('apiGetLib'), str):
-                raise TypeError(f'Expect that apiGetLib will be str.')
+                raise TypeError(f'apiGetLib must be str.')
         if value.get('data') is not None and not isinstance(value.get('data'), str):
-            raise TypeError(f'Expect that data will be str.')
+            raise TypeError(f'data must be str.')
         return value
 
     @model_validator(mode='before')

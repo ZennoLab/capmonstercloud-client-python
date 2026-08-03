@@ -25,10 +25,10 @@ class FriendlyCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('apiGetLib') is None:
-            raise TypeError(f'Expect that apiGetLib will be defined.')
+            raise TypeError(f'apiGetLib must be defined inside metadata.')
         else:
             if not isinstance(value.get('apiGetLib'), str):
-                raise TypeError(f'Expect that apiGetLib will be str.')
+                raise TypeError(f'apiGetLib must be str.')
         return value
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:

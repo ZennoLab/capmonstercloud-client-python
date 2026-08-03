@@ -23,17 +23,17 @@ class ImpervaCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('incapsulaScriptUrl') is None:
-            raise TypeError(f'Expect that incapsulaScriptUrl will be defined.')
+            raise TypeError(f'incapsulaScriptUrl must be defined inside metadata')
         else:
             if not isinstance(value.get('incapsulaScriptUrl'), str):
-                raise TypeError(f'Expect that incapsulaScriptUrl will be str.')
+                raise TypeError(f'incapsulaScriptUrl must be str.')
         if value.get('incapsulaCookies') is None:
-            raise TypeError(f'Expect that incapsulaCookies will be defined.')
+            raise TypeError(f'incapsulaCookies must be defined inside metadata')
         else:
             if not isinstance(value.get('incapsulaCookies'), str):
-                raise TypeError(f'Expect that incapsulaCookies will be str.')
+                raise TypeError(f'incapsulaCookies must be str.')
         if value.get('reese84UrlEndpoint') is not None and not isinstance(value.get('reese84UrlEndpoint'), str):
-            raise TypeError(f'Expect that reese84UrlEndpoint will be str.')
+            raise TypeError(f'reese84UrlEndpoint must be str.')
         return value
     
     @model_validator(mode='before')

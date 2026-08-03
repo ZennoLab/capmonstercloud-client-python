@@ -55,25 +55,25 @@ class TurnstileRequest(BaseRequestWithProxy):
         
         if self.get('htmlPageBase64') is None:
             if self.get('cloudflareTaskType') in ['cf_clearance', 'wait_room']:
-                raise RuntimeError(f'Expect that "htmlPageBase64" will be filled ' \
-                    f'when cloudflareTaskType is "cf_clearance" or "wait_room')
-        
+                raise RuntimeError(f'"htmlPageBase64" must be filled ' \
+                    f'when cloudflareTaskType is "cf_clearance" or "wait_room".')
+
         if self.get('proxy') is None:
             if self.get('cloudflareTaskType') in ['cf_clearance', 'wait_room']:
-                raise RuntimeError(f'You are working using queries, and you need cf_clearance cookies or wait_room ' \
-                        f'it is required that you need your proxies.')
+                raise RuntimeError(f'proxy must be defined when cloudflareTaskType is ' \
+                        f'"cf_clearance" or "wait_room".')
 
         if self.get('cloudflareTaskType') == 'token':
             for field in ['pageAction', 'pageData', 'data']:
                 if self.get(field) is None:
-                    raise RuntimeError(f'Expect that "{field}" will be filled ' \
+                    raise RuntimeError(f'"{field}" must be filled ' \
                     f'when "cloudflareTaskType" = "token".')
-        
+
         if self.get('cloudflareTaskType') is not None:
             if self.get('cloudflareTaskType') in ['cf_clearance', 'token', 'wait_room']:
                 if self.get('userAgent') is None:
-                    raise RuntimeError(f'Expect that userAgent will be filled ' \
-                        f'when cloudflareTaskType specified.')
+                    raise RuntimeError(f'userAgent must be filled ' \
+                        f'when cloudflareTaskType is specified.')
           
         return self
     

@@ -27,15 +27,15 @@ class TspdCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('tspdCookie') is None:
-            raise TypeError(f'Expect that tspdCookie will be defined.')
+            raise TypeError(f'tspdCookie must be defined inside metadata.')
         else:
             if not isinstance(value.get('tspdCookie'), str):
-                raise TypeError(f'Expect that tspdCookie will be str.')
+                raise TypeError(f'tspdCookie must be str.')
         if value.get('htmlPageBase64') is None:
-            raise TypeError(f'Expect that htmlPageBase64 will be defined.')
+            raise TypeError(f'htmlPageBase64 must be defined inside metadata.')
         else:
             if not isinstance(value.get('htmlPageBase64'), str):
-                raise TypeError(f'Expect that htmlPageBase64 will be str.')
+                raise TypeError(f'htmlPageBase64 must be str.')
         return value
 
     @model_validator(mode='before')

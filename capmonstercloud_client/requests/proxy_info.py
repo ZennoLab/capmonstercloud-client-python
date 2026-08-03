@@ -23,14 +23,14 @@ class ProxyInfo(BaseModel):
     @classmethod
     def validate_proxy_type(cls, value):
         if value not in ProxyTypes.list_values():
-            raise ValueError(f'Expected that proxy type will be in {ProxyTypes.list_values()}, got "{value}"')
+            raise ValueError(f'proxyType must be one of {ProxyTypes.list_values()}, got "{value}".')
         return value
-    
+
     @field_validator('proxyPort')
     @classmethod
     def validate_port(cls, value):
         if not isinstance(value, int):
-            raise TypeError(f'Expect that port value will be <int> type, got {type(value)}')
+            raise TypeError(f'proxyPort must be <int> type, got {type(value)}.')
         return value
 
 class ClientProxyInfo(BaseModel):
@@ -57,12 +57,12 @@ class ClientProxyInfo(BaseModel):
     @classmethod
     def validate_proxy_type(cls, value):
         if value not in ProxyTypes.list_values():
-            raise ValueError(f'Expected that proxy type will be in {ProxyTypes.list_values()}, got "{value}"')
+            raise ValueError(f'proxyType must be one of {ProxyTypes.list_values()}, got "{value}".')
         return value
-    
+
     @field_validator('proxyPort')
     @classmethod
     def validate_port(cls, value):
         if not isinstance(value, int):
-            raise TypeError(f'Expect that port value will be <int> type, got {type(value)}')
+            raise TypeError(f'proxyPort must be <int> type, got {type(value)}.')
         return value

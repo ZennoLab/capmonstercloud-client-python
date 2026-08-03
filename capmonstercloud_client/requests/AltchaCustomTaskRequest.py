@@ -27,10 +27,10 @@ class AltchaCustomTaskRequest(CustomTaskRequestBase):
     def validate_metadata(cls, value):
         for key in ['challenge', 'iterations', 'salt', 'signature']:
             if value.get(key) is None:
-                raise TypeError(f'Expect that {key} will be defined.')
+                raise TypeError(f'{key} must be defined inside metadata.')
             else:
                 if not isinstance(value.get(key), str):
-                    raise TypeError(f'Expect that {key} will be str.')
+                    raise TypeError(f'{key} must be str.')
         return value
     
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:

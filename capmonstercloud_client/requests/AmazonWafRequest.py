@@ -53,19 +53,19 @@ class AmazonWafRequest(BaseRequestWithProxy):
         if self.challengeScript is None:
             # Option 1: visible captcha, no challenge.js involved.
             if self.websiteKey is None or self.captchaScript is None:
-                raise ValueError('Expect that "websiteKey" and "captchaScript" will be filled '
+                raise ValueError('"websiteKey" and "captchaScript" must be filled '
                                   'when "challengeScript" is not provided (Option 1).')
             if self.context is not None or self.iv is not None:
                 raise ValueError('"context" and "iv" are not used when "challengeScript" is not provided (Option 1).')
         elif self.websiteKey is None and self.captchaScript is None:
             # Option 3: invisible/challenge-only captcha.
             if self.context != '' or self.iv != '':
-                raise ValueError('Expect that "context" and "iv" will be empty strings '
+                raise ValueError('"context" and "iv" must be empty strings '
                                   'when only "challengeScript" is provided (Option 3).')
         else:
             # Option 2: challenge + captcha.
             if self.websiteKey is None or self.context is None or self.iv is None:
-                raise ValueError('Expect that "websiteKey", "context" and "iv" will be filled '
+                raise ValueError('"websiteKey", "context" and "iv" must be filled '
                                   'when "challengeScript" is provided together with "websiteKey" (Option 2).')
         return self
 

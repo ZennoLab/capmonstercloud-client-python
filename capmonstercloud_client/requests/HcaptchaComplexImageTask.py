@@ -37,7 +37,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         if value is None:
             return value
         if not isinstance(value, (list, tuple)):
-            raise TypeError(f'Expect that type {field_name} array will be <list> or <tuple>, got {type(value)}')
+            raise TypeError(f'{field_name} must be <list> or <tuple>, got {type(value)}.')
 
         if not len(value):
             if 'base64' in field_name.lower():
@@ -60,7 +60,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
-            raise TaskNotDefinedError('Expect that task will be defined.')
+            raise TaskNotDefinedError('Task must be defined.')
         else:
             return value
     

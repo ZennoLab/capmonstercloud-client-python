@@ -22,11 +22,11 @@ class DataDomeCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('datadomeCookie') is None:
-            raise TypeError(f'Expect that datadomeCookie will be defined.')
+            raise TypeError(f'datadomeCookie must be defined inside metadata.')
         if value.get('datadomeVersion') is not None and not isinstance(value.get('datadomeVersion'), str):
-            raise TypeError(f'Expected datadomeVersion to be str')
+            raise TypeError(f'datadomeVersion must be str.')
         if value.get('captchaUrl') is None:
-            raise TypeError(f'Expect that captchaUrl will be defined.')
+            raise TypeError(f'captchaUrl must be defined inside metadata.')
         return value
 
     @model_validator(mode='before')

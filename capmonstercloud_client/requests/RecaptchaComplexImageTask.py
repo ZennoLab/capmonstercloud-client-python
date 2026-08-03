@@ -29,9 +29,9 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None or value.get('TaskDefinition') is None:
-            raise TaskNotDefinedError(f'Expect that both "Task" and "TaskDefinition" will be filled.')
+            raise TaskNotDefinedError(f'"Task" and "TaskDefinition" must both be filled.')
         elif value.get('Grid') is None:
-            raise TaskNotDefinedError(f'Expect that "Grid" value will be filled(3x3, 4x4, 1x1).')
+            raise TaskNotDefinedError(f'"Grid" must be filled (3x3, 4x4, 1x1).')
         else:
             return value
     
@@ -40,7 +40,7 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     def validate_urls_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesUrls array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesUrls must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
@@ -56,7 +56,7 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesBase64 array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesBase64 must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):

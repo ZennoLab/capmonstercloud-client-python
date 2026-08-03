@@ -26,7 +26,7 @@ class TenDiCustomTaskRequest(CustomTaskRequestBase):
             if not set(value.keys()).issubset(set(["captchaUrl"])):
                 raise TypeError(f'Allowed keys for metadata are "captchaUrl"')
             if value.get('captchaUrl') is not None and not isinstance(value.get('captchaUrl'), str):
-                raise TypeError(f'Expect that captchaUrl will be str.')
+                raise TypeError(f'captchaUrl must be str.')
         return value
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:

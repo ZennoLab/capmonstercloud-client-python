@@ -23,10 +23,10 @@ class TemuCustomTaskRequest(CustomTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('cookie') is None:
-            raise TypeError(f'Expect that cookie will be defined.')
+            raise TypeError(f'cookie must be defined inside metadata.')
         else:
             if not isinstance(value.get('cookie'), str):
-                raise TypeError(f'Expect that cookie will be str.')
+                raise TypeError(f'cookie must be str.')
         if not set(value.keys()).issubset(set(["cookie"])):
             raise TypeError(f'Allowed keys for metadata are "cookie"')
         return value

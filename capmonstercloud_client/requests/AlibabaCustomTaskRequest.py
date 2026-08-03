@@ -29,17 +29,17 @@ class AlibabaCustomTaskRequest(CustomTaskRequestBase):
         if not set(value.keys()).issubset(ALLOWED_METADATA_KEYS):
             raise TypeError(f'Allowed keys for metadata are {sorted(ALLOWED_METADATA_KEYS)}')
         if value.get('sceneId') is None:
-            raise TypeError(f'Expect that sceneId will be defined.')
+            raise TypeError(f'sceneId must be defined inside metadata.')
         else:
             if not isinstance(value.get('sceneId'), str):
-                raise TypeError(f'Expect that sceneId will be str.')
+                raise TypeError(f'sceneId must be str.')
         if value.get('prefix') is None:
-            raise TypeError(f'Expect that prefix will be defined.')
+            raise TypeError(f'prefix must be defined inside metadata.')
         else:
             if not isinstance(value.get('prefix'), str):
-                raise TypeError(f'Expect that prefix will be str.')
+                raise TypeError(f'prefix must be str.')
         if value.get('cookieRequired') is not None and not isinstance(value.get('cookieRequired'), bool):
-            raise TypeError(f'Expect that cookieRequired will be bool.')
+            raise TypeError(f'cookieRequired must be bool.')
         return value
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:

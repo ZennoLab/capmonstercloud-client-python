@@ -27,7 +27,7 @@ class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
-            raise TaskNotDefinedError(f'Expect that task will be defined.')
+            raise TaskNotDefinedError(f'task must be defined.')
         else:
             return value
     
@@ -36,7 +36,7 @@ class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     def validate_urls_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesUrls array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesUrls must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
@@ -52,7 +52,7 @@ class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesBase64 array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesBase64 must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
