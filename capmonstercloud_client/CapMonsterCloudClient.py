@@ -32,7 +32,7 @@ _instance_config = (
     ((BinanceTaskRequest,), getBinanceTimeouts),
     ((ImpervaCustomTaskRequest,), getImpervaTimeouts),
     ((RecognitionComplexImageTaskRequest,), getCITTimeouts),
-    ((MTCaptchaRequest,), getImage2TextTimeouts),
+    ((MTCaptchaRequest,), getMTCaptchaTimeouts),
     ((YidunRequest,), getYidunTimeouts),
     ((TemuCustomTaskRequest,), getTemuTimeouts),
     ((ProsopoTaskRequest,), getProsopoTimeouts),
@@ -40,6 +40,8 @@ _instance_config = (
     ((CastleCustomTaskRequest,), getCastleTimeouts),
     ((TspdCustomTaskRequest,), getTspdTimeouts),
     ((HuntCustomTaskRequest,), getHuntTimeouts),
+    ((AlibabaCustomTaskRequest,), getAlibabaTimeouts),
+    ((FriendlyCustomTaskRequest,), getFriendlyTimeouts),
 )
 
 
@@ -106,7 +108,9 @@ class CapMonsterClient:
                                                  AltchaCustomTaskRequest,
                                                  CastleCustomTaskRequest,
                                                  TspdCustomTaskRequest,
-                                                 HuntCustomTaskRequest],
+                                                 HuntCustomTaskRequest,
+                                                 AlibabaCustomTaskRequest,
+                                                 FriendlyCustomTaskRequest],
                             ) -> Dict[str, str]:
         '''
         Non-blocking method for captcha solving. 
@@ -145,7 +149,12 @@ class CapMonsterClient:
                                           YidunRequest,
                                           TemuCustomTaskRequest,
                                           ProsopoTaskRequest,
-                                          AltchaCustomTaskRequest],
+                                          AltchaCustomTaskRequest,
+                                          CastleCustomTaskRequest,
+                                          TspdCustomTaskRequest,
+                                          HuntCustomTaskRequest,
+                                          AlibabaCustomTaskRequest,
+                                          FriendlyCustomTaskRequest],
                            timeouts: GetResultTimeouts,
                            ) -> Dict[str, str]:
 

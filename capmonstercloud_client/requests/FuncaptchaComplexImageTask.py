@@ -1,26 +1,42 @@
-from typing import Dict, Union
-from pydantic import Field, validator
+from typing import Dict, List, Optional, Union
+from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
 
 class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
+    """
+    Represents a payload structure for solving FunCaptcha (Arkose Labs)
+    complex image challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the complex
+            image task subtype as "funcaptcha".
+        metadata: A dictionary describing the FunCaptcha challenge, which
+            must include a "Task" key naming the specific image challenge
+            to solve (e.g. matching, rotating, or selecting images).
+        imagesUrls: A collection of image URLs to be recognized. Must be
+            populated if imagesBase64 is not.
+    """
+
+    captchaClass: str = Field(default='funcaptcha', description='The constant string value identifying the complex image task subtype as "funcaptcha".')
+    metadata : Dict[str, str] = Field(..., description='A dictionary describing the FunCaptcha challenge, which must include a "Task" key naming the specific image challenge to solve.')
+    imagesUrls: Optional[List[str]] = Field(default=None, description='Collection with image urls. Must be populated if imagesBase64 is not.')
     
-    captchaClass: str = Field(default='funcaptcha')
-    metadata : Dict[str, str]
-    
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
-            raise TaskNotDefinedError(f'Expect that task will be defined.')
+            raise TaskNotDefinedError(f'task must be defined.')
         else:
             return value
     
-    @validator('imagesUrls')
+    @field_validator('imagesUrls')
+    @classmethod
     def validate_urls_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesUrls array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesUrls must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
@@ -31,11 +47,12 @@ class FunCaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesBase64 array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesBase64 must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):

@@ -1,15 +1,35 @@
 from typing import Dict, Union, List, Optional
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError, ExtraParamsError
 
 class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
-    
-    captchaClass: str = Field(default='hcaptcha')
-    metadata : Dict[str, str]
-    exampleImageUrls: Optional[List[str]] = None
-    exampleImagesBase64: Optional[List[str]] = None
+    """
+    Represents a payload structure for solving hCaptcha "complex image"
+    challenges, where a worker must select images matching a described
+    object or example image across a grid of candidate images.
+
+    Attributes:
+        captchaClass: The constant string value identifying the hCaptcha
+            challenge class, used to select the correct solving logic.
+        metadata: A dictionary describing the challenge, including the
+            mandatory "Task" key with the instruction shown to the worker.
+        exampleImageUrls: A list of URLs pointing to example image(s)
+            that illustrate the object to be found. Mutually exclusive
+            with exampleImagesBase64.
+        exampleImagesBase64: A list of base64-encoded example image(s)
+            that illustrate the object to be found. Mutually exclusive
+            with exampleImageUrls.
+        imagesUrls: A collection of image URLs to be recognized (up to 18).
+            Must be populated if imagesBase64 is not.
+    """
+
+    captchaClass: str = Field(default='hcaptcha', description='The constant string value identifying the hCaptcha challenge class.')
+    metadata : Dict[str, str] = Field(..., description='Dictionary describing the challenge, must contain a "Task" key with the instruction for the worker.')
+    exampleImageUrls: Optional[List[str]] = Field(default=None, description='List of URLs of example image(s) illustrating the object to find. Mutually exclusive with exampleImagesBase64.')
+    exampleImagesBase64: Optional[List[str]] = Field(default=None, description='List of base64-encoded example image(s) illustrating the object to find. Mutually exclusive with exampleImageUrls.')
+    imagesUrls: Optional[List[str]] = Field(default=None, description='Collection with image urls (up to 18). Must be populated if imagesBase64 is not.')
 
     @staticmethod
     def _validate_image_array(value, field_name, max_images):
@@ -17,7 +37,7 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
         if value is None:
             return value
         if not isinstance(value, (list, tuple)):
-            raise TypeError(f'Expect that type {field_name} array will be <list> or <tuple>, got {type(value)}')
+            raise TypeError(f'{field_name} must be <list> or <tuple>, got {type(value)}.')
 
         if not len(value):
             if 'base64' in field_name.lower():
@@ -36,26 +56,31 @@ class HcaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
 
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('Task') is None:
-            raise TaskNotDefinedError('Expect that task will be defined.')
+            raise TaskNotDefinedError('Task must be defined.')
         else:
             return value
     
-    @validator('exampleImageUrls')
+    @field_validator('exampleImageUrls')
+    @classmethod
     def validate_example_image_urls(cls, value):
         return cls._validate_image_array(value, 'exampleImageUrls', 1)
     
-    @validator('exampleImagesBase64')
+    @field_validator('exampleImagesBase64')
+    @classmethod
     def validate_example_images_base64(cls, value):
         return cls._validate_image_array(value, 'exampleImagesBase64', 1)
     
-    @validator('imagesUrls')
+    @field_validator('imagesUrls')
+    @classmethod
     def validate_images_urls(cls, value):
         return cls._validate_image_array(value, 'imagesUrls', 18)
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_base64(cls, value):
         return cls._validate_image_array(value, 'imagesBase64', 18)
 

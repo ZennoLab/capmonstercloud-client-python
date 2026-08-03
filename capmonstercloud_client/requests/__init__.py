@@ -27,6 +27,8 @@ from .AltchaCustomTaskRequest import AltchaCustomTaskRequest
 from .CastleCustomTaskRequest import CastleCustomTaskRequest
 from .TspdCustomTaskRequest import TspdCustomTaskRequest
 from .HuntCustomTaskRequest import HuntCustomTaskRequest
+from .AlibabaCustomTaskRequest import AlibabaCustomTaskRequest
+from .FriendlyCustomTaskRequest import FriendlyCustomTaskRequest
 from .proxy_info import ProxyInfo, ClientProxyInfo
 
 
@@ -50,5 +52,7 @@ REQUESTS = ['RecaptchaV2EnterpiseRequest', 'RecaptchaV2Request', 'RecaptchaV3Pro
             'AltchaCustomTaskRequest',
             'CastleCustomTaskRequest',
             'TspdCustomTaskRequest',
-            'HuntCustomTaskRequest'
+            'HuntCustomTaskRequest',
+            'AlibabaCustomTaskRequest',
+            'FriendlyCustomTaskRequest'
             ]

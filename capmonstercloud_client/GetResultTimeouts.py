@@ -36,7 +36,7 @@ def getTurnstileTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 80)
 
 def getDatadomeTimeouts() -> GetResultTimeouts:
-    return GetResultTimeouts(1, 0, 1, 80)
+    return GetResultTimeouts(1, 0, 3, 180)
 
 def getTenDiTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 10, 3, 180)
@@ -51,7 +51,7 @@ def getBinanceTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 20)
 
 def getImpervaTimeouts() -> GetResultTimeouts:
-    return GetResultTimeouts(1, 0, 1, 20)
+    return GetResultTimeouts(1, 0, 1, 15)
 
 def getAltchaTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 50)
@@ -63,10 +63,19 @@ def getTspdTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 0, 1, 60)
 
 def getHuntTimeouts() -> GetResultTimeouts:
-    return GetResultTimeouts(1, 0, 1, 60)
+    return GetResultTimeouts(1, 0, 3, 180)
+
+def getAlibabaTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 3, 120)
+
+def getFriendlyTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 0, 3, 180)
 
 def getCITTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(0.35, 0, 0.2, 10)
+
+def getMTCaptchaTimeouts() -> GetResultTimeouts:
+    return GetResultTimeouts(1, 10, 3, 180)
 
 def getYidunTimeouts() -> GetResultTimeouts:
     return GetResultTimeouts(1, 10, 3, 180)

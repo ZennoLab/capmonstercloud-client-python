@@ -1,25 +1,33 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class DataDomeCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='DataDome')
-    metadata : Dict[str, str]
+    """
+    Represents a payload structure for solving DataDome custom challenges.
 
-    @validator('metadata')
+    Attributes:
+        captchaClass: The constant string value identifying the captcha
+            class as "DataDome".
+        metadata: A dictionary carrying DataDome-specific challenge data:
+            the required captchaUrl and datadomeCookie, plus the optional
+            datadomeVersion.
+        proxy: Proxy settings to route the request through. Required for
+            this task type — DataDome will not solve without your own proxy.
+    """
+    captchaClass: str = Field(default='DataDome', description='The constant string value identifying the captcha class as "DataDome".')
+    metadata : Dict[str, str] = Field(..., description='A dictionary carrying DataDome-specific challenge data: the required captchaUrl and datadomeCookie, plus the optional datadomeVersion.')
+
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('datadomeCookie') is None:
-            raise TypeError(f'Expect that datadomeCookie will be defined.')
+            raise TypeError(f'datadomeCookie must be defined inside metadata.')
         if value.get('datadomeVersion') is not None and not isinstance(value.get('datadomeVersion'), str):
-            raise TypeError(f'Expected datadomeVersion to be str')
-        if value.get('captchaUrl') and value.get('htmlPageBase64'):
-            raise TypeError(f'Expected only one of [captchaUrl, htmlPageBase64]')
-        elif value.get('captchaUrl'):
-            return {i: value[i] for i in value if i != 'htmlPageBase64'}
-        elif value.get('htmlPageBase64'):
-            return {i: value[i] for i in value if i != 'captchaUrl'}
-        else:
-            raise TypeError(f'Expected one of [captchaUrl, htmlPageBase64]')
+            raise TypeError(f'datadomeVersion must be str.')
+        if value.get('captchaUrl') is None:
+            raise TypeError(f'captchaUrl must be defined inside metadata.')
+        return value
 
     @model_validator(mode='before')
     def validate_datadome_proxy(cls, values):

@@ -1,6 +1,6 @@
 import unittest
 
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 from capmonstercloudclient.requests import DataDomeCustomTaskRequest, ProxyInfo
 
 
@@ -32,12 +32,9 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
         metadataListUrl = DataDomeCustomTaskRequestTest.metadataExample.copy()
         metadataListUrl["captchaUrl"] = list(metadataListUrl["captchaUrl"])
 
-        metadataListImage = DataDomeCustomTaskRequestTest.metadataExample.copy()
-        metadataListImage.pop("captchaUrl")
-        metadataListImage["htmlPageBase64"] = metadataListUrl["captchaUrl"]
+        metadataMissingUrl = DataDomeCustomTaskRequestTest.metadataExample.copy()
+        metadataMissingUrl.pop("captchaUrl")
 
-        metadataListExtra = DataDomeCustomTaskRequestTest.metadataExample.copy()
-        metadataListExtra["htmlPageBase64"] = metadataListExtra["captchaUrl"]
         with self.assertRaises(ValidationError):
             request = DataDomeCustomTaskRequest(
                 websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
@@ -45,25 +42,17 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
                 proxy=self.proxy,
             )
 
-        with self.assertRaises(ValidationError):
-            request = DataDomeCustomTaskRequest(
-                websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
-                metadata=metadataListImage,
-                proxy=self.proxy,
-            )
-
         with self.assertRaises(TypeError):
             request = DataDomeCustomTaskRequest(
                 websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
-                metadata=metadataListExtra,
+                metadata=metadataMissingUrl,
                 proxy=self.proxy,
             )
 
     def testAllRequiredFieldsFilling(self):
         required_fields = ["class", "type", "websiteURL", "metadata",
                            "proxyType", "proxyAddress", "proxyPort", "proxyLogin", "proxyPassword"]
-        metadata_fields = ["datadomeCookie"]
-        one_of_fields = [["captchaUrl", "htmlPageBase64"]]
+        metadata_fields = ["datadomeCookie", "captchaUrl"]
         request = DataDomeCustomTaskRequest(
             websiteUrl=DataDomeCustomTaskRequestTest.websiteUrlExample,
             metadata=DataDomeCustomTaskRequestTest.metadataExample,
@@ -82,9 +71,6 @@ class DataDomeCustomTaskRequestTest(unittest.TestCase):
                 i in list(metadata_dict.keys()),
                 msg=f"Required field {i} not in {request_dict}",
             )
-
-        for i in one_of_fields:
-            self.assertTrue(len(set(i).intersection(metadata_dict.keys())) == 1)
 
         self.assertEqual(request_dict["class"], "DataDome")
         self.assertEqual(request_dict["type"], "CustomTask")

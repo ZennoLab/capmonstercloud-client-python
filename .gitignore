@@ -4,3 +4,5 @@ build/
 env/
 venv/
 capmonstercloudclient.egg-info/
+.mcp.json
+.claude/

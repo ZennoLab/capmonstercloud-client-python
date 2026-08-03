@@ -1,7 +1,7 @@
 import unittest
 import urllib
 import base64
-from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 from capmonstercloudclient.requests import RecognitionComplexImageTaskRequest
 from capmonstercloudclient.exceptions import (
     TaskNotDefinedError,

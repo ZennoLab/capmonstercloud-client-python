@@ -1,28 +1,50 @@
 import base64
 
-from pydantic import validator, Field
+from pydantic import field_validator, Field
 from typing import Optional, Dict, Union
 from .baseRequest import BaseRequest
 from .enums import TextModules
 
 class ImageToTextRequest(BaseRequest):
+    """
+    Represents a payload structure for solving image-based text recognition
+    (ImageToText) captchas.
 
-    image_bytes: bytes
-    type: str = "ImageToTextTask"
-    module_name: Optional[str] = Field(default=None)
-    threshold: Optional[int] = Field(default=None)
-    case: Optional[bool] = Field(default=None)
-    numeric: Optional[int] = Field(default=None)
-    math: Optional[bool] = Field(default=None)
+    Attributes:
+        image_bytes: The raw bytes of the image containing the text to be
+            recognized. It is base64-encoded before being sent to the API.
+        type: The constant string value identifying the task type as "ImageToTextTask".
+        module_name: The name of a specific CapMonster recognition module
+            to use for this image, tailored to a particular captcha service's format.
+        threshold: The minimum acceptable recognition confidence, expressed
+            as an integer between 0 and 100.
+        case: When set to True, specifies that the recognized text is
+            case-sensitive.
+        numeric: Restricts recognition to numeric characters only. Must be
+            either 0 (disabled) or 1 (enabled).
+        math: When set to True, specifies that the image contains a
+            mathematical expression that must be calculated rather than
+            transcribed.
+    """
 
-    @validator('threshold')
+    image_bytes: bytes = Field(..., description='Raw bytes of the image containing the text to recognize.')
+    type: str = Field(default="ImageToTextTask", description='The constant string value identifying the task type as "ImageToTextTask".')
+    module_name: Optional[str] = Field(default=None, description='Name of a specific CapMonster recognition module to use for this image.')
+    threshold: Optional[int] = Field(default=None, description='Minimum acceptable recognition confidence, between 0 and 100.')
+    case: Optional[bool] = Field(default=None, description='When True, indicates that the recognized text is case-sensitive.')
+    numeric: Optional[int] = Field(default=None, description='Restricts recognition to numeric characters only; must be 0 or 1.')
+    math: Optional[bool] = Field(default=None, description='When True, indicates that the image contains a mathematical expression to calculate.')
+
+    @field_validator('threshold')
+    @classmethod
     def validate_threshold(cls, value):
         if value is not None:
             if value not in range(0, 101):
-                raise ValueError(f"threshold must be between 1 and 100, got {value}")
+                raise ValueError(f"threshold must be between 0 and 100, got {value}")
         return value
 
-    @validator('module_name')
+    @field_validator('module_name')
+    @classmethod
     def validate_module_name(cls, value):
         if value is not None:
             if value not in TextModules.list_values():
@@ -30,21 +52,24 @@ class ImageToTextRequest(BaseRequest):
                                  f"got '{value}'")
         return value
     
-    @validator('case')
+    @field_validator('case')
+    @classmethod
     def validate_case_type(cls, value):
         if value is not None:
             if not isinstance(value, bool):
                 raise TypeError(f'Case value must be type as boolean, not {type(value)}')
         return value
     
-    @validator('numeric')
+    @field_validator('numeric')
+    @classmethod
     def validate_numeric_range(cls, value):
         if value is not None:
             if not value in range(0, 2):
                 raise ValueError(f'numeric must be between [0, 1], got {value}')
         return value
 
-    @validator('math')
+    @field_validator('math')
+    @classmethod
     def validate_math_type(cls, value):
         if value is not None:
             if not isinstance(value, bool):

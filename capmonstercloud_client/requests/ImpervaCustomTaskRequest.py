@@ -1,26 +1,39 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class ImpervaCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='Imperva')
-    metadata : Dict[str, str]
+    """
+    Represents a payload structure for solving Imperva/Incapsula custom challenges.
+
+    Attributes:
+        captchaClass: The constant string value identifying the captcha class
+            as "Imperva".
+        metadata: A dictionary of Imperva-specific parameters, including the
+            required incapsulaScriptUrl and incapsulaCookies values, and the
+            optional reese84UrlEndpoint value.
+        proxy: Proxy settings to route the request through. Required for
+            this task type — Imperva will not solve without your own proxy.
+    """
+    captchaClass: str = Field(default='Imperva', description='The constant string value identifying the captcha class as "Imperva".')
+    metadata : Dict[str, str] = Field(..., description='A dictionary of Imperva-specific parameters, including the required incapsulaScriptUrl and incapsulaCookies values, and the optional reese84UrlEndpoint value.')
     
-    @validator('metadata')
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('incapsulaScriptUrl') is None:
-            raise TypeError(f'Expect that incapsulaScriptUrl will be defined.')
+            raise TypeError(f'incapsulaScriptUrl must be defined inside metadata')
         else:
             if not isinstance(value.get('incapsulaScriptUrl'), str):
-                raise TypeError(f'Expect that incapsulaScriptUrl will be str.')
-        if value.get('incapsulaCookie') is None:
-            raise TypeError(f'Expect that incapsulaCookie will be defined.')
+                raise TypeError(f'incapsulaScriptUrl must be str.')
+        if value.get('incapsulaCookies') is None:
+            raise TypeError(f'incapsulaCookies must be defined inside metadata')
         else:
-            if not isinstance(value.get('incapsulaCookie'), str):
-                raise TypeError(f'Expect that incapsulaCookie will be str.')
+            if not isinstance(value.get('incapsulaCookies'), str):
+                raise TypeError(f'incapsulaCookies must be str.')
         if value.get('reese84UrlEndpoint') is not None and not isinstance(value.get('reese84UrlEndpoint'), str):
-            raise TypeError(f'Expect that reese84UrlEndpoint will be str.')
+            raise TypeError(f'reese84UrlEndpoint must be str.')
         return value
     
     @model_validator(mode='before')

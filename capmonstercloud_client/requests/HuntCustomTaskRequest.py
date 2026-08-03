@@ -1,21 +1,35 @@
 from typing import Dict, Union
-from pydantic import Field, validator, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from .CustomTaskRequestBase import CustomTaskRequestBase
 
 class HuntCustomTaskRequest(CustomTaskRequestBase):
-    captchaClass: str = Field(default='HUNT')
-    metadata: Dict[str, str]
+    """
+    Represents a payload structure for solving custom HUNT challenges.
 
-    @validator('metadata')
+    Attributes:
+        captchaClass: The constant string value identifying the underlying
+            captcha class as "HUNT".
+        metadata: A dictionary of parameters required by the HUNT solver.
+            Always requires "apiGetLib" (the URL of the HUNT JS script on
+            the page). HUNT has two solving modes: fingerprint generation
+            (only "apiGetLib" needed) and captcha solving (also requires
+            "data", which must hold the "meta.token" value extracted from
+            the page).
+    """
+    captchaClass: str = Field(default='HUNT', description='The constant string value identifying the underlying captcha class as "HUNT".')
+    metadata: Dict[str, str] = Field(..., description='Dictionary of HUNT parameters. Always requires "apiGetLib". Also requires "data" (the "meta.token" value from the page) when solving a captcha rather than just generating a fingerprint.')
+
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
         if value.get('apiGetLib') is None:
-            raise TypeError(f'Expect that apiGetLib will be defined.')
+            raise TypeError(f'apiGetLib must be defined inside metadata.')
         else:
             if not isinstance(value.get('apiGetLib'), str):
-                raise TypeError(f'Expect that apiGetLib will be str.')
+                raise TypeError(f'apiGetLib must be str.')
         if value.get('data') is not None and not isinstance(value.get('data'), str):
-            raise TypeError(f'Expect that data will be str.')
+            raise TypeError(f'data must be str.')
         return value
 
     @model_validator(mode='before')

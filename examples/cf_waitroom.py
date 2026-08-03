@@ -1,3 +1,4 @@
+import os
 import asyncio
 from capmonstercloudclient import CapMonsterClient, ClientOptions
 from capmonstercloudclient.requests import TurnstileRequest
@@ -11,7 +12,7 @@ async def main():
       proxyLogin='login', # get at https://docs.zennolab.com/zennoproxy/introduction or your own proxy
       proxyPassword='password' # get at https://docs.zennolab.com/zennoproxy/introduction or your own proxy
     )
-    client_options = ClientOptions(api_key="dac3599143bdfd88dfc41758c6cb8729", client_proxy=client_proxy)
+    client_options = ClientOptions(api_key=os.getenv("API_KEY"), client_proxy=client_proxy)
     cap_monster_client = CapMonsterClient(options=client_options)
 
     proxy = ProxyInfo(

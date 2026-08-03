@@ -4,15 +4,38 @@ from .baseRequestWithProxy import BaseRequestWithProxy
 
 
 class YidunRequest(BaseRequestWithProxy):
-    type: str = Field(default="YidunTask")
-    websiteUrl: str
-    websiteKey: str
-    userAgent: Optional[str] = Field(default=None)
-    yidunGetLib: Optional[str] = Field(default=None)
-    yidunApiServerSubdomain: Optional[str] = Field(default=None)
-    challenge: Optional[str] = Field(default=None)
-    hcg: Optional[str] = Field(default=None)
-    hct: Optional[int] = Field(default=None)
+    """
+    Represents a payload structure for solving NetEase Yidun captcha challenges.
+
+    Attributes:
+        type: The constant string value identifying the task type as "YidunTask".
+        websiteUrl: The URL of the webpage containing the Yidun captcha challenge.
+        websiteKey: The siteKey value associated with the Yidun widget on the webpage.
+        userAgent: Browser User-Agent to emulate. Pass only a current
+            Windows OS UA.
+        yidunGetLib: The URL of the get lib script used by the Yidun widget,
+            extracted from the page source when the default one does not apply.
+        yidunApiServerSubdomain: The custom API server subdomain used by the
+            Yidun widget, if the target page overrides the default one.
+        challenge: Unique identifier of the current captcha. Its presence
+            indicates the Enterprise/Business Yidun variant, and it is
+            typically supplied together with hcg, hct, yidunGetLib, and
+            yidunApiServerSubdomain.
+        hcg: An additional Yidun-specific parameter (hcg) sometimes required
+            by the widget to complete verification.
+        hct: An additional Yidun-specific numeric parameter (hct) sometimes
+            required by the widget to complete verification.
+    """
+
+    type: str = Field(default="YidunTask", description='The constant string value identifying the task type as "YidunTask".')
+    websiteUrl: str = Field(..., description='The URL of the webpage containing the Yidun captcha challenge.')
+    websiteKey: str = Field(..., description='The siteKey value associated with the Yidun widget on the webpage.')
+    userAgent: Optional[str] = Field(default=None, description='Browser User-Agent to emulate. Pass only a current Windows OS UA.')
+    yidunGetLib: Optional[str] = Field(default=None, description='The URL of the get lib script used by the Yidun widget, extracted from the page source when the default one does not apply.')
+    yidunApiServerSubdomain: Optional[str] = Field(default=None, description='The custom API server subdomain used by the Yidun widget, if the target page overrides the default one.')
+    challenge: Optional[str] = Field(default=None, description='Unique identifier of the current captcha. Its presence indicates the Enterprise/Business Yidun variant, and it is typically supplied together with hcg, hct, yidunGetLib, and yidunApiServerSubdomain.')
+    hcg: Optional[str] = Field(default=None, description='An additional Yidun-specific parameter (hcg) sometimes required by the widget to complete verification.')
+    hct: Optional[int] = Field(default=None, description='An additional Yidun-specific numeric parameter (hct) sometimes required by the widget to complete verification.')
 
     def getTaskDict(self) -> Dict[str, Union[str, int, bool]]:
         task = {}

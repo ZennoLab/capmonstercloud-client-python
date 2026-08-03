@@ -1,28 +1,46 @@
-from typing import Dict, Union
-from pydantic import Field, validator
+from typing import Dict, List, Optional, Union
+from pydantic import Field, field_validator
 
 from .ComplexImageTaskBase import ComplexImageTaskRequestBase
 from ..exceptions import NumbersImagesErrors, ZeroImagesErrors, TaskNotDefinedError
 
 class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
-    
-    metadata : Dict[str, str]
-    captchaClass: str = Field(default='recaptcha')
-    
-    @validator('metadata')
+    """
+    Represents a payload structure for solving reCAPTCHA-style grid-based
+    image classification challenges.
+
+    Attributes:
+        metadata: A dictionary describing the challenge. Must contain
+            "Task" (English task name, e.g. "Click on traffic lights") and
+            "TaskDefinition" (its technical identifier, e.g. "/m/015qff") —
+            both required together — along with "Grid" (e.g. "3x3", "4x4",
+            "1x1") specifying the image grid layout.
+        captchaClass: The constant string identifying the captcha family
+            as "recaptcha".
+        imagesUrls: A collection of image URLs to be recognized. Must be
+            populated if imagesBase64 is not.
+    """
+
+    metadata : Dict[str, str] = Field(..., description='Dictionary describing the challenge. Must contain "Task" and "TaskDefinition" (both required together) plus "Grid".')
+    captchaClass: str = Field(default='recaptcha', description='Constant string identifying the captcha family as "recaptcha".')
+    imagesUrls: Optional[List[str]] = Field(default=None, description='Collection with image urls. Must be populated if imagesBase64 is not.')
+
+    @field_validator('metadata')
+    @classmethod
     def validate_metadata(cls, value):
-        if value.get('Task') is None and value.get('TaskDefinition') is None:
-            raise TaskNotDefinedError(f'Expect at least one of value(Task or TaskDefinition) will be filled.')
+        if value.get('Task') is None or value.get('TaskDefinition') is None:
+            raise TaskNotDefinedError(f'"Task" and "TaskDefinition" must both be filled.')
         elif value.get('Grid') is None:
-            raise TaskNotDefinedError(f'Expect that "Grid" value will be filled(3x3, 4x4, 1x1).')
+            raise TaskNotDefinedError(f'"Grid" must be filled (3x3, 4x4, 1x1).')
         else:
             return value
     
-    @validator('imagesUrls')
+    @field_validator('imagesUrls')
+    @classmethod
     def validate_urls_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesUrls array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesUrls must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
@@ -33,11 +51,12 @@ class RecaptchaComplexImageTaskRequest(ComplexImageTaskRequestBase):
                 raise TypeError(f'Next images from imagesUrls array are not string: {contain_types}')
         return value
     
-    @validator('imagesBase64')
+    @field_validator('imagesBase64')
+    @classmethod
     def validate_images_array(cls, value):
         if value is not None:
             if not isinstance(value, (list, tuple)):
-                raise TypeError(f'Expect that type imagesBase64 array will be <list> or <tuple>, got {type(value)}')
+                raise TypeError(f'imagesBase64 must be <list> or <tuple>, got {type(value)}.')
             elif len(value) > 1:
                 raise NumbersImagesErrors(f'Maximum numbers images in list 1, got {len(value)}')
             elif not len(value):
