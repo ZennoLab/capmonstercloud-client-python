@@ -12,10 +12,10 @@
 
 <p align="center">
   <a href="https://pypi.org/project/capmonstercloudclient/"><img src="https://img.shields.io/pypi/v/capmonstercloudclient.svg?style=flat-square&color=blue" alt="PyPI version"></a>
-  <a href="https://pypi.org/project/capmonstercloudclient/"><img src="https://img.shields.io/pypi/dm/capmonstercloudclient.svg?style=flat-square&color=green" alt="PyPI downloads"></a>
+  <a href="https://pepy.tech/project/capmonstercloudclient"><img src="https://static.pepy.tech/badge/capmonstercloudclient/month" alt="PyPI downloads"></a>
   <a href="https://pypi.org/project/capmonstercloudclient/"><img src="https://img.shields.io/pypi/pyversions/capmonstercloudclient.svg?style=flat-square" alt="Python Versions"></a>
-  <a href="https://github.com/ZennoLab/capmonstercloud-client-python/stargazers"><img src="https://img.shields.io/github/stars/ZennoLab/capmonstercloud-client-python?style=flat-square&color=yellow" alt="GitHub Stars"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License: MIT"></a>
+  <a href="https://github.com/CapMonsterCloud/capmonster-python-captcha-solver/stargazers"><img src="https://img.shields.io/github/stars/CapMonsterCloud/capmonster-python-captcha-solver?style=flat-square&color=yellow" alt="GitHub Stars"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 
 ---
@@ -165,12 +165,6 @@ All task types conform to the official [CapMonster Cloud API Documentation](http
 
 ---
 
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=ZennoLab/capmonstercloud-client-python&type=Date)](https://star-history.com/#ZennoLab/capmonstercloud-client-python&Date)
-
----
-
 ## 📄 License
 
-[MIT](LICENSE) © [ZennoLab](https://zennolab.com/) / [CapMonster Cloud](https://capmonster.cloud/en/?utm_source=github&utm_medium=referral&utm_campaign=python_repo_readme)
+[MIT](./LICENSE) © [ZennoLab](https://zennolab.com/) / [CapMonster Cloud](https://capmonster.cloud/en/?utm_source=github&utm_medium=referral&utm_campaign=python_repo_readme)
