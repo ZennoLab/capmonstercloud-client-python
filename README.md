@@ -163,6 +163,13 @@ All task types conform to the official [CapMonster Cloud API Documentation](http
 - ⚙️ [API Methods Reference](https://docs.capmonster.cloud/docs/methods/?utm_source=github&utm_medium=referral&utm_campaign=python_repo_readme)
 - 💬 [Support & Community](https://capmonster.cloud/en/?utm_source=github&utm_medium=referral&utm_campaign=python_repo_readme#support)
 
+## Other official SDKs
+
+- [.NET](https://github.com/CapMonsterCloud/capmonster-dotnet-captcha-solver)
+- [Node.js](https://github.com/CapMonsterCloud/capmonster-nodejs-captcha-solver)
+- [n8n](https://github.com/CapMonsterCloud/capmonster-n8n-captcha-solver)
+- [API Docs](https://github.com/CapMonsterCloud/capmonster-captcha-solver-docs)
+
 ---
 
 ## 📄 License
